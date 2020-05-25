@@ -4,19 +4,8 @@ import { SearchGroup } from './components/SearchGroup';
 import { CountryDropdown } from './components/CountryDropdown';
 import { CurrentWeatherDiv } from './components/CurrentWeatherDiv';
 import { currentWeatherByCity } from './utils/API';
+import countryArr from './constant/countries.json';
 
-const countryArr = [
-  { name: `United States`, code: `us` },
-  { name: `Canada`, code: `ca` },
-  { name: `United Kingdom`, code: `uk` },
-  { name: `Costa Rica`, code: `cr` },
-  { name: `Argentina`, code: `ar` },
-  { name: `Philippines`, code: `ph` },
-  { name: `Taiwan`, code: `tw` },
-  { name: `South Korea`, code: `kr` },
-  { name: `Japan`, code: `jp` },
-  { name: `China`, code: `cn` }
-]
 
 function App() {
   const [searchInput, setSearchInput] = useState([]);
