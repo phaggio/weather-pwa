@@ -11,7 +11,7 @@ Container.propTypes = {
 
 export function Row({ fluid, cols, children }) {
 	return (
-		<div className={`row${fluid ? `-fluid` : ``} `} className={cols ? `row-cols-${cols}` : ``} >
+		<div className={`row${fluid ? `-fluid` : ``} ${cols ? `row-cols-${cols}` : ``}`} >
 			{children}
 		</div>
 	);
