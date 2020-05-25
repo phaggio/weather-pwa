@@ -7,7 +7,14 @@ import { currentWeatherByCity } from './utils/API';
 const countryArr = [
   { name: `United States`, code: `us` },
   { name: `Canada`, code: `ca` },
-  { name: `United Kingdom`, code: `uk` }
+  { name: `United Kingdom`, code: `uk` },
+  { name: `Costa Rica`, code: `cr` },
+  { name: `Argentina`, code: `ar` },
+  { name: `Philippines`, code: `ph` },
+  { name: `Taiwan`, code: `tw` },
+  { name: `South Korea`, code: `kr` },
+  { name: `Japan`, code: `jp` },
+  { name: `China`, code: `cn` }
 ]
 
 function App() {
