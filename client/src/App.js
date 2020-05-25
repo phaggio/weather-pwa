@@ -11,25 +11,30 @@ const countryArr = [
 function App() {
   const [searchInput, setSearchInput] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(`us`);
-
+  const [showSearchButton, setShowSearchButton] = useState(false);
 
   const updateSearchInputState = event => {
     const inputText = event.target.value;
     console.log(inputText);
     setSearchInput(inputText);
+    validateSearchInput(inputText);
   };
 
   const updateSelectedCountryState = event => {
     const selectedCountry = event.target.value;
     console.log(selectedCountry);
     setSelectedCountry(selectedCountry);
+  };
+
+  const validateSearchInput = input => {
+    (input.trim()) ? setShowSearchButton(true) : setShowSearchButton(false);
   }
 
   return (
     <Container>
       <Row>
         <Col size="sm-12 md-4 lg-3 xl-2">
-          Search a city:<SearchGroup onChange={updateSearchInputState} />
+          Search a city:<SearchGroup onChange={updateSearchInputState} showSearchButton={showSearchButton} />
           <CountryDropdown countryArr={countryArr} onChange={updateSelectedCountryState} />
         </Col>
         {/* <Col size="sm-12 md-8 lg-9 xl-7">current weather Condition</Col>
