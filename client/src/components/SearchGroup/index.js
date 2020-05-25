@@ -6,12 +6,12 @@ const SearchGroup = props => {
       <input className="form-control" id="search-input" type="text" placeholder="city name" aria-label="Search" onChange={props.onChange} />
       <div className="input-group-append">
         {props.showSearchButton ?
-          <button className="btn btn-success btn-sm">
-            <i className="material-icons">location_searching</i>
-          </button>
-          :
           <button className="btn btn-primary btn-sm" type="search">
             <i className="material-icons">search</i>
+          </button>
+          :
+          <button className="btn btn-success btn-sm">
+            <i className="material-icons">location_searching</i>
           </button>
         }
       </div>
