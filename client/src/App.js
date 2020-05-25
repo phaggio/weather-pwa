@@ -2,16 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Container, Col, Row } from './components/Grid';
 import { SearchGroup } from './components/SearchGroup';
 import { CountryDropdown } from './components/CountryDropdown';
+import { currentWeatherByCity } from './utils/API';
 
 const countryArr = [
   { name: `United States`, code: `us` },
-  { name: `Canada`, code: `ca` }
+  { name: `Canada`, code: `ca` },
+  { name: `United Kingdom`, code: `uk` }
 ]
 
 function App() {
   const [searchInput, setSearchInput] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(`us`);
   const [showSearchButton, setShowSearchButton] = useState(false);
+
+  useEffect(() => {
+    currentWeatherByCity();
+  }, []);
 
   const updateSearchInputState = event => {
     const inputText = event.target.value;
