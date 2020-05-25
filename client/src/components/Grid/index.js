@@ -40,5 +40,7 @@ Col.propTypes = {
 };
 
 export {
-	Container, Col, Row
+	Container,
+	Col,
+	Row
 }
