@@ -6,10 +6,13 @@ const coordUVIndexURL = 'https://api.openweathermap.org/data/2.5/uvi?';
 const key = '786953f37f3a1158ba41f05aad533b5b';
 
 const currentWeatherByCity = (city, country) => {
-  axios.get(
-    `${currentWeatherURL}q=${city},${country}&appid=${key}`
-  ).then(res => console.log(res));
+  return axios.get(`${currentWeatherURL}q=${city},${country}&appid=${key}`);
 }
 
-
-export default { currentWeatherByCity }
+const currentWeatherByCoord = (latitude, longitude) => {
+  return axios.get(`${currentWeatherURL}lat=${latitude}&lon=${longitude}&appid=${key}`);
+}
+export default {
+  currentWeatherByCity,
+  currentWeatherByCoord
+}

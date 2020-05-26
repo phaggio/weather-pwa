@@ -10,13 +10,18 @@ const App = () => {
   const [searchCity, setSearchCity] = useState(`Seattle`);
   const [selectedCountry, setSelectedCountry] = useState(`us`);
   const [showSearchButton, setShowSearchButton] = useState(false);
+  const [currentWeather, setCurrentWeather] = useState();
 
   useEffect(() => {
-    API.currentWeatherByCity(searchCity, selectedCountry);
+    API.currentWeatherByCity(searchCity, selectedCountry)
+      .then(res => {
+        // setCurrentWeather(res.data);
+        console.log(res.data);
+      });
   }, []);
 
   const updateSearchCityState = event => {
-    const inputText = event.target.value;
+    const inputText = event.target.value.trim();
     console.log(inputText);
     setSearchCity(inputText);
     validateSearchCity(inputText);
@@ -32,12 +37,21 @@ const App = () => {
     (input.trim()) ? setShowSearchButton(true) : setShowSearchButton(false);
   }
 
+  const getCurrentWeatherByCity = () => {
+    API.currentWeatherByCity(searchCity, selectedCountry)
+      .then(res => {
+        console.log(res);
+        setCurrentWeather(res.data);
+      });
+  }
+
   const locateMe = () => {
     const success = position => {
-      let latitude = position.coords.latitude;
-      let longitude = position.coords.longitude;
-      // currentWeatherApiCall(null, null, latitude, longitude);
-      console.log(`Lat: ${latitude}, Lon: ${longitude}`);
+      API.currentWeatherByCoord(position.coords.latitude, position.coords.longitude)
+        .then(res => {
+          console.log(res.data);
+          setCurrentWeather(res.data);
+        })
     };
 
     const error = () => {
@@ -57,11 +71,16 @@ const App = () => {
     <Container>
       <Row>
         <Col size="sm-12 md-4 lg-3 xl-2">
-          Search a city:<SearchGroup onChange={updateSearchCityState} showSearchButton={showSearchButton} locateMe={locateMe} />
+          Search a city:
+          <SearchGroup
+            onChange={updateSearchCityState}
+            showSearchButton={showSearchButton}
+            locateMe={locateMe}
+            searchButtonPressed={getCurrentWeatherByCity} />
           <CountryDropdown countryArr={countryArr} onChange={updateSelectedCountryState} />
         </Col>
         <Col size="sm-12 md-8 lg-9 xl-7">
-          <CurrentWeatherDiv />
+          {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} /> : ``}
         </Col>
         {/* <Col size="sm-12 md-12 lg-12 xl-3">days forecast 05/24/2020 05/25/2020 05/26/2020</Col> */}
       </Row>
