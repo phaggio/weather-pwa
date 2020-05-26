@@ -7,15 +7,16 @@ import API from './utils/API';
 import countryArr from './constant/countries.json';
 
 const App = () => {
-  const [searchCity, setSearchCity] = useState(`Seattle`);
+  const [searchCity, setSearchCity] = useState(`Lynnwood`);
   const [selectedCountry, setSelectedCountry] = useState(`us`);
+  const [selectedCoord, setSelectedCoord] = useState();
   const [showSearchButton, setShowSearchButton] = useState(false);
   const [currentWeather, setCurrentWeather] = useState();
 
   useEffect(() => {
     API.currentWeatherByCity(searchCity, selectedCountry)
       .then(res => {
-        // setCurrentWeather(res.data);
+        setCurrentWeather(res.data);
         console.log(res.data);
       });
   }, []);
@@ -47,6 +48,7 @@ const App = () => {
 
   const locateMe = () => {
     const success = position => {
+      setSelectedCoord({ latitude: position.coords.latitude, longitude: position.coords.longitude })
       API.currentWeatherByCoord(position.coords.latitude, position.coords.longitude)
         .then(res => {
           console.log(res.data);

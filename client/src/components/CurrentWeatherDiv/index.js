@@ -10,7 +10,6 @@ const CurrentWeatherDiv = props => {
     <Row>
       <Col size="8 sm-8 lg-7">
         <h2>{props.currentWeather.name}</h2>
-        <h5>{props.currentWeather.sys.country.toLowerCase()}</h5>
         <h6>{currentCountryName}</h6>
         <p>Sunrise: {Moment.unix(props.currentWeather.sys.sunrise).format('h:mm A')}</p>
         <p>Sunset: {Moment.unix(props.currentWeather.sys.sunset).format('h:mm A')}</p>
