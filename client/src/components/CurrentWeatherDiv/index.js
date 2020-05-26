@@ -19,7 +19,7 @@ const CurrentWeatherDiv = props => {
         <p>Humidity: {props.currentWeather.main.humidity}%</p>
         <p>Pressure: {props.currentWeather.main.pressure} hPa</p>
       </Col>
-      <Col size="4 sm-4 lg-3">
+      <Col size="4 sm-4 lg-5">
         <img size="w-100" src={require(`../../assets/${props.currentWeather.weather[0].icon}@2x.png`)} alt="weather icon" />
       </Col>
     </Row>

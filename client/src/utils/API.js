@@ -16,7 +16,7 @@ const currentWeatherByCoord = (latitude, longitude) => {
 }
 
 const oneCallWeatherByCoord = (latitude, longitude) => {
-  return axios.get(`${oneCallWeatherURL}lat=${latitude}&lon=${longitude}&appid=${key}`);
+  return axios.get(`${oneCallWeatherURL}lat=${latitude}&lon=${longitude}&units=imperial&appid=${key}`);
 }
 
 export default {

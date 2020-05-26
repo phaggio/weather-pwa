@@ -3,6 +3,7 @@ import { Container, Col, Row } from './components/Grid';
 import { SearchGroup } from './components/SearchGroup';
 import { CountryDropdown } from './components/CountryDropdown';
 import { CurrentWeatherDiv } from './components/CurrentWeatherDiv';
+import { HourlyForecastDiv } from './components/HourlyForecastDiv';
 import API from './utils/API';
 import countryArr from './constant/countries.json';
 
@@ -12,6 +13,7 @@ const App = () => {
   const [selectedCoord, setSelectedCoord] = useState();
   const [showSearchButton, setShowSearchButton] = useState(false);
   const [currentWeather, setCurrentWeather] = useState();
+  const [hourlyForecast, setHourlyForecast] = useState();
 
   useEffect(() => {
     API.currentWeatherByCity(searchCity, selectedCountry)
@@ -54,6 +56,11 @@ const App = () => {
           console.log(res.data);
           setCurrentWeather(res.data);
         })
+      API.oneCallWeatherByCoord(position.coords.latitude, position.coords.longitude)
+        .then(res => {
+          console.log(res.data.hourly);
+          setHourlyForecast(res.data.hourly);
+        })
     };
 
     const error = () => {
@@ -72,7 +79,7 @@ const App = () => {
   return (
     <Container>
       <Row>
-        <Col size="sm-12 md-4 lg-3 xl-2">
+        <Col size="sm-12 md-4 lg-3 xl-3">
           <SearchGroup
             onChange={updateSearchCityState}
             showSearchButton={showSearchButton}
@@ -80,11 +87,15 @@ const App = () => {
             searchButtonPressed={getCurrentWeatherByCity} />
           <CountryDropdown countryArr={countryArr} onChange={updateSelectedCountryState} />
         </Col>
-        <Col size="sm-12 md-8 lg-9 xl-7">
+        <Col size="sm-12 md-8 lg-9 xl-9">
           {currentWeather ?
             <CurrentWeatherDiv currentWeather={currentWeather} />
             :
             ``}
+
+        </Col>
+        <Col size="sm-12">
+          {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} /> : ``}
         </Col>
         {/* <Col size="sm-12 md-12 lg-12 xl-3">days forecast 05/24/2020 05/25/2020 05/26/2020</Col> */}
       </Row>
