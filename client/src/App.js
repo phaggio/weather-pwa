@@ -71,7 +71,6 @@ const App = () => {
     <Container>
       <Row>
         <Col size="sm-12 md-4 lg-3 xl-2">
-          Search a city:
           <SearchGroup
             onChange={updateSearchCityState}
             showSearchButton={showSearchButton}
