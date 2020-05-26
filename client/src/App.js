@@ -3,24 +3,23 @@ import { Container, Col, Row } from './components/Grid';
 import { SearchGroup } from './components/SearchGroup';
 import { CountryDropdown } from './components/CountryDropdown';
 import { CurrentWeatherDiv } from './components/CurrentWeatherDiv';
-import { currentWeatherByCity } from './utils/API';
+import API from './utils/API';
 import countryArr from './constant/countries.json';
 
-
-function App() {
-  const [searchInput, setSearchInput] = useState([]);
+const App = () => {
+  const [searchCity, setSearchCity] = useState(`Seattle`);
   const [selectedCountry, setSelectedCountry] = useState(`us`);
   const [showSearchButton, setShowSearchButton] = useState(false);
 
   useEffect(() => {
-    currentWeatherByCity();
+    API.currentWeatherByCity(searchCity, selectedCountry);
   }, []);
 
-  const updateSearchInputState = event => {
+  const updateSearchCityState = event => {
     const inputText = event.target.value;
     console.log(inputText);
-    setSearchInput(inputText);
-    validateSearchInput(inputText);
+    setSearchCity(inputText);
+    validateSearchCity(inputText);
   };
 
   const updateSelectedCountryState = event => {
@@ -29,15 +28,36 @@ function App() {
     setSelectedCountry(selectedCountry);
   };
 
-  const validateSearchInput = input => {
+  const validateSearchCity = input => {
     (input.trim()) ? setShowSearchButton(true) : setShowSearchButton(false);
   }
+
+  const locateMe = () => {
+    const success = position => {
+      let latitude = position.coords.latitude;
+      let longitude = position.coords.longitude;
+      // currentWeatherApiCall(null, null, latitude, longitude);
+      console.log(`Lat: ${latitude}, Lon: ${longitude}`);
+    };
+
+    const error = () => {
+      console.log(`Unable to retrieve your location ...`);
+    };
+
+    if (!navigator.geolocation) {
+      console.log(`Geolocation is not supported by your browser ...`)
+    } else {
+      console.log(`Getting your location ...`)
+      let options = { timeout: 20000 };
+      navigator.geolocation.getCurrentPosition(success, error, options);
+    };
+  };
 
   return (
     <Container>
       <Row>
         <Col size="sm-12 md-4 lg-3 xl-2">
-          Search a city:<SearchGroup onChange={updateSearchInputState} showSearchButton={showSearchButton} />
+          Search a city:<SearchGroup onChange={updateSearchCityState} showSearchButton={showSearchButton} locateMe={locateMe} />
           <CountryDropdown countryArr={countryArr} onChange={updateSelectedCountryState} />
         </Col>
         <Col size="sm-12 md-8 lg-9 xl-7">

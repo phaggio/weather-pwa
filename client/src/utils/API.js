@@ -7,9 +7,9 @@ const key = '786953f37f3a1158ba41f05aad533b5b';
 
 const currentWeatherByCity = (city, country) => {
   axios.get(
-    `${currentWeatherURL}q=${`Seattle`},${`us`}&appid=${key}`
+    `${currentWeatherURL}q=${city},${country}&appid=${key}`
   ).then(res => console.log(res));
 }
 
 
-export { currentWeatherByCity }
+export default { currentWeatherByCity }
