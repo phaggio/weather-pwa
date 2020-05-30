@@ -1,5 +1,9 @@
 [
   {
+    "name": "Choose a country",
+    "code": "us"
+  },
+  {
     "name": "United States",
     "code": "us"
   },

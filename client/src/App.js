@@ -76,14 +76,14 @@ const App = () => {
   };
 
   const locateMe = () => {
-    const success = position => {
-      setSelectedCoord({ lat: position.coords.latitude, lon: position.coords.longitude })
-      API.currentWeatherByCoord(position.coords.latitude, position.coords.longitude)
+    const success = browserPosition => {
+      setSelectedCoord({ lat: browserPosition.coords.latitude, lon: browserPosition.coords.longitude })
+      API.currentWeatherByCoord(browserPosition.coords.latitude, browserPosition.coords.longitude)
         .then(res => {
           console.log(res.data);
           setCurrentWeather(res.data);
         })
-      API.oneCallWeatherByCoord(position.coords.latitude, position.coords.longitude)
+      API.oneCallWeatherByCoord(browserPosition.coords.latitude, browserPosition.coords.longitude)
         .then(res => {
           console.log(res.data.hourly);
           setHourlyForecast(res.data.hourly);

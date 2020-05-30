@@ -5,9 +5,8 @@ const CountryDropdown = props => {
     <div className="input-group">
       <div className="input-group">
         <select className="custom-select" onChange={props.onChange}>
-          <option value="us">Choose a country</option>
           {props.countryArr.map(country => {
-            return <option key={country.code} value={country.code}>{country.name}</option>
+            return <option key={country.name} value={country.code}>{country.name}</option>
           })}
         </select>
       </div>
