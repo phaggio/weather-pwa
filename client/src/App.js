@@ -28,6 +28,7 @@ const App = () => {
       });
   }, []);
 
+  // local storage functions
   const checkLocalStorage = key => {
     let storedData = JSON.parse(localStorage.getItem(key));
     setRecentCities(storedData ? storedData : []);
@@ -37,6 +38,7 @@ const App = () => {
     localStorage.setItem(key, JSON.stringify(data));
   };
 
+  // state functions
   const updateSearchCityState = event => {
     const inputText = event.target.value.trim();
     console.log(inputText);
@@ -54,18 +56,28 @@ const App = () => {
     (input.trim()) ? setShowSearchButton(true) : setShowSearchButton(false);
   }
 
+
+  // api call functions
+  const getForecastByCoord = coordObj => {
+    API.oneCallWeatherByCoord(coordObj.lat, coordObj.lon)
+      .then(res => {
+        setHourlyForecast(res.data.hourly);
+      })
+  };
+
   const getCurrentWeatherByCity = () => {
     API.currentWeatherByCity(searchCity, selectedCountry)
       .then(res => {
         console.log(res);
         setCurrentWeather(res.data);
-        setSelectedCoord({ latitude: res.data.coord.lat, longitude: res.data.coord.lon })
+        setSelectedCoord(res.data.coord);
+        getForecastByCoord(res.data.coord);
       })
-  }
+  };
 
   const locateMe = () => {
     const success = position => {
-      setSelectedCoord({ latitude: position.coords.latitude, longitude: position.coords.longitude })
+      setSelectedCoord({ lat: position.coords.latitude, lon: position.coords.longitude })
       API.currentWeatherByCoord(position.coords.latitude, position.coords.longitude)
         .then(res => {
           console.log(res.data);
@@ -76,7 +88,7 @@ const App = () => {
           console.log(res.data.hourly);
           setHourlyForecast(res.data.hourly);
         })
-    };
+    }
 
     const error = () => {
       console.log(`Unable to retrieve your location ...`);
@@ -88,8 +100,10 @@ const App = () => {
       console.log(`Getting your location ...`)
       const options = { timeout: 20000 };
       navigator.geolocation.getCurrentPosition(success, error, options);
-    };
+    }
   };
+
+
 
   return (
     <Container>
@@ -108,7 +122,7 @@ const App = () => {
             <CurrentWeatherDiv currentWeather={currentWeather} />
             :
             ``}
-          {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} /> : ``}
+          {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} hours={24} /> : ``}
         </Col>
         <Col size="sm-12">
 
