@@ -88,6 +88,18 @@ const App = () => {
         });
         getForecastByCoord(res.data.coord); // another API call to get forecast data
       })
+      .catch(err => {
+        console.log(err)
+        if (err.response) {
+          console.log(err.response.data);
+          console.log(err.response.status);
+          console.log(err.response.headers);
+          if (err.response.status === 404) {
+            alert(`Cannot find that city`);
+          }
+          alert(`Something is wrong, cannot get weather at this time`);
+        }
+      })
   };
 
   const getForecastByCoord = coordObj => {
@@ -101,7 +113,7 @@ const App = () => {
     const success = browserPosition => {
       API.currentWeatherByCoord(browserPosition.coords.latitude, browserPosition.coords.longitude)
         .then(res => {
-          console.log(res.data);
+          console.log(res);
           setCurrentWeather(res.data);
           updateRecentCities({
             key: `${res.data.name}, ${res.data.sys.country}`,
@@ -133,7 +145,7 @@ const App = () => {
     API.currentWeatherByCoord(lat, lon)
       .then(res => {
         setCurrentWeather(res.data);
-        console.log(res.data);
+        console.log(res);
       })
     getForecastByCoord({ lat: lat, lon: lon })
   };

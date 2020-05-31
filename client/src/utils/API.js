@@ -8,7 +8,9 @@ const oneCallWeatherURL = `https://api.openweathermap.org/data/2.5/onecall?`;
 const key = `786953f37f3a1158ba41f05aad533b5b`;
 
 const currentWeatherByCity = (city, state, country) => {
-  return axios.get(`${currentWeatherURL}q=${city},${state},${country}&units=imperial&appid=${key}`);
+  return (
+    axios.get(`${currentWeatherURL}q=${city},${state},${country}&units=imperial&appid=${key}`)
+  )
 }
 
 const currentWeatherByCoord = (latitude, longitude) => {
