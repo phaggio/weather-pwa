@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container, Col, Row } from '../Grid';
 
 const RecentCitiesDiv = props => {
   return (

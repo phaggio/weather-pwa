@@ -12,7 +12,7 @@ const SearchGroup = props => {
               <i className="material-icons">search</i>
             </button>
             :
-            <button className="btn btn-success btn-sm" onClick={props.locateMe}>
+            <button className="btn btn-success btn-sm" onClick={props.locateMeButtonPressed}>
               <i className="material-icons">location_searching</i>
             </button>
           }

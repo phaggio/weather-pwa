@@ -1,6 +1,6 @@
 import React from 'react';
 import Moment from 'moment';
-import { Container, Col, Row } from '../Grid';
+import { Col, Row } from '../Grid';
 import countryArr from '../../constant/countries.json';
 
 const CurrentWeatherDiv = props => {
