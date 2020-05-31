@@ -21,7 +21,7 @@ const App = () => {
 
   useEffect(() => {
     checkLocalStorage(`recentCities`);
-    API.currentWeatherByCity(`Seattle`, `US`)
+    API.currentWeatherByCity({ city: `Seattle`, country: `US` })
       .then(res => {
         setCurrentWeather(res.data);
         getForecastByCoord(res.data.coord);
@@ -75,7 +75,7 @@ const App = () => {
 
   // api call functions
   const searchButtonPressed = () => {
-    API.currentWeatherByCity(searchCity, ``, selectedCountry)
+    API.currentWeatherByCity({ city: searchCity, country: selectedCountry })
       .then(res => {
         console.log(res.data);
         setCurrentWeather(res.data);
