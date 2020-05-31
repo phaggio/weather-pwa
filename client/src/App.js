@@ -10,14 +10,15 @@ import countryArr from './constant/countries.json';
 
 const App = () => {
   const [searchCity, setSearchCity] = useState(`Lynnwood`);
-  const [selectedCountry, setSelectedCountry] = useState(`us`);
+  const [selectedCountry, setSelectedCountry] = useState(`US`);
   const [recentCities, setRecentCities] = useState([]);
-  const [selectedCoord, setSelectedCoord] = useState();
   const [showSearchButton, setShowSearchButton] = useState(false);
   const [currentWeather, setCurrentWeather] = useState();
   const [hourlyForecast, setHourlyForecast] = useState();
 
   const localStorageKey = `recentCities`;
+  const hourlyForecastNumber = 24;
+  let currentCityObj = {};
 
   useEffect(() => {
     checkLocalStorage(localStorageKey);
@@ -27,6 +28,10 @@ const App = () => {
         console.log(res.data);
       });
   }, []);
+
+  const updateCurrentCity = (city, country, lon, lat) => {
+    currentCityObj = { city, country, lon, lat };
+  };
 
   // local storage functions
   const checkLocalStorage = key => {
@@ -40,16 +45,14 @@ const App = () => {
 
   // state functions
   const updateSearchCityState = event => {
-    const inputText = event.target.value.trim();
-    console.log(inputText);
-    setSearchCity(inputText);
-    validateSearchCity(inputText);
+    const city = event.target.value.trim();
+    setSearchCity(city);
+    validateSearchCity(city);
   };
 
   const updateSelectedCountryState = event => {
-    const selectedCountry = event.target.value;
-    console.log(selectedCountry);
-    setSelectedCountry(selectedCountry);
+    const country = event.target.value;
+    setSelectedCountry(country);
   };
 
   const validateSearchCity = input => {
@@ -62,22 +65,23 @@ const App = () => {
     API.oneCallWeatherByCoord(coordObj.lat, coordObj.lon)
       .then(res => {
         setHourlyForecast(res.data.hourly);
+        setRecentCities([...recentCities, currentCityObj])
       })
   };
 
   const getCurrentWeatherByCity = () => {
     API.currentWeatherByCity(searchCity, selectedCountry)
       .then(res => {
-        console.log(res);
+        console.log(res.data);
         setCurrentWeather(res.data);
-        setSelectedCoord(res.data.coord);
+        updateCurrentCity(res.data.name, res.data.sys.country, res.data.coord.lon, res.data.coord.lat);
+        // setSelectedCoord(res.data.coord);
         getForecastByCoord(res.data.coord);
       })
   };
 
   const locateMe = () => {
     const success = browserPosition => {
-      setSelectedCoord({ lat: browserPosition.coords.latitude, lon: browserPosition.coords.longitude })
       API.currentWeatherByCoord(browserPosition.coords.latitude, browserPosition.coords.longitude)
         .then(res => {
           console.log(res.data);
@@ -103,7 +107,9 @@ const App = () => {
     }
   };
 
-
+  const consoleRecentCities = () => {
+    console.log(recentCities);
+  }
 
   return (
     <Container>
@@ -115,14 +121,14 @@ const App = () => {
             locateMe={locateMe}
             searchButtonPressed={getCurrentWeatherByCity} />
           <CountryDropdown countryArr={countryArr} onChange={updateSelectedCountryState} />
-          <RecentCitiesDiv />
+          <RecentCitiesDiv recentCities={recentCities} onClick={consoleRecentCities} />
         </Col>
         <Col size="sm-12 md-8 lg-9 xl-9">
           {currentWeather ?
             <CurrentWeatherDiv currentWeather={currentWeather} />
             :
             ``}
-          {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} hours={24} /> : ``}
+          {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} hours={hourlyForecastNumber} /> : ``}
         </Col>
         <Col size="sm-12">
 

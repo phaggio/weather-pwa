@@ -1,46 +1,42 @@
 [
   {
-    "name": "Choose a country",
-    "code": "us"
-  },
-  {
     "name": "United States",
-    "code": "us"
+    "code": "US"
   },
   {
     "name": "Canada",
-    "code": "ca"
+    "code": "CA"
   },
   {
     "name": "United Kingdom",
-    "code": "uk"
+    "code": "UK"
   },
   {
     "name": "Costa Rica",
-    "code": "cr"
+    "code": "CR"
   },
   {
     "name": "Argentina",
-    "code": "ar"
+    "code": "AR"
   },
   {
     "name": "Philippines",
-    "code": "ph"
+    "code": "PH"
   },
   {
     "name": "Taiwan",
-    "code": "tw"
+    "code": "TW"
   },
   {
     "name": "South Korea",
-    "code": "kr"
+    "code": "KR"
   },
   {
     "name": "Japan",
-    "code": "jp"
+    "code": "JP"
   },
   {
     "name": "China",
-    "code": "cn"
+    "code": "CN"
   }
 ]
