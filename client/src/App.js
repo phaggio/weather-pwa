@@ -103,6 +103,13 @@ const App = () => {
         .then(res => {
           console.log(res.data);
           setCurrentWeather(res.data);
+          updateRecentCities({
+            key: `${res.data.name}, ${res.data.sys.country}`,
+            city: res.data.name,
+            country: res.data.sys.country,
+            lon: res.data.coord.lon,
+            lat: res.data.coord.lat
+          });
         });
       getForecastByCoord({
         lat: browserPosition.coords.latitude, lon: browserPosition.coords.longitude
