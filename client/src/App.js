@@ -20,11 +20,10 @@ const App = () => {
   const hourlyForecastNumber = 24;
 
   useEffect(() => {
-    checkLocalStorage(localStorageKey);
+    checkLocalStorage(`recentCities`);
     API.currentWeatherByCity(`Seattle`, `US`)
       .then(res => {
         setCurrentWeather(res.data);
-        console.log(res.data);
         getForecastByCoord(res.data.coord);
       })
   }, []);
@@ -76,11 +75,12 @@ const App = () => {
 
   // api call functions
   const searchButtonPressed = () => {
-    API.currentWeatherByCity(searchCity, selectedCountry)
+    API.currentWeatherByCity(searchCity, ``, selectedCountry)
       .then(res => {
         console.log(res.data);
         setCurrentWeather(res.data);
         updateRecentCities({
+          key: `${res.data.name}, ${res.data.sys.country}`,
           city: res.data.name,
           country: res.data.sys.country,
           lon: res.data.coord.lon,
@@ -126,6 +126,15 @@ const App = () => {
     API.currentWeatherByCoord(lat, lon)
       .then(res => setCurrentWeather(res.data))
     getForecastByCoord({ lat: lat, lon: lon })
+  };
+
+  const removeCityButtonPressed = (key) => {
+    console.log(`Removing city`);
+    console.log(key);
+    const tempArr = [...recentCities];
+    const index = tempArr.findIndex(city => city.key === key);
+    tempArr.splice(index, 1);
+    setRecentCities(tempArr)
   }
 
   const consoleRecentCities = () => console.log(recentCities);
@@ -139,10 +148,13 @@ const App = () => {
             showSearchButton={showSearchButton}
             locateMeButtonPressed={locateMeButtonPressed}
             searchButtonPressed={searchButtonPressed} />
-          <CountryDropdown countryArr={countryArr} onChange={updateSelectedCountryState} />
+          <CountryDropdown
+            countryArr={countryArr}
+            onChange={updateSelectedCountryState} />
           <RecentCitiesDiv recentCities={recentCities}
             recentCityButtonPressed={recentCityButtonPressed}
-            consoleRecentCities={consoleRecentCities} />
+            consoleRecentCities={consoleRecentCities}
+            removeCityButtonPressed={removeCityButtonPressed} />
         </Col>
         <Col size="sm-12 md-8 lg-9 xl-9">
           {currentWeather ?

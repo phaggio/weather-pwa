@@ -12,7 +12,6 @@ const hourStyle = {
 
 const HourlyForecastDiv = props => {
   const hourArr = props.hourlyForecast.slice(0, props.hours);
-  console.log(hourArr);
   return (
     <div className="d-flex flex-nowrap" style={hourlyForecastStyle}>
       {hourArr.map(hour => {
