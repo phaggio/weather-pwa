@@ -25,7 +25,8 @@ const App = () => {
       .then(res => {
         setCurrentWeather(res.data);
         console.log(res.data);
-      });
+        getForecastByCoord(res.data.coord);
+      })
   }, []);
 
   // local storage functions
@@ -102,12 +103,10 @@ const App = () => {
         .then(res => {
           console.log(res.data);
           setCurrentWeather(res.data);
-        })
-      API.oneCallWeatherByCoord(browserPosition.coords.latitude, browserPosition.coords.longitude)
-        .then(res => {
-          console.log(res.data.hourly);
-          setHourlyForecast(res.data.hourly);
-        })
+        });
+      getForecastByCoord({
+        lat: browserPosition.coords.latitude, lon: browserPosition.coords.longitude
+      });
     }
 
     const error = () => {
@@ -123,6 +122,12 @@ const App = () => {
     }
   };
 
+  const recentCityButtonPressed = (lat, lon) => {
+    API.currentWeatherByCoord(lat, lon)
+      .then(res => setCurrentWeather(res.data))
+    getForecastByCoord({ lat: lat, lon: lon })
+  }
+
   const consoleRecentCities = () => console.log(recentCities);
 
   return (
@@ -135,7 +140,9 @@ const App = () => {
             locateMeButtonPressed={locateMeButtonPressed}
             searchButtonPressed={searchButtonPressed} />
           <CountryDropdown countryArr={countryArr} onChange={updateSelectedCountryState} />
-          <RecentCitiesDiv recentCities={recentCities} onClick={consoleRecentCities} />
+          <RecentCitiesDiv recentCities={recentCities}
+            recentCityButtonPressed={recentCityButtonPressed}
+            consoleRecentCities={consoleRecentCities} />
         </Col>
         <Col size="sm-12 md-8 lg-9 xl-9">
           {currentWeather ?
