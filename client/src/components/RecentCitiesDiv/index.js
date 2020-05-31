@@ -5,7 +5,7 @@ const RecentCitiesDiv = props => {
     <div className="d-flex flex-column btn-group mt-3">
       <label>Recent cities:</label>
       <ul className="list-group w-100">
-        <button className="btn btn-light w-100" onClick={props.consoleRecentCities}>console.log recent city state</button>
+        <button className="btn btn-light w-100" onClick={props.consoleRecentCities}>console.log recent cities</button>
         {props.recentCities.map(city => {
           return (
             <div key={city.key}>

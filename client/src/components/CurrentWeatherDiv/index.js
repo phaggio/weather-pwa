@@ -4,8 +4,8 @@ import { Col, Row } from '../Grid';
 import countryArr from '../../constant/countries.json';
 
 const CurrentWeatherDiv = props => {
-  const currentCountryCode = props.currentWeather.sys.country.toLowerCase()
-  const currentCountryName = countryArr.find(country => country.code = currentCountryCode).name;
+  const currentCountryCode = props.currentWeather.sys.country;
+  const currentCountryName = countryArr.find(country => country.code === currentCountryCode).name;
   return (
     <Row>
       <Col size="8 sm-8 lg-9">

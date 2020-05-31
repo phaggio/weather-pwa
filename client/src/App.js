@@ -131,7 +131,10 @@ const App = () => {
 
   const recentCityButtonPressed = (lat, lon) => {
     API.currentWeatherByCoord(lat, lon)
-      .then(res => setCurrentWeather(res.data))
+      .then(res => {
+        setCurrentWeather(res.data);
+        console.log(res.data);
+      })
     getForecastByCoord({ lat: lat, lon: lon })
   };
 
