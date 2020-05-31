@@ -6,6 +6,7 @@ const RecentCitiesDiv = props => {
       <label>Recent cities:</label>
       <ul className="list-group w-100">
         <button className="btn btn-light w-100" onClick={props.consoleRecentCities}>console.log recent cities</button>
+        <button className="btn btn-light w-100" onClick={props.consoleSelectedCountry}>console.log country</button>
         {props.recentCities.map(city => {
           return (
             <div key={city.key}>

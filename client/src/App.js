@@ -10,7 +10,7 @@ import countryArr from './constant/countries.json';
 
 const App = () => {
   const [searchCity, setSearchCity] = useState();
-  const [selectedCountry, setSelectedCountry] = useState();
+  const [selectedCountry, setSelectedCountry] = useState(`US`);
   const [recentCities, setRecentCities] = useState([]);
   const [showSearchButton, setShowSearchButton] = useState(false);
   const [currentWeather, setCurrentWeather] = useState();
@@ -50,6 +50,7 @@ const App = () => {
 
   const updateSelectedCountryState = event => {
     const country = event.target.value;
+    console.log(country);
     setSelectedCountry(country);
   };
 
@@ -160,6 +161,7 @@ const App = () => {
   }
 
   const consoleRecentCities = () => console.log(recentCities);
+  const consoleSelectedCountry = () => console.log(selectedCountry);
 
   return (
     <Container>
@@ -173,9 +175,11 @@ const App = () => {
           <CountryDropdown
             countryArr={countryArr}
             onChange={updateSelectedCountryState} />
-          <RecentCitiesDiv recentCities={recentCities}
+          <RecentCitiesDiv
+            recentCities={recentCities}
             recentCityButtonPressed={recentCityButtonPressed}
             consoleRecentCities={consoleRecentCities}
+            consoleSelectedCountry={consoleSelectedCountry}
             removeCityButtonPressed={removeCityButtonPressed} />
         </Col>
         <Col size="sm-12 md-8 lg-9 xl-9">

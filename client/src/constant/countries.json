@@ -8,10 +8,6 @@
     "code": "CA"
   },
   {
-    "name": "United Kingdom",
-    "code": "UK"
-  },
-  {
     "name": "Costa Rica",
     "code": "CR"
   },
@@ -38,5 +34,33 @@
   {
     "name": "China",
     "code": "CN"
+  },
+  {
+    "name": "Honduras",
+    "code": "HN"
+  },
+  {
+    "name": "Columbia",
+    "code": "CO"
+  },
+  {
+    "name": "Spain",
+    "code": "ES"
+  },
+  {
+    "name": "Mexico",
+    "code": "MX"
+  },
+  {
+    "name": "Germany",
+    "code": "DE"
+  },
+  {
+    "name": "France",
+    "code": "FR"
+  },
+  {
+    "name": "Great Britain",
+    "code": "GB"
   }
 ]
