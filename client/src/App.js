@@ -76,6 +76,7 @@ const App = () => {
 
   // api call functions
   const searchButtonPressed = () => {
+    console.log(searchCity, selectedCountry);
     API.currentWeatherByCity({ city: searchCity, country: selectedCountry })
       .then(res => {
         console.log(res.data);
