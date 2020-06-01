@@ -5,17 +5,19 @@ const RecentCitiesDiv = props => {
     <div className="d-flex flex-column btn-group mt-3">
       <label>Recent cities:</label>
       <ul className="list-group w-100">
-        <button className="btn btn-light w-100" onClick={props.consoleRecentCities}>console.log recent cities</button>
-        <button className="btn btn-light w-100" onClick={props.consoleSelectedCountry}>console.log country</button>
+        <button className="btn btn-danger w-100" onClick={props.consoleRecentCities}>console.log recent cities</button>
+        <button className="btn btn-danger w-100" onClick={props.consoleSearchCity}>console.log city</button>
+        <button className="btn btn-danger w-100" onClick={props.consoleSelectedCountry}>console.log country</button>
         {props.recentCities.map(city => {
           return (
-            <div key={city.key}>
+            <div className="btn-group rounded" key={city.key}>
               <button className="btn btn-light w-75"
                 value={city}
                 onClick={() => props.recentCityButtonPressed(city.lat, city.lon)} >
                 {`${city.city}, ${city.country}`}
               </button>
               <button className="btn btn-light w-25"
+                value={city}
                 onClick={() => props.removeCityButtonPressed(city.key)}>
                 <i className="material-icons">delete_outline</i>
               </button>

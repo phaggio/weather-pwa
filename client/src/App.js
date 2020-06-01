@@ -76,7 +76,6 @@ const App = () => {
 
   // api call functions
   const searchButtonPressed = () => {
-    console.log(searchCity, selectedCountry);
     API.currentWeatherByCity({ city: searchCity, country: selectedCountry })
       .then(res => {
         console.log(res.data);
@@ -152,7 +151,7 @@ const App = () => {
     getForecastByCoord({ lat: lat, lon: lon })
   };
 
-  const removeCityButtonPressed = (key) => {
+  const removeCityButtonPressed = key => {
     console.log(`Removing city`);
     console.log(key);
     const tempArr = [...recentCities];
@@ -161,8 +160,10 @@ const App = () => {
     setRecentCities(tempArr)
   }
 
+  // dev logs
   const consoleRecentCities = () => console.log(recentCities);
   const consoleSelectedCountry = () => console.log(selectedCountry);
+  const consoleSearchCity = () => console.log(searchCity);
 
   return (
     <Container>
@@ -180,14 +181,12 @@ const App = () => {
             recentCities={recentCities}
             recentCityButtonPressed={recentCityButtonPressed}
             consoleRecentCities={consoleRecentCities}
+            consoleSearchCity={consoleSearchCity}
             consoleSelectedCountry={consoleSelectedCountry}
             removeCityButtonPressed={removeCityButtonPressed} />
         </Col>
         <Col size="sm-12 md-8 lg-9 xl-9">
-          {currentWeather ?
-            <CurrentWeatherDiv currentWeather={currentWeather} />
-            :
-            ``}
+          {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} /> : ``}
           {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} hours={hourlyForecastNumber} /> : ``}
         </Col>
         <Col size="sm-12">
