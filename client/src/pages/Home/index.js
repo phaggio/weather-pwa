@@ -8,8 +8,6 @@ import { HourlyForecastDiv } from '../../components/HourlyForecastDiv';
 import API from '../../utils/API';
 import countryArr from '../../constant/countries.json';
 
-
-
 const Home = () => {
   const [searchCity, setSearchCity] = useState();
   const [selectedCountry, setSelectedCountry] = useState(`US`);

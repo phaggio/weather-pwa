@@ -9,6 +9,7 @@ import React from 'react';
 // import countryArr from './constant/countries.json';
 
 import Home from './pages/Home';
+import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const App = () => {
@@ -202,6 +203,7 @@ const App = () => {
   return (
     <Router>
       <div>
+        <Navbar />
         <Route exact path="/" component={Home} />
       </div>
     </Router>
