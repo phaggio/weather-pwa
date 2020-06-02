@@ -5,7 +5,13 @@ const SearchGroup = props => {
     <div>
       <label>Search a city:</label>
       <div className="input-group">
-        <input className="form-control" id="search-input" type="text" placeholder="city name" aria-label="Search" onChange={props.onChange} />
+        <input className="form-control"
+          id="search-input"
+          type="text"
+          placeholder="city name"
+          aria-label="Search"
+          onChange={props.onChange}
+          onKeyDown={props.keyPressed} />
         <div className="input-group-append">
           {props.showSearchButton ?
             <button className="btn btn-primary btn-sm" type="search" onClick={props.searchButtonPressed}>

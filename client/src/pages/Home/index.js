@@ -74,6 +74,12 @@ const Home = () => {
     saveLocalStorage(localStorageKey, recentCities);
   })
 
+  const keyPressed = event => {
+    if (event.keyCode === 13 && searchCity) {
+      searchButtonPressed();
+    }
+  }
+
   // api call functions
   const searchButtonPressed = () => {
     API.currentWeatherByCity({ city: searchCity, country: selectedCountry })
@@ -171,6 +177,7 @@ const Home = () => {
         <Col size="sm-12 md-4 lg-3 xl-3">
           <SearchGroup
             onChange={updateSearchCityState}
+            keyPressed={keyPressed}
             showSearchButton={showSearchButton}
             locateMeButtonPressed={locateMeButtonPressed}
             searchButtonPressed={searchButtonPressed} />

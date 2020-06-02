@@ -15,11 +15,13 @@ const HourlyForecastDiv = props => {
   return (
     <div className="d-flex flex-nowrap" style={hourlyForecastStyle}>
       {hourArr.map(hour => {
-        return <div className="d-flex flex-column" key={hour.dt} style={hourStyle}>
-          <div>Time: {Moment.unix(hour.dt).format(`h:mm A`)}</div>
-          <div>Temperature: {hour.temp}F</div>
-          <div>Feels like: {hour.feels_like}</div>
-        </div>
+        return (
+          <div className="d-flex flex-column" key={hour.dt} style={hourStyle}>
+            <div>{Moment.unix(hour.dt).format(`h:mm A`)}</div>
+            <div>{hour.temp}F</div>
+            <div>Feels like: {hour.feels_like}</div>
+          </div>
+        )
       })}
     </div>
 
