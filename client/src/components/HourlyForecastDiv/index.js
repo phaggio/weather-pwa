@@ -17,7 +17,7 @@ const HourlyForecastDiv = props => {
     <div className="d-flex flex-nowrap" style={hourlyForecastStyle}>
       {hourArr.map(hour => {
         return (
-          <div className="d-flex flex-column" key={hour.dt} style={hourStyle}>
+          <div className="d-flex flex-column border align-items-center" key={hour.dt} style={hourStyle}>
             <img size="w-100" src={require(`../../assets/${hour.weather[0].icon}@2x.png`)} alt="weather icon" />
             <div>{Moment.unix(hour.dt).format(`h A`)}</div>
             <div>{hour.temp}F</div>
