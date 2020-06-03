@@ -1,6 +1,7 @@
 import React from 'react';
 import Moment from 'moment';
 
+
 const hourlyForecastStyle = {
   overflowX: 'auto'
 };
@@ -17,9 +18,9 @@ const HourlyForecastDiv = props => {
       {hourArr.map(hour => {
         return (
           <div className="d-flex flex-column" key={hour.dt} style={hourStyle}>
-            <div>{Moment.unix(hour.dt).format(`h:mm A`)}</div>
+            <img size="w-100" src={require(`../../assets/${hour.weather[0].icon}@2x.png`)} alt="weather icon" />
+            <div>{Moment.unix(hour.dt).format(`h A`)}</div>
             <div>{hour.temp}F</div>
-            <div>Feels like: {hour.feels_like}</div>
           </div>
         )
       })}
