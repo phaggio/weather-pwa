@@ -109,8 +109,8 @@ const Home = () => {
       })
   };
 
-  const getForecastByCoord = coordObj => {
-    API.oneCallWeatherByCoord(coordObj.lat, coordObj.lon)
+  const getForecastByCoord = ({ lat, lon }) => {
+    API.oneCallWeatherByCoord({ lat, lon })
       .then(res => {
         setHourlyForecast(res.data.hourly);
       })
@@ -118,9 +118,12 @@ const Home = () => {
 
   const locateMeButtonPressed = () => {
     const success = browserPosition => {
-      API.currentWeatherByCoord(browserPosition.coords.latitude, browserPosition.coords.longitude)
+      API.currentWeatherByCoord({
+        lat: browserPosition.coords.latitude,
+        lon: browserPosition.coords.longitude
+      })
         .then(res => {
-          console.log(res);
+          console.log(res.data);
           setCurrentWeather(res.data);
           updateRecentCities({
             key: `${res.data.name}, ${res.data.sys.country}`,
@@ -131,7 +134,8 @@ const Home = () => {
           });
         });
       getForecastByCoord({
-        lat: browserPosition.coords.latitude, lon: browserPosition.coords.longitude
+        lat: browserPosition.coords.latitude,
+        lon: browserPosition.coords.longitude
       });
     }
 
@@ -148,13 +152,13 @@ const Home = () => {
     }
   };
 
-  const recentCityButtonPressed = (lat, lon) => {
+  const recentCityButtonPressed = ({ lat, lon }) => {
     API.currentWeatherByCoord(lat, lon)
       .then(res => {
         setCurrentWeather(res.data);
         console.log(res);
       })
-    getForecastByCoord({ lat: lat, lon: lon })
+    getForecastByCoord({ lat, lon })
   };
 
   const removeCityButtonPressed = key => {
