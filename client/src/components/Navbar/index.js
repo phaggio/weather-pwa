@@ -1,4 +1,5 @@
 import React from 'react';
+import ToggleSwitch from '../ToggleSwitch';
 
 const Navbar = () => {
   return (
@@ -17,6 +18,7 @@ const Navbar = () => {
             <input type="checkbox" className="custom-control-input" id="dark-mode-toggle" />
             <label className="custom-control-label text-white" htmlFor="dark-mode-toggle">Dark mode</label>
           </div>
+          <ToggleSwitch toggleId="Test" label="Test" />
 
         </div>
       </div>
