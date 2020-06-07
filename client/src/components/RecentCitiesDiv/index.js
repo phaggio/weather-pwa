@@ -33,4 +33,4 @@ const RecentCitiesDiv = props => {
   )
 };
 
-export { RecentCitiesDiv };
+export default RecentCitiesDiv

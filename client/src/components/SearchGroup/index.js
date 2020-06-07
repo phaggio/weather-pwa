@@ -28,4 +28,4 @@ const SearchGroup = props => {
   );
 }
 
-export { SearchGroup }
+export default SearchGroup

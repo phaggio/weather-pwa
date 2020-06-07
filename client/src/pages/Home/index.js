@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Col, Row } from '../../components/Grid';
-import { SearchGroup } from '../../components/SearchGroup';
+import SearchGroup from '../../components/SearchGroup';
 import { CountryDropdown } from '../../components/CountryDropdown';
-import { RecentCitiesDiv } from '../../components/RecentCitiesDiv';
+import RecentCitiesDiv from '../../components/RecentCitiesDiv';
 import { CurrentWeatherDiv } from '../../components/CurrentWeatherDiv';
 import { HourlyForecastDiv } from '../../components/HourlyForecastDiv';
 import API from '../../utils/API';

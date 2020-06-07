@@ -1,8 +1,10 @@
 import React from 'react';
 
 const AppContext = React.createContext({
-    theme: `default`,
-    updateTheme: () => undefined
+  theme: String,
+  units: String,
+  updateTheme: () => undefined,
+  updateUnits: () => undefined
 });
 
 export default AppContext;
