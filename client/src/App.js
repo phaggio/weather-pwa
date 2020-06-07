@@ -9,6 +9,7 @@ import Alert from './components/Alert';
 const App = () => {
   const [appState, setAppState] = useState({
     theme: `default`,
+    units: `imperial`,
     updateTheme: theme => {
       setAppState({ ...appState, theme })
     }
