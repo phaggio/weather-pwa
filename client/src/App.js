@@ -8,10 +8,13 @@ import Alert from './components/Alert';
 
 const App = () => {
   const [appState, setAppState] = useState({
-    theme: `default`,
-    units: `imperial`,
-    updateTheme: theme => {
-      setAppState({ ...appState, theme })
+    darkMode: false,
+    unit: `Fahrenheit (°F)`,
+    updateDarkMode: darkMode => {
+      setAppState({ ...appState, darkMode })
+    },
+    updateUnit: unit => {
+      setAppState({ ...appState, unit })
     }
   });
 

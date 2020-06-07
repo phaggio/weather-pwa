@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ToggleSwitch from '../ToggleSwitch';
 import RadioButtonGroup from '../RadioButtonGroup';
+import AppContext from '../../utils/AppContext';
+
+const unitArr = [`Fahrenheit (°F)`, `Celsius (°C)`];
 
 const Navbar = () => {
+  const appContext = useContext(AppContext);
+  const toggleDarkMode = () => {
+    appContext.updateDarkMode(!appContext.darkMode);
+  }
   return (
     <div className="">
       <div className="collapse" id="navbarToggleExternalContent">
@@ -11,16 +18,12 @@ const Navbar = () => {
           <span className="text-muted">Toggleable via the navbar brand.</span> */}
           <h4 className="text-white h4">Settings</h4>
 
-          <div className="custom-control custom-switch">
-            <input type="checkbox" className="custom-control-input" id="hourly-forecast-toggle" />
-            <label className="custom-control-label text-white" htmlFor="hourly-forecast-toggle">Hourly forecast</label>
-          </div>
-          <div className="custom-control custom-switch">
-            <input type="checkbox" className="custom-control-input" id="dark-mode-toggle" />
-            <label className="custom-control-label text-white" htmlFor="dark-mode-toggle">Dark mode</label>
-          </div>
-          <ToggleSwitch toggleId="units" label="Units" />
-          <RadioButtonGroup radios={[`Celsius (°C)`, `Fahrenheit (°F)`]}/>
+          <ToggleSwitch toggleId="dark-mode-toggle" label="Dark mode" darkMode={appContext.darkMode} toggle={toggleDarkMode} />
+
+          <RadioButtonGroup
+            radios={unitArr}
+            updateUnit={appContext.updateUnit}
+            currentUnit={appContext.unit} />
 
 
         </div>

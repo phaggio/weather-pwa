@@ -1,10 +1,10 @@
 import React from 'react';
 
 const AppContext = React.createContext({
-  theme: String,
-  units: String,
-  updateTheme: () => undefined,
-  updateUnits: () => undefined
+  darkMode: Boolean,
+  unit: String,
+  updateDarkMode: () => undefined,
+  updateUnit: () => undefined
 });
 
 export default AppContext;
