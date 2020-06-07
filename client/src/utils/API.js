@@ -12,12 +12,12 @@ const currentWeatherByCity = ({ units, city, country }) => {
   }
 }
 
-const currentWeatherByCoord = ({ lat, lon }) => {
-  return axios.get(`${currentWeatherURL}lat=${lat}&lon=${lon}&units=imperial&appid=${key}`);
+const currentWeatherByCoord = ({ units, lat, lon }) => {
+  return axios.get(`${currentWeatherURL}lat=${lat}&lon=${lon}&units=${units ? units : ``}&appid=${key}`);
 }
 
-const oneCallWeatherByCoord = ({ lat, lon }) => {
-  return axios.get(`${oneCallWeatherURL}lat=${lat}&lon=${lon}&units=imperial&appid=${key}`);
+const oneCallWeatherByCoord = ({ units, lat, lon }) => {
+  return axios.get(`${oneCallWeatherURL}lat=${lat}&lon=${lon}&units=${units ? units : ``}&appid=${key}`);
 }
 
 export default {
