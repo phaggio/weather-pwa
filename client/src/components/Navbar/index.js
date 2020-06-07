@@ -3,7 +3,7 @@ import ToggleSwitch from '../ToggleSwitch';
 import RadioButtonGroup from '../RadioButtonGroup';
 import AppContext from '../../utils/AppContext';
 
-const unitArr = [`Fahrenheit (°F)`, `Celsius (°C)`];
+const unitArr = [{ label: `Fahrenheit (°F)`, units: `imperial` }, { label: `Celsius (°C)`, units: `metric` }];
 
 const Navbar = () => {
   const appContext = useContext(AppContext);

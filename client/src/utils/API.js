@@ -4,11 +4,11 @@ const currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?`;
 const oneCallWeatherURL = `https://api.openweathermap.org/data/2.5/onecall?`;
 const key = `786953f37f3a1158ba41f05aad533b5b`;
 
-const currentWeatherByCity = ({ city, country }) => {
+const currentWeatherByCity = ({ units, city, country }) => {
   if (country === `US`) {
-    return axios.get(`${currentWeatherURL}q=${city},,${country}&units=imperial&appid=${key}`)
+    return axios.get(`${currentWeatherURL}q=${city},,${country}&units=${units ? units : ``}&appid=${key}`)
   } else {
-    return axios.get(`${currentWeatherURL}q=${city},${country}&units=imperial&appid=${key}`)
+    return axios.get(`${currentWeatherURL}q=${city},${country}&units=${units ? units : ``}&appid=${key}`)
   }
 }
 

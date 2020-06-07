@@ -9,7 +9,7 @@ import Alert from './components/Alert';
 const App = () => {
   const [appState, setAppState] = useState({
     darkMode: false,
-    unit: `Fahrenheit (°F)`,
+    unit: `imperial`,
     updateDarkMode: darkMode => {
       setAppState({ ...appState, darkMode })
     },

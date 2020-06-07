@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Container, Col, Row } from '../../components/Grid';
 import SearchGroup from '../../components/SearchGroup';
 import { CountryDropdown } from '../../components/CountryDropdown';
@@ -6,6 +6,7 @@ import RecentCitiesDiv from '../../components/RecentCitiesDiv';
 import { CurrentWeatherDiv } from '../../components/CurrentWeatherDiv';
 import { HourlyForecastDiv } from '../../components/HourlyForecastDiv';
 import API from '../../utils/API';
+import AppContext from '../../utils/AppContext';
 import countryArr from '../../constant/countries.json';
 
 const Home = () => {
@@ -15,13 +16,14 @@ const Home = () => {
   const [showSearchButton, setShowSearchButton] = useState(false);
   const [currentWeather, setCurrentWeather] = useState();
   const [hourlyForecast, setHourlyForecast] = useState();
+  const appContext = useContext(AppContext);
 
   const localStorageKey = `recentCities`;
   const hourlyForecastNumber = 24;
 
   useEffect(() => {
     checkLocalStorage(`recentCities`);
-    API.currentWeatherByCity({ city: `Seattle`, country: `US` })
+    API.currentWeatherByCity({ units: appContext.unit, city: `Seattle`, country: `US` })
       .then(res => {
         setCurrentWeather(res.data);
         getForecastByCoord(res.data.coord);
@@ -82,7 +84,7 @@ const Home = () => {
 
   // api call functions
   const searchButtonPressed = () => {
-    API.currentWeatherByCity({ city: searchCity, country: selectedCountry })
+    API.currentWeatherByCity({ units: appContext.unit, city: searchCity, country: selectedCountry })
       .then(res => {
         console.log(res.data);
         setCurrentWeather(res.data);

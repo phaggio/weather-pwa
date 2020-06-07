@@ -10,15 +10,15 @@ const SearchGroup = props => {
           type="text"
           placeholder="city name"
           aria-label="Search"
-          onChange={props.onChange}
-          onKeyDown={props.keyPressed} />
+          onChange={event => props.onChange(event)}
+          onKeyDown={event => props.keyPressed(event)} />
         <div className="input-group-append">
           {props.showSearchButton ?
-            <button className="btn btn-primary btn-sm" type="search" onClick={props.searchButtonPressed}>
+            <button className="btn btn-primary btn-sm" type="search" onClick={() => props.searchButtonPressed()}>
               <i className="material-icons">search</i>
             </button>
             :
-            <button className="btn btn-success btn-sm" onClick={props.locateMeButtonPressed}>
+            <button className="btn btn-success btn-sm" onClick={() => props.locateMeButtonPressed()}>
               <i className="material-icons">location_searching</i>
             </button>
           }

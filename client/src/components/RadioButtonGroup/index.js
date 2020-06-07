@@ -8,12 +8,12 @@ const RadioButtonGroup = props => {
 
       {props.radios ? props.radios.map(radio => {
         return (
-          <div className="custom-control custom-radio" key={radio}>
-            <input type="radio" id={radio} name="customRadio"
-              checked={radio === props.currentUnit ? `checked` : ``}
+          <div className="custom-control custom-radio" key={radio.label}>
+            <input type="radio" id={radio.label} name="customRadio"
+              checked={radio.units === props.currentUnit ? `checked` : ``}
               className="custom-control-input"
-              onChange={() => props.updateUnit(radio)} />
-            <label className="custom-control-label text-white" htmlFor={radio}>{radio}</label>
+              onChange={() => props.updateUnit(radio.units)} />
+            <label className="custom-control-label text-white" htmlFor={radio.label}>{radio.label}</label>
           </div>
         )
       }) : ``}
