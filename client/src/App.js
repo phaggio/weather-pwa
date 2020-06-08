@@ -14,8 +14,11 @@ const App = () => {
     updateDarkMode: darkMode => {
       setAppState({ ...appState, darkMode })
     },
-    updateUnit: unitType => {
-      setAppState({ ...appState, unitType })
+    updateUnitType: (unitType, units) => {
+      setAppState({ ...appState, unitType, units })
+    },
+    updateUnits: units => {
+      setAppState({ ...appState, units })
     }
   });
 

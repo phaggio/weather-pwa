@@ -21,10 +21,10 @@ const Navbar = () => {
 
           <RadioButtonGroup
             radios={unitArr}
-            updateUnit={appContext.updateUnit}
+            updateUnitType={appContext.updateUnitType}
+            updateUnits={appContext.updateUnits}
             currentUnitType={appContext.unitType} />
-
-
+            
         </div>
       </div>
 

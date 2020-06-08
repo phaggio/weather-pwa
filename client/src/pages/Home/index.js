@@ -201,8 +201,8 @@ const Home = () => {
             removeCityButtonPressed={removeCityButtonPressed} />
         </Col>
         <Col size="sm-12 md-8 lg-9 xl-9">
-          {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} /> : ``}
-          {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} hours={hourlyForecastNumber} /> : ``}
+          {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} units={appContext.units} /> : ``}
+          {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} hours={hourlyForecastNumber} units={appContext.units} /> : ``}
         </Col>
         <Col size="sm-12">
 

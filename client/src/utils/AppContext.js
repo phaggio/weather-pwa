@@ -5,7 +5,8 @@ const AppContext = React.createContext({
   unitType: String,
   units: String,
   updateDarkMode: () => undefined,
-  updateUnit: () => undefined
+  updateUnitType: () => undefined,
+  updateUnits: () => undefined
 });
 
 export default AppContext;

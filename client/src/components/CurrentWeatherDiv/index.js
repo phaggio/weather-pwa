@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Moment from 'moment';
 import { Col, Row } from '../Grid';
 import countryArr from '../../constant/countries.json';
+import AppContext from '../../utils/AppContext';
 
 const CurrentWeatherDiv = props => {
   const currentCountryCode = props.currentWeather.sys.country;
   const currentCountryName = countryArr.find(country => country.code === currentCountryCode).name;
+
+  const appContext = useContext(AppContext);
   return (
     <Row>
       <Col size="8 sm-8 lg-9">
@@ -14,8 +17,8 @@ const CurrentWeatherDiv = props => {
         <p>Sunrise: {Moment.unix(props.currentWeather.sys.sunrise).format('h:mm A')}</p>
         <p>Sunset: {Moment.unix(props.currentWeather.sys.sunset).format('h:mm A')}</p>
         <p>Description: {props.currentWeather.weather[0].description}</p>
-        <p>Current temperature: {props.currentWeather.main.temp}</p>
-        <p>Feels like: {props.currentWeather.main.feels_like}</p>
+        <p>Current temperature: {props.currentWeather.main.temp}{appContext.units}</p>
+        <p>Feels like: {props.currentWeather.main.feels_like}{appContext.units}</p>
         <p>Humidity: {props.currentWeather.main.humidity}%</p>
         <p>Pressure: {props.currentWeather.main.pressure} hPa</p>
       </Col>
