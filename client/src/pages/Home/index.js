@@ -23,13 +23,12 @@ const Home = () => {
 
   useEffect(() => {
     checkLocalStorage(`recentCities`);
-    API.currentWeatherByCity({ units: appContext.unit, city: `Seattle`, country: `US` })
+    API.currentWeatherByCity({ units: appContext.unitType, city: `Seattle`, country: `US` })
       .then(res => {
         setCurrentWeather(res.data);
-        console.log(res.data.coord)
-        getForecastByCoord({ units: appContext.unit, lat: res.data.coord.lat, lon: res.data.coord.lon });
+        getForecastByCoord({ units: appContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon });
       })
-  }, []);
+  }, [appContext]);
 
   // local storage functions
   const checkLocalStorage = key => {
@@ -85,7 +84,7 @@ const Home = () => {
 
   // api call functions
   const searchButtonPressed = () => {
-    API.currentWeatherByCity({ units: appContext.unit, city: searchCity, country: selectedCountry })
+    API.currentWeatherByCity({ units: appContext.unitType, city: searchCity, country: selectedCountry })
       .then(res => {
         console.log(res.data);
         setCurrentWeather(res.data);
@@ -96,7 +95,7 @@ const Home = () => {
           lon: res.data.coord.lon,
           lat: res.data.coord.lat
         });
-        getForecastByCoord(...res.data.coord, { units: appContext.unit }); // another API call to get forecast data
+        getForecastByCoord(...res.data.coord, { units: appContext.unitType }); // another API call to get forecast data
       })
       .catch(err => {
         console.log(err)
@@ -122,7 +121,7 @@ const Home = () => {
   const locateMeButtonPressed = () => {
     const success = browserPosition => {
       API.currentWeatherByCoord({
-        units: appContext.unit,
+        units: appContext.unitType,
         lat: browserPosition.coords.latitude,
         lon: browserPosition.coords.longitude
       })
@@ -138,7 +137,7 @@ const Home = () => {
           });
         });
       getForecastByCoord({
-        units: appContext.unit,
+        units: appContext.unitType,
         lat: browserPosition.coords.latitude,
         lon: browserPosition.coords.longitude
       });
@@ -158,12 +157,12 @@ const Home = () => {
   };
 
   const recentCityButtonPressed = ({ lat, lon }) => {
-    API.currentWeatherByCoord({ units: appContext.unit, lat: lat, lon: lon })
+    API.currentWeatherByCoord({ units: appContext.unitType, lat: lat, lon: lon })
       .then(res => {
         setCurrentWeather(res.data);
         console.log(res);
       })
-    getForecastByCoord({ units: appContext.unit, lat: lat, lon: lon })
+    getForecastByCoord({ units: appContext.unitType, lat: lat, lon: lon })
   };
 
   const removeCityButtonPressed = key => {

@@ -1,0 +1,17 @@
+[
+  {
+    "label": "Fahrenheit (°F)",
+    "type": "imperial",
+    "unit": "°F"
+  },
+  {
+    "label": "Celsius (°C)",
+    "type": "metric",
+    "unit": "°C"
+  },
+  {
+    "label": "Kelvin (°K)",
+    "type": "",
+    "unit": "°K"
+  }
+]

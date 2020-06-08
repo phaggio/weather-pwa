@@ -2,7 +2,8 @@ import React from 'react';
 
 const AppContext = React.createContext({
   darkMode: Boolean,
-  unit: String,
+  unitType: String,
+  units: String,
   updateDarkMode: () => undefined,
   updateUnit: () => undefined
 });

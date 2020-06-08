@@ -10,9 +10,9 @@ const RadioButtonGroup = props => {
         return (
           <div className="custom-control custom-radio" key={radio.label}>
             <input type="radio" id={radio.label} name="customRadio"
-              checked={radio.units === props.currentUnit ? `checked` : ``}
+              checked={radio.type === props.currentUnitType ? `checked` : ``}
               className="custom-control-input"
-              onChange={() => props.updateUnit(radio.units)} />
+              onChange={() => props.updateUnit(radio.type)} />
             <label className="custom-control-label text-white" htmlFor={radio.label}>{radio.label}</label>
           </div>
         )

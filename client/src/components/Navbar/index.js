@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import ToggleSwitch from '../ToggleSwitch';
 import RadioButtonGroup from '../RadioButtonGroup';
 import AppContext from '../../utils/AppContext';
-
-const unitArr = [{ label: `Fahrenheit (°F)`, units: `imperial` }, { label: `Celsius (°C)`, units: `metric` }];
+import unitArr from '../../constant/units.json';
 
 const Navbar = () => {
   const appContext = useContext(AppContext);
@@ -23,7 +22,7 @@ const Navbar = () => {
           <RadioButtonGroup
             radios={unitArr}
             updateUnit={appContext.updateUnit}
-            currentUnit={appContext.unit} />
+            currentUnitType={appContext.unitType} />
 
 
         </div>
