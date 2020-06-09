@@ -26,7 +26,7 @@ const App = () => {
     <Router>
       <div>
         <AppContext.Provider value={appState}>
-          <Alert type="danger" children="Something is wrong!" />
+          {/* <Alert type="danger" children="Something is wrong!" /> */}
           <Navbar />
           <Route exact path="/" component={Home} />
         </AppContext.Provider>

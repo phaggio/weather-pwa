@@ -156,13 +156,13 @@ const Home = () => {
     }
   };
 
-  const recentCityButtonPressed = ({ lat, lon }) => {
-    API.currentWeatherByCoord({ units: appContext.unitType, lat: lat, lon: lon })
+  const recentCityButtonPressed = ({ city, country }) => {
+    API.currentWeatherByCity({ units: appContext.unitType, city: city, country: country })
       .then(res => {
         setCurrentWeather(res.data);
+        getForecastByCoord({ units: appContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon })
         console.log(res);
       })
-    getForecastByCoord({ units: appContext.unitType, lat: lat, lon: lon })
   };
 
   const removeCityButtonPressed = key => {
