@@ -29,6 +29,7 @@ const App = () => {
           {/* <Alert type="danger" children="Something is wrong!" /> */}
           <Navbar />
           <Route exact path="/" component={Home} />
+          <Route exact path="/weather-app" component={Home} />
         </AppContext.Provider>
       </div>
     </Router>
