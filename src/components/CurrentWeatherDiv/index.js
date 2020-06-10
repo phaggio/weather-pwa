@@ -53,7 +53,7 @@ const CurrentWeatherDiv = props => {
 
           <p>Humidity: {props.currentWeather.main.humidity}%</p>
           <p>Pressure: {Conversion.pascalToInchMercury(props.currentWeather.main.pressure)}</p>
-          <p>Wind: {props.currentWeather.wind.speed}</p>
+          <p>Wind: {props.currentWeather.wind.speed} {Conversion.returnSpeedUnit(appContext.unitType)}</p>
           <p>Feels like: {props.currentWeather.main.feels_like}{appContext.units}</p>
           <p>Direction: {Conversion.degreeToDirection(props.currentWeather.wind.deg)}</p>
         </Col>
