@@ -50,10 +50,10 @@ const CurrentWeatherDiv = props => {
 
       <hr />
       <Row>
-        <Col size="6 md-6">
+        <Col size="6 md-6 lg-5 xl-4">
           <div className="d-flex flex-column">
             <small className="text-left">HUMIDITY</small>
-            <div className="d-flex justify-content-end align-items-end">
+            <div className="d-flex justify-content-end justify-content-sm-center justify-content-lg-center align-items-end">
               <p className="display-4">{props.currentWeather.main.humidity}</p>
               <p>%</p>
             </div>
@@ -61,7 +61,7 @@ const CurrentWeatherDiv = props => {
 
           <div className="d-flex flex-column">
             <small className="text-left">WIND</small>
-            <div className="d-flex justify-content-end align-items-end">
+            <div className="d-flex justify-content-end justify-content-sm-center justify-content-lg-center align-items-end">
               <p className="display-4">{props.currentWeather.wind.speed}</p>
               <div className="d-flex flex-column justify-content-end">
                 <div>{Conversion.convertDirection(props.currentWeather.wind.deg, appContext.unitType)}</div>
@@ -69,11 +69,12 @@ const CurrentWeatherDiv = props => {
               </div>
             </div>
           </div>
+
         </Col>
-        <Col size="6 md-6">
+        <Col size="6 md-6 lg-5 xl-4">
           <div className="d-flex flex-column">
             <small className="text-left">PRESSURE</small>
-            <div className="d-flex justify-content-end align-items-end">
+            <div className="d-flex justify-content-end justify-content-sm-center justify-content-lg-center align-items-end">
               <p className="display-4 text-right">{Conversion.convertPressure(props.currentWeather.main.pressure, appContext.unitType)}</p>
               <p>{Conversion.returnPressureUnit(appContext.unitType)}</p>
             </div>
@@ -81,7 +82,7 @@ const CurrentWeatherDiv = props => {
 
           <div className="d-flex flex-column">
             <small className="text-left">FEELS LIKE</small>
-            <div className="d-flex justify-content-end align-items-end">
+            <div className="d-flex justify-content-end justify-content-sm-center justify-content-lg-center align-items-end">
               <p className="display-4">{props.currentWeather.main.feels_like}</p>
               <p>{appContext.units}</p>
             </div>
