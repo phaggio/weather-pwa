@@ -13,8 +13,6 @@ const Navbar = () => {
     <div className="">
       <div className="collapse" id="navbarToggleExternalContent">
         <div className="bg-dark p-4">
-          {/* <h5 className="text-black h4">Collapsed content</h5>
-          <span className="text-muted">Toggleable via the navbar brand.</span> */}
           <h4 className="text-white h4">Settings</h4>
 
           <ToggleSwitch toggleId="dark-mode-toggle" label="Dark mode" darkMode={appContext.darkMode} toggle={toggleDarkMode} />
@@ -24,7 +22,7 @@ const Navbar = () => {
             updateUnitType={appContext.updateUnitType}
             updateUnits={appContext.updateUnits}
             currentUnitType={appContext.unitType} />
-            
+
         </div>
       </div>
 

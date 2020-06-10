@@ -4,7 +4,7 @@ import propTypes from 'prop-types';
 const UnitRadioButtonGroup = props => {
   return (
     <div className="form-group">
-      <label className="text-white">Temperature Unit</label>
+      <label className="text-white">Unit</label>
 
       {props.radios ? props.radios.map(radio => {
         return (
