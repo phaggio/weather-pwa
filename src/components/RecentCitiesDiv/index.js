@@ -5,7 +5,7 @@ const RecentCitiesDiv = props => {
   const appContext = useContext(AppContext);
   return (
     <div className="d-flex flex-column btn-group mt-3">
-      <label>Recent cities:</label>
+      <label>Recent cities</label>
       <ul className="list-group w-100">
         <button className="btn btn-secondary w-100" onClick={() => console.log(appContext)}>console.log appContext</button>
         <button className="btn btn-danger w-100" onClick={props.consoleRecentCities}>console.log recentCities</button>

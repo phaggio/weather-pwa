@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import Moment from 'moment';
-import { Container, Col, Row } from '../Grid';
+import { Col, Row } from '../Grid';
 import countryArr from '../../constant/countries.json';
 import AppContext from '../../utils/AppContext';
+import * as Conversion from '../../utils/Conversion';
 
 const CurrentWeatherDiv = props => {
   const currentCountryCode = props.currentWeather.sys.country;
@@ -27,7 +28,7 @@ const CurrentWeatherDiv = props => {
               <p className="font-italic my-0">{props.currentWeather.weather[0].description} in</p>
             </div>
             <div className="d-flex flex-row justify-content-center justify-content-md-start align-items-end">
-              <h2 className="display-4 mr-2">{props.currentWeather.name}</h2>
+              <h2 className="display-4 mr-2 text-center text-md-left">{props.currentWeather.name}</h2>
               <small className="mb-2">{currentCountryName}</small>
             </div>
           </div>
@@ -49,12 +50,15 @@ const CurrentWeatherDiv = props => {
 
       <Row>
         <Col size="12 md-6">
-          <p>Feels like: {props.currentWeather.main.feels_like}{appContext.units}</p>
+
           <p>Humidity: {props.currentWeather.main.humidity}%</p>
-          <p>Pressure: {props.currentWeather.main.pressure} hPa</p>
+          <p>Pressure: {Conversion.pascalToInchMercury(props.currentWeather.main.pressure)}</p>
+          <p>Wind: {props.currentWeather.wind.speed}</p>
+          <p>Feels like: {props.currentWeather.main.feels_like}{appContext.units}</p>
+          <p>Direction: {Conversion.degreeToDirection(props.currentWeather.wind.deg)}</p>
         </Col>
         <Col size="12 md-6">
-          
+
         </Col>
       </Row>
     </div>
