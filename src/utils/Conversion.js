@@ -20,11 +20,13 @@ const convertDirection = (degree, newUnitType) => {
 const returnSpeedUnit = type => type === `imperial` ? `mph` : `m/s`;
 const returnPressureUnit = type => type === `imperial` ? `inHg` : `hPa`;
 const returnDegreeUnit = type => type === `` ? `°` : ``;
+const returnRoundedTemperature = temperature => parseInt(temperature) ? parseInt(temperature).toFixed() : undefined;
 
 export {
   convertPressure,
   convertDirection,
   returnSpeedUnit,
   returnPressureUnit,
-  returnDegreeUnit
+  returnDegreeUnit,
+  returnRoundedTemperature
 }

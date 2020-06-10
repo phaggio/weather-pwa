@@ -181,7 +181,7 @@ const Home = () => {
   const consoleSearchCity = () => console.log(searchCity);
 
   return (
-    <Container fluid="true">
+    <Container fluid="">
       <Row>
         <Col size="sm-12 md-4 lg-3 xl-3">
           <SearchGroup

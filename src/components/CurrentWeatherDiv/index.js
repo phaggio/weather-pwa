@@ -16,9 +16,9 @@ const CurrentWeatherDiv = props => {
         <Col size="12 md-5 lg-6">
           <div className="h-100 d-flex flex-row justify-content-center justify-content-md-end align-items-center">
             <img className="mw-100" src={require(`../../assets/${props.currentWeather.weather[0].icon}@2x.png`)} alt="weather icon" />
-            <div className="d-flex">
+            <div className="d-flex align-items-end">
               <h1 className="display-3">{Math.round(parseInt(props.currentWeather.main.temp))}</h1>
-              <p className="mt-3">{appContext.units}</p>
+              <p className="mb-2">{appContext.units}</p>
             </div>
           </div>
         </Col>
@@ -83,7 +83,7 @@ const CurrentWeatherDiv = props => {
           <div className="d-flex flex-column">
             <small className="text-left">FEELS LIKE</small>
             <div className="d-flex justify-content-end justify-content-sm-center justify-content-lg-center align-items-end">
-              <p className="display-4">{props.currentWeather.main.feels_like}</p>
+              <p className="display-4">{Conversion.returnRoundedTemperature(props.currentWeather.main.feels_like)}</p>
               <p>{appContext.units}</p>
             </div>
           </div>
