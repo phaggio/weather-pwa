@@ -1,5 +1,6 @@
 {
   "name": "simple-weather",
+  "homepage": "https://phaggio.github.io/simple-weather/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

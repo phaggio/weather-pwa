@@ -26,7 +26,7 @@ const App = () => {
         <AppContext.Provider value={appState}>
           <Navbar />
           <Route exact path="/" component={Home} />
-          <Route exact path="/weather-app" component={Home} />
+          <Route exact path="/simple-weather" component={Home} />
         </AppContext.Provider>
       </div>
     </Router>
