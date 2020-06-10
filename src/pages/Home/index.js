@@ -8,6 +8,7 @@ import { HourlyForecastDiv } from '../../components/HourlyForecastDiv';
 import API from '../../utils/API';
 import AppContext from '../../utils/AppContext';
 import countryArr from '../../constant/countries.json';
+import DebugTool from '../../components/DebugTool';
 
 const Home = () => {
   const [searchCity, setSearchCity] = useState();
@@ -195,10 +196,11 @@ const Home = () => {
           <RecentCitiesDiv
             recentCities={recentCities}
             recentCityButtonPressed={recentCityButtonPressed}
+            removeCityButtonPressed={removeCityButtonPressed} />
+          <DebugTool
             consoleRecentCities={consoleRecentCities}
             consoleSearchCity={consoleSearchCity}
-            consoleSelectedCountry={consoleSelectedCountry}
-            removeCityButtonPressed={removeCityButtonPressed} />
+            consoleSelectedCountry={consoleSelectedCountry} />
         </Col>
         <Col size="sm-12 md-8 lg-9 xl-9">
           {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} units={appContext.units} /> : ``}
