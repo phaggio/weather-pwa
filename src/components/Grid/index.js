@@ -22,13 +22,15 @@ Row.propTypes = {
 	children: PropTypes.node
 };
 
-const Col = ({ size, children }) => {
+const Col = ({ size, className, children }) => {
 	return (
 		<div
-			className={size
+			className={`${size
 				.split(` `)
 				.map(size => `col-${size}`)
 				.join(` `)}
+				${className}`
+			}
 		>
 			{children}
 		</div>
