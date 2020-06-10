@@ -34,6 +34,7 @@ const CurrentWeatherDiv = props => {
           </div>
         </Col>
       </Row>
+
       <hr />
       <Row>
         <Col size="12 md-4">
@@ -46,8 +47,8 @@ const CurrentWeatherDiv = props => {
           <p className="text-center text-md-left">Sunset: {Moment.unix(props.currentWeather.sys.sunset).format('h:mm A')}</p>
         </Col>
       </Row>
-      <hr />
 
+      <hr />
       <Row>
         <Col size="12 md-6">
 
@@ -55,7 +56,7 @@ const CurrentWeatherDiv = props => {
           <p>Pressure: {Conversion.pascalToInchMercury(props.currentWeather.main.pressure)}</p>
           <p>Wind: {props.currentWeather.wind.speed} {Conversion.returnSpeedUnit(appContext.unitType)}</p>
           <p>Feels like: {props.currentWeather.main.feels_like}{appContext.units}</p>
-          <p>Direction: {Conversion.degreeToDirection(props.currentWeather.wind.deg)}</p>
+          <p>Direction: {Conversion.degreeToDirection(props.currentWeather.wind.deg)}{Conversion.returnDegreeUnit(appContext.unitType)}</p>
         </Col>
         <Col size="12 md-6">
 

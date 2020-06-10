@@ -1,17 +1,20 @@
 [
   {
-    "label": "Fahrenheit (°F)",
+    "label": "Fahrenheit",
     "type": "imperial",
-    "unit": "°F"
+    "unit": "°F",
+    "description": "(°F, mph, inHg, compass direction)"
   },
   {
-    "label": "Celsius (°C)",
+    "label": "Celsius",
     "type": "metric",
-    "unit": "°C"
+    "unit": "°C",
+    "description": "(°C, m/s, hPa, compass direction)"
   },
   {
-    "label": "Kelvin (°K)",
+    "label": "Kelvin",
     "type": "",
-    "unit": "°K"
+    "unit": "°K",
+    "description": "(°K, m/s, hPa, degree)"
   }
 ]

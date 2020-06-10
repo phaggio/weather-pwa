@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import ToggleSwitch from '../ToggleSwitch';
-import RadioButtonGroup from '../RadioButtonGroup';
+import UnitRadioButtonGroup from '../UnitRadioButtonGroup';
 import AppContext from '../../utils/AppContext';
 import unitArr from '../../constant/units.json';
 
@@ -19,7 +19,7 @@ const Navbar = () => {
 
           <ToggleSwitch toggleId="dark-mode-toggle" label="Dark mode" darkMode={appContext.darkMode} toggle={toggleDarkMode} />
 
-          <RadioButtonGroup
+          <UnitRadioButtonGroup
             radios={unitArr}
             updateUnitType={appContext.updateUnitType}
             updateUnits={appContext.updateUnits}
