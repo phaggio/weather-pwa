@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Moment from 'moment';
 import AppContext from '../../utils/AppContext';
-
+import * as Conversion from '../../utils/Conversion';
 
 const hourlyForecastStyle = {
   overflowX: 'auto'
@@ -22,7 +22,7 @@ const HourlyForecastDiv = props => {
           <div className="d-flex flex-column border align-items-center" key={hour.dt} style={hourStyle}>
             <img className="border border-danger" size="w-100" src={require(`../../assets/${hour.weather[0].icon}@2x.png`)} alt="weather icon" />
             <div>{Moment.unix(hour.dt).format(`h A`)}</div>
-            <div>{hour.temp}{appContext.units}</div>
+            <div>{Conversion.returnRoundedTemperature(hour.temp)}{appContext.units}</div>
           </div>
         )
       })}
