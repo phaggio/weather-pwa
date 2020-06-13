@@ -1,24 +1,26 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import AppContext from './utils/AppContext';
+import DarkModeContext from './utils/DarkModeContext';
+import UnitContext from './utils/UnitContext';
 import ThemeContext from './utils/ThemeContext';
 
 const App = () => {
 
-  const [appState, setAppState] = useState({
+  const [darkModeState, setDarkModeState] = useState({
     darkMode: false,
+    toggleDarkMode: (bool) => setDarkModeState({ ...darkModeState, darkMode: bool })
+  });
+
+  const [unitState, setUnitState] = useState({
     unitType: `imperial`,
     units: `°F`,
-    updateDarkMode: darkMode => {
-      setAppState({ ...appState, darkMode })
-    },
     updateUnitType: (unitType, units) => {
-      setAppState({ ...appState, unitType, units })
+      setUnitState({ ...unitState, unitType, units })
     },
     updateUnits: units => {
-      setAppState({ ...appState, units })
+      setUnitState({ ...unitState, units })
     }
   });
 
@@ -26,7 +28,7 @@ const App = () => {
     backgroundColor: `light`,
     textColor: `black`,
     borderColor: `dark`,
-    darkMode: bool => {
+    updateTheme: bool => {
       if (bool) {
         setThemeState({ ...themeState, backgroundColor: `dark`, textColor: `white`, borderColor: `light` })
       } else {
@@ -37,15 +39,17 @@ const App = () => {
 
   return (
     <Router>
-      <AppContext.Provider value={appState}>
-        <ThemeContext.Provider value={themeState}>
-          <div>
-            <Navbar />
-            <Route exact path="/" component={Home} />
-            <Route exact path="/simple-weather" component={Home} />
-          </div>
-        </ThemeContext.Provider>
-      </AppContext.Provider>
+      <UnitContext.Provider value={unitState}>
+        <DarkModeContext.Provider value={darkModeState}>
+          <ThemeContext.Provider value={themeState}>
+            <div>
+              <Navbar />
+              <Route exact path="/" component={Home} />
+              <Route exact path="/simple-weather" component={Home} />
+            </div>
+          </ThemeContext.Provider>
+        </DarkModeContext.Provider>
+      </UnitContext.Provider>
     </Router>
   )
 }

@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import ThemeContext from '../../utils/ThemeContext';
 
 const UnitRadioButtonGroup = props => {
-  
+
   const themeContext = useContext(ThemeContext);
 
   return (
@@ -14,7 +14,7 @@ const UnitRadioButtonGroup = props => {
         return (
           <div className="custom-control custom-radio" key={radio.label}>
             <input type="radio" id={radio.label} name="customRadio"
-              checked={radio.type === props.currentUnitType ? `checked` : ``}
+              checked={radio.type === props.currentUnitType ? true : false}
               className="custom-control-input"
               onChange={() => props.updateUnitType(radio.type, radio.unit)} />
             <label className={`custom-control-label text-${themeContext.textColor}`} htmlFor={radio.label}>{radio.label}</label>

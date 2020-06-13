@@ -6,7 +6,7 @@ import RecentCitiesDiv from '../../components/RecentCitiesDiv';
 import { CurrentWeatherDiv } from '../../components/CurrentWeatherDiv';
 import { HourlyForecastDiv } from '../../components/HourlyForecastDiv';
 import API from '../../utils/API';
-import AppContext from '../../utils/AppContext';
+import UnitContext from '../../utils/UnitContext';
 import countryArr from '../../constant/countries.json';
 import DebugTool from '../../components/DebugTool';
 import ThemeContext from '../../utils/ThemeContext';
@@ -18,7 +18,8 @@ const Home = () => {
   const [showSearchButton, setShowSearchButton] = useState(false);
   const [currentWeather, setCurrentWeather] = useState();
   const [hourlyForecast, setHourlyForecast] = useState();
-  const appContext = useContext(AppContext);
+
+  const unitContext = useContext(UnitContext);
   const themeContext = useContext(ThemeContext);
 
   const localStorageKey = `recentCities`;
@@ -26,12 +27,12 @@ const Home = () => {
 
   useEffect(() => {
     checkLocalStorage(`recentCities`);
-    API.currentWeatherByCity({ units: appContext.unitType, city: `Seattle`, country: `US` })
+    API.currentWeatherByCity({ units: unitContext.unitType, city: `Seattle`, country: `US` })
       .then(res => {
         setCurrentWeather(res.data);
-        getForecastByCoord({ units: appContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon });
+        getForecastByCoord({ units: unitContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon });
       })
-  }, [appContext]);
+  }, [unitContext]);
 
   // local storage functions
   const checkLocalStorage = key => setRecentCities(JSON.parse(localStorage.getItem(key)) ? JSON.parse(localStorage.getItem(key)) : []);
@@ -77,7 +78,7 @@ const Home = () => {
 
   // api call functions
   const searchButtonPressed = () => {
-    API.currentWeatherByCity({ units: appContext.unitType, city: searchCity, country: selectedCountry })
+    API.currentWeatherByCity({ units: unitContext.unitType, city: searchCity, country: selectedCountry })
       .then(res => {
         console.log(res.data);
         setCurrentWeather(res.data);
@@ -88,7 +89,7 @@ const Home = () => {
           lon: res.data.coord.lon,
           lat: res.data.coord.lat
         });
-        getForecastByCoord(...res.data.coord, { units: appContext.unitType }); // another API call to get forecast data
+        getForecastByCoord(...res.data.coord, { units: unitContext.unitType }); // another API call to get forecast data
       })
       .catch(err => {
         console.log(err)
@@ -114,7 +115,7 @@ const Home = () => {
   const locateMeButtonPressed = () => {
     const success = browserPosition => {
       API.currentWeatherByCoord({
-        units: appContext.unitType,
+        units: unitContext.unitType,
         lat: browserPosition.coords.latitude,
         lon: browserPosition.coords.longitude
       })
@@ -130,7 +131,7 @@ const Home = () => {
           });
         });
       getForecastByCoord({
-        units: appContext.unitType,
+        units: unitContext.unitType,
         lat: browserPosition.coords.latitude,
         lon: browserPosition.coords.longitude
       });
@@ -150,10 +151,10 @@ const Home = () => {
   };
 
   const recentCityButtonPressed = ({ city, country }) => {
-    API.currentWeatherByCity({ units: appContext.unitType, city: city, country: country })
+    API.currentWeatherByCity({ units: unitContext.unitType, city: city, country: country })
       .then(res => {
         setCurrentWeather(res.data);
-        getForecastByCoord({ units: appContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon })
+        getForecastByCoord({ units: unitContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon })
         console.log(res);
       })
   };
@@ -196,8 +197,8 @@ const Home = () => {
               consoleSelectedCountry={consoleSelectedCountry} />
           </Col>
           <Col size="sm-12 md-8 lg-9 xl-9">
-            {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} units={appContext.units} /> : ``}
-            {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} hours={hourlyForecastNumber} units={appContext.units} /> : ``}
+            {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} units={unitContext.units} /> : ``}
+            {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} hours={hourlyForecastNumber} units={unitContext.units} /> : ``}
           </Col>
           <Col size="sm-12">
 
