@@ -7,8 +7,10 @@ const RecentCitiesDiv = props => {
 
   return (
     <div className={`d-flex flex-column btn-group mt-3`}>
+
       <label className={`text-${themeContext.textColor}`}>Recent cities</label>
       <ul className={`list-group w-100 border border-${themeContext.borderColor}`}>
+
         {props.recentCities.map(city => {
           return (
             <div className="btn-group rounded" key={city.key}>
@@ -25,7 +27,9 @@ const RecentCitiesDiv = props => {
             </div>
           )
         })}
+
       </ul>
+
     </div>
   )
 };

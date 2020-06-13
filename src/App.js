@@ -18,9 +18,6 @@ const App = () => {
     units: `°F`,
     updateUnitType: (unitType, units) => {
       setUnitState({ ...unitState, unitType, units })
-    },
-    updateUnits: units => {
-      setUnitState({ ...unitState, units })
     }
   });
 
@@ -28,7 +25,7 @@ const App = () => {
     backgroundColor: `light`,
     textColor: `black`,
     borderColor: `dark`,
-    updateTheme: bool => {
+    updateTheme: (bool) => {
       if (bool) {
         setThemeState({ ...themeState, backgroundColor: `dark`, textColor: `white`, borderColor: `light` })
       } else {

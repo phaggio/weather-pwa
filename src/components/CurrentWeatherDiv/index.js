@@ -7,14 +7,15 @@ import ThemeContext from '../../utils/ThemeContext';
 import * as Conversion from '../../utils/Conversion';
 
 const CurrentWeatherDiv = props => {
-  const currentCountryCode = props.currentWeather.sys.country;
+  console.log(`rendering CurrentWeatherDiv`)
+  const currentCountryCode = props.currentWeather.sys.country ? props.currentWeather.sys.country : ``;
   const currentCountryName = countryArr.find(country => country.code === currentCountryCode).name;
 
   const unitContext = useContext(UnitContext);
   const themeContext = useContext(ThemeContext);
 
   return (
-    <div>
+    <div className={`bg-${themeContext.backgroundColor}`}>
       <Row>
         <Col size="12 md-5 lg-6">
           <div className="h-100 d-flex flex-row justify-content-center justify-content-md-end align-items-center">
@@ -38,8 +39,13 @@ const CurrentWeatherDiv = props => {
         </Col>
       </Row>
 
-      <hr className={`bg-light`} />
-      <Row>
+      <Row className={`bg-${themeContext.backgroundColor}`}>
+        <Col size="12">
+          <hr className={`bg-light`} />
+        </Col>
+      </Row>
+
+      <Row className={`bg-${themeContext.backgroundColor}`}>
         <Col size="12 md-4">
           <p className={`text-center text-md-left text-${themeContext.textColor}`}>Now: {Moment.unix(props.currentWeather.dt).format('h:mm A')}</p>
         </Col>
@@ -51,9 +57,14 @@ const CurrentWeatherDiv = props => {
         </Col>
       </Row>
 
-      <hr className={`bg-light`}/>
-      <Row>
-        <Col size="6 md-6 lg-5 xl-4">
+      <Row className={`bg-${themeContext.backgroundColor}`}>
+        <Col size="12">
+          <hr className={`bg-light`} />
+        </Col>
+      </Row>
+
+      <Row className={`bg-${themeContext.backgroundColor}`}>
+        <Col size="6 md-6 lg-5 xl-4" className={`bg-${themeContext.backgroundColor}`}>
           <div className="d-flex flex-column">
             <small className={`text-left text-${themeContext.textColor}`}>HUMIDITY</small>
             <div className="d-flex justify-content-end justify-content-sm-center justify-content-lg-center align-items-end">
@@ -61,7 +72,6 @@ const CurrentWeatherDiv = props => {
               <p className={`text-${themeContext.textColor}`}>%</p>
             </div>
           </div>
-
           <div className="d-flex flex-column">
             <small className={`text-left text-${themeContext.textColor}`}>WIND</small>
             <div className="d-flex justify-content-end justify-content-sm-center justify-content-lg-center align-items-end">
@@ -72,7 +82,6 @@ const CurrentWeatherDiv = props => {
               </div>
             </div>
           </div>
-
         </Col>
         <Col size="6 md-6 lg-5 xl-4">
           <div className="d-flex flex-column">
@@ -82,7 +91,6 @@ const CurrentWeatherDiv = props => {
               <p className={`text-${themeContext.textColor}`}>{Conversion.returnPressureUnit(unitContext.unitType)}</p>
             </div>
           </div>
-
           <div className="d-flex flex-column">
             <small className={`text-left text-${themeContext.textColor}`}>FEELS LIKE</small>
             <div className="d-flex justify-content-end justify-content-sm-center justify-content-lg-center align-items-end">
@@ -90,6 +98,12 @@ const CurrentWeatherDiv = props => {
               <p className={`text-${themeContext.textColor}`}>{unitContext.units}</p>
             </div>
           </div>
+        </Col>
+      </Row>
+
+      <Row className={`bg-${themeContext.backgroundColor}`}>
+        <Col size="12">
+          <hr className={`bg-light`} />
         </Col>
       </Row>
     </div>

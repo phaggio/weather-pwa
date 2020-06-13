@@ -4,7 +4,7 @@ const ThemeContext = React.createContext({
   backgroundColor: String,
   textColor: String,
   borderColor: String,
-  toggleDarkMode: () => undefined
+  updateTheme: () => undefined
 });
 
 export default ThemeContext;

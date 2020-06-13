@@ -3,8 +3,7 @@ import React from 'react';
 const UnitContext = React.createContext({
   unitType: String,
   units: String,
-  updateUnitType: () => undefined,
-  updateUnits: () => undefined
+  updateUnitType: () => undefined
 });
 
 export default UnitContext;

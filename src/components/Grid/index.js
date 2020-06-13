@@ -9,9 +9,9 @@ Container.propTypes = {
 	fluid: PropTypes.string
 };
 
-const Row = ({ fluid, cols, children }) => {
+const Row = ({ fluid, cols, className, children }) => {
 	return (
-		<div className={`row${fluid ? `-fluid` : ``} ${cols ? `row-cols-${cols}` : ``}`} >
+		<div className={`row${fluid ? `-fluid` : ``} ${cols ? `row-cols-${cols}` : ``} ${className}`} >
 			{children}
 		</div>
 	);

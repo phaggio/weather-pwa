@@ -174,8 +174,8 @@ const Home = () => {
   const consoleSearchCity = () => console.log(searchCity);
 
   return (
-    <div className={`vw-100 vh-100 bg-${themeContext.backgroundColor}`}>
-      <Container fluid="">
+    <div className={`vh-100 bg-${themeContext.backgroundColor}`}>
+      <Container fluid="" className="vh-100 vw-100">
         <Row>
           <Col size="sm-12 md-4 lg-3 xl-3">
             <SearchGroup
@@ -197,6 +197,7 @@ const Home = () => {
               consoleSelectedCountry={consoleSelectedCountry} />
           </Col>
           <Col size="sm-12 md-8 lg-9 xl-9">
+            {/* CurrentWeatherDiv is added after page load, so it is outside of html space */}
             {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} units={unitContext.units} /> : ``}
             {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} hours={hourlyForecastNumber} units={unitContext.units} /> : ``}
           </Col>
