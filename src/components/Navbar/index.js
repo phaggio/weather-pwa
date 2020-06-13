@@ -2,7 +2,9 @@ import React, { useContext } from 'react';
 import ToggleSwitch from '../ToggleSwitch';
 import UnitRadioButtonGroup from '../UnitRadioButtonGroup';
 import AppContext from '../../utils/AppContext';
+import ThemeContext from '../../utils/ThemeContext';
 import unitArr from '../../constant/units.json';
+
 
 const Navbar = () => {
   const appContext = useContext(AppContext);

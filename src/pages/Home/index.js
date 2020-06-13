@@ -32,22 +32,14 @@ const Home = () => {
   }, [appContext]);
 
   // local storage functions
-  const checkLocalStorage = key => {
-    let storedData = JSON.parse(localStorage.getItem(key));
-    setRecentCities(storedData ? storedData : []);
-  };
-
-  const saveLocalStorage = (key, data) => {
-    localStorage.setItem(key, JSON.stringify(data));
-  };
+  const checkLocalStorage = key => setRecentCities(JSON.parse(localStorage.getItem(key)) ? JSON.parse(localStorage.getItem(key)) : []);
+  const saveLocalStorage = (key, data) => localStorage.setItem(key, JSON.stringify(data));
 
 
   // state functions
   const updateSearchCityState = event => {
     const city = event.target.value.trim();
-    if (city.length > 0) {
-      setSearchCity(city);
-    }
+    if (city.length > 0) { setSearchCity(city) };
     validateSearchCity(city);
   };
 
@@ -57,9 +49,7 @@ const Home = () => {
     setSelectedCountry(country);
   };
 
-  const validateSearchCity = input => {
-    (input.trim()) ? setShowSearchButton(true) : setShowSearchButton(false);
-  }
+  const validateSearchCity = input => (input.trim()) ? setShowSearchButton(true) : setShowSearchButton(false);
 
   const updateRecentCities = newCityObj => {
     const existingCity = recentCities.find(city => {
@@ -175,7 +165,7 @@ const Home = () => {
     setRecentCities(tempArr)
   }
 
-  // dev logs
+  // dev log functions
   const consoleRecentCities = () => console.log(recentCities);
   const consoleSelectedCountry = () => console.log(selectedCountry);
   const consoleSearchCity = () => console.log(searchCity);
