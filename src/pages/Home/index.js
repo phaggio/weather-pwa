@@ -187,10 +187,15 @@ const Home = () => {
             <CountryDropdown
               countryArr={countryArr}
               onChange={updateSelectedCountryState} />
+            {recentCities.length > 0 ? 
             <RecentCitiesDiv
               recentCities={recentCities}
               recentCityButtonPressed={recentCityButtonPressed}
               removeCityButtonPressed={removeCityButtonPressed} />
+              :
+              ``
+            }
+            
             <DebugTool
               consoleRecentCities={consoleRecentCities}
               consoleSearchCity={consoleSearchCity}
