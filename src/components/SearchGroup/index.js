@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import ThemeContext from '../../utils/ThemeContext';
 
 const SearchGroup = props => {
+  const themeContext = useContext(ThemeContext);
+
   return (
-    <div>
-      <label>Search a city:</label>
+    <div className={`bg-${themeContext.backgroundColor}`}>
+      <label className={`text-${themeContext.textColor}`}>Search a city:</label>
       <div className="input-group">
         <input className="form-control"
           id="search-input"

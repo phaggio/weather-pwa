@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import ThemeContext from '../../utils/ThemeContext';
 
 const CountryDropdown = props => {
+  const themeContext = useContext(ThemeContext);
+
   return (
-    <div className="input-group">
+    <div className={`input-group bg-${themeContext.backgroundColor}`}>
       <div className="input-group">
         <select className="custom-select" onChange={props.onChange}>
           <option key="default" value="us">Select a country</option>
@@ -11,7 +14,7 @@ const CountryDropdown = props => {
           })}
         </select>
       </div>
-      <small className="ml-1">Default country: US</small>
+      <small className={`ml-1 text-${themeContext.textColor}`}>Default country: US</small>
     </div>
   );
 }
