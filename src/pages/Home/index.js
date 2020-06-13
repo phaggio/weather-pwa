@@ -195,17 +195,18 @@ const Home = () => {
               :
               ``
             }
-            
             <DebugTool
               consoleRecentCities={consoleRecentCities}
               consoleSearchCity={consoleSearchCity}
               consoleSelectedCountry={consoleSelectedCountry} />
           </Col>
+
           <Col size="sm-12 md-8 lg-9 xl-9">
             {/* CurrentWeatherDiv is added after page load, so it is outside of html space */}
             {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} units={unitContext.units} /> : ``}
             {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} hours={hourlyForecastNumber} units={unitContext.units} /> : ``}
           </Col>
+          
           <Col size="sm-12">
 
           </Col>

@@ -15,8 +15,8 @@ const CurrentWeatherDiv = props => {
   const themeContext = useContext(ThemeContext);
 
   return (
-    <div className={`bg-${themeContext.backgroundColor}`}>
-      <Row>
+    <div>
+      <Row className={`bg-${themeContext.backgroundColor}`}>
         <Col size="12 md-5 lg-6">
           <div className="h-100 d-flex flex-row justify-content-center justify-content-md-end align-items-center">
             <img className="mw-100" src={require(`../../assets/${props.currentWeather.weather[0].icon}@2x.png`)} alt="weather icon" />
