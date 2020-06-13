@@ -9,6 +9,7 @@ import API from '../../utils/API';
 import AppContext from '../../utils/AppContext';
 import countryArr from '../../constant/countries.json';
 import DebugTool from '../../components/DebugTool';
+import ThemeContext from '../../utils/ThemeContext';
 
 const Home = () => {
   const [searchCity, setSearchCity] = useState();
@@ -18,6 +19,7 @@ const Home = () => {
   const [currentWeather, setCurrentWeather] = useState();
   const [hourlyForecast, setHourlyForecast] = useState();
   const appContext = useContext(AppContext);
+  const themeContext = useContext(ThemeContext);
 
   const localStorageKey = `recentCities`;
   const hourlyForecastNumber = 24;
@@ -169,6 +171,7 @@ const Home = () => {
   const consoleRecentCities = () => console.log(recentCities);
   const consoleSelectedCountry = () => console.log(selectedCountry);
   const consoleSearchCity = () => console.log(searchCity);
+  
 
   return (
     <Container fluid="">

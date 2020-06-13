@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import propTypes from 'prop-types';
+import ThemeContext from '../../utils/ThemeContext';
 
 const UnitRadioButtonGroup = props => {
+  const themeContext = useContext(ThemeContext);
   return (
     <div className="form-group">
-      <label className="text-white">Unit</label>
+      <label className={`text-${themeContext.textColor}`}>Unit</label>
 
       {props.radios ? props.radios.map(radio => {
         return (
@@ -13,8 +15,8 @@ const UnitRadioButtonGroup = props => {
               checked={radio.type === props.currentUnitType ? `checked` : ``}
               className="custom-control-input"
               onChange={() => props.updateUnitType(radio.type, radio.unit)} />
-            <label className="custom-control-label text-white" htmlFor={radio.label}>{radio.label}</label>
-            <small className="ml-2 font-italic text-white" htmlFor={radio.label}>{radio.description}</small>
+            <label className={`custom-control-label text-${themeContext.textColor}`} htmlFor={radio.label}>{radio.label}</label>
+            <small className={`ml-2 font-italic text-${themeContext.textColor}`} htmlFor={radio.label}>{radio.description}</small>
           </div>
         )
       }) : ``}

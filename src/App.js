@@ -27,9 +27,9 @@ const App = () => {
     textColor: `black`,
     darkMode: bool => {
       if (bool) {
-        setThemeState({ backgroundColor: `dark`, textColor: `white` })
+        setThemeState({ ...themeState, backgroundColor: `dark`, textColor: `white` })
       } else {
-        setThemeState({ backgroundColor: `light`, textColor: `black` })
+        setThemeState({ ...themeState, backgroundColor: `light`, textColor: `black` })
       }
     }
   })
