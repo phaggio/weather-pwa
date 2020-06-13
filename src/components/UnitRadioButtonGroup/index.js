@@ -3,7 +3,9 @@ import propTypes from 'prop-types';
 import ThemeContext from '../../utils/ThemeContext';
 
 const UnitRadioButtonGroup = props => {
+  
   const themeContext = useContext(ThemeContext);
+
   return (
     <div className="form-group">
       <label className={`text-${themeContext.textColor}`}>Unit</label>

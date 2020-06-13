@@ -171,39 +171,40 @@ const Home = () => {
   const consoleRecentCities = () => console.log(recentCities);
   const consoleSelectedCountry = () => console.log(selectedCountry);
   const consoleSearchCity = () => console.log(searchCity);
-  
 
   return (
-    <Container fluid="">
-      <Row>
-        <Col size="sm-12 md-4 lg-3 xl-3">
-          <SearchGroup
-            onChange={updateSearchCityState}
-            keyPressed={keyPressed}
-            showSearchButton={showSearchButton}
-            locateMeButtonPressed={locateMeButtonPressed}
-            searchButtonPressed={searchButtonPressed} />
-          <CountryDropdown
-            countryArr={countryArr}
-            onChange={updateSelectedCountryState} />
-          <RecentCitiesDiv
-            recentCities={recentCities}
-            recentCityButtonPressed={recentCityButtonPressed}
-            removeCityButtonPressed={removeCityButtonPressed} />
-          <DebugTool
-            consoleRecentCities={consoleRecentCities}
-            consoleSearchCity={consoleSearchCity}
-            consoleSelectedCountry={consoleSelectedCountry} />
-        </Col>
-        <Col size="sm-12 md-8 lg-9 xl-9">
-          {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} units={appContext.units} /> : ``}
-          {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} hours={hourlyForecastNumber} units={appContext.units} /> : ``}
-        </Col>
-        <Col size="sm-12">
+    <div className={`vw-100 vh-100 bg-${themeContext.backgroundColor}`}>
+      <Container fluid="">
+        <Row>
+          <Col size="sm-12 md-4 lg-3 xl-3">
+            <SearchGroup
+              onChange={updateSearchCityState}
+              keyPressed={keyPressed}
+              showSearchButton={showSearchButton}
+              locateMeButtonPressed={locateMeButtonPressed}
+              searchButtonPressed={searchButtonPressed} />
+            <CountryDropdown
+              countryArr={countryArr}
+              onChange={updateSelectedCountryState} />
+            <RecentCitiesDiv
+              recentCities={recentCities}
+              recentCityButtonPressed={recentCityButtonPressed}
+              removeCityButtonPressed={removeCityButtonPressed} />
+            <DebugTool
+              consoleRecentCities={consoleRecentCities}
+              consoleSearchCity={consoleSearchCity}
+              consoleSelectedCountry={consoleSelectedCountry} />
+          </Col>
+          <Col size="sm-12 md-8 lg-9 xl-9">
+            {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} units={appContext.units} /> : ``}
+            {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} hours={hourlyForecastNumber} units={appContext.units} /> : ``}
+          </Col>
+          <Col size="sm-12">
 
-        </Col>
-      </Row>
-    </Container>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 }
 

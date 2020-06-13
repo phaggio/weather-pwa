@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -25,26 +25,27 @@ const App = () => {
   const [themeState, setThemeState] = useState({
     backgroundColor: `light`,
     textColor: `black`,
+    borderColor: `dark`,
     darkMode: bool => {
       if (bool) {
-        setThemeState({ ...themeState, backgroundColor: `dark`, textColor: `white` })
+        setThemeState({ ...themeState, backgroundColor: `dark`, textColor: `white`, borderColor: `light` })
       } else {
-        setThemeState({ ...themeState, backgroundColor: `light`, textColor: `black` })
+        setThemeState({ ...themeState, backgroundColor: `light`, textColor: `black`, borderColor: `dark` })
       }
     }
   })
 
   return (
     <Router>
-      <div>
-        <AppContext.Provider value={appState}>
-          <ThemeContext.Provider value={themeState}>
+      <AppContext.Provider value={appState}>
+        <ThemeContext.Provider value={themeState}>
+          <div>
             <Navbar />
             <Route exact path="/" component={Home} />
             <Route exact path="/simple-weather" component={Home} />
-          </ThemeContext.Provider>
-        </AppContext.Provider>
-      </div>
+          </div>
+        </ThemeContext.Provider>
+      </AppContext.Provider>
     </Router>
   )
 }

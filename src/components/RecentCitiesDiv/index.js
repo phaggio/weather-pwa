@@ -2,12 +2,13 @@ import React, { useContext } from 'react';
 import ThemeContext from '../../utils/ThemeContext';
 
 const RecentCitiesDiv = props => {
+
   const themeContext = useContext(ThemeContext);
 
   return (
-    <div className={`d-flex flex-column btn-group mt-3 bg-${themeContext.backgroundColor}`}>
+    <div className={`d-flex flex-column btn-group mt-3`}>
       <label className={`text-${themeContext.textColor}`}>Recent cities</label>
-      <ul className="list-group w-100">
+      <ul className={`list-group w-100 border border-${themeContext.borderColor}`}>
         {props.recentCities.map(city => {
           return (
             <div className="btn-group rounded" key={city.key}>

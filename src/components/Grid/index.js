@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const Container = ({ fluid, children }) => {
-	return <div className={`container${fluid ? `-fluid` : ``}`}>{children}</div>;
+const Container = ({ fluid, className, children }) => {
+	return <div className={`container${fluid ? `-fluid` : ``} ${className}`}>{children}</div>;
 }
 Container.propTypes = {
 	children: PropTypes.node,
