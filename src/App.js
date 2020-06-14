@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import DarkModeContext from './utils/DarkModeContext';
 import UnitContext from './utils/UnitContext';
@@ -39,11 +40,12 @@ const App = () => {
       <UnitContext.Provider value={unitState}>
         <DarkModeContext.Provider value={darkModeState}>
           <ThemeContext.Provider value={themeState}>
-            <div>
+            {/* <div className={`bh-${themeState.backgroundColor}`}> */}
               <Navbar />
               <Route exact path="/" component={Home} />
               <Route exact path="/simple-weather" component={Home} />
-            </div>
+              <Footer />
+            {/* </div> */}
           </ThemeContext.Provider>
         </DarkModeContext.Provider>
       </UnitContext.Provider>

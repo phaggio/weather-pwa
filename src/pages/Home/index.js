@@ -175,8 +175,8 @@ const Home = () => {
   const consoleSearchCity = () => console.log(searchCity);
 
   return (
-    <div className={` bg-${themeContext.backgroundColor}`}>
-      <Container fluid="" className={` bg-${themeContext.backgroundColor}`}>
+    <div className={`mh-100 vh-100 bg-${themeContext.backgroundColor}`}>
+      <Container fluid="" className={`bg-${themeContext.backgroundColor}`}>
         <Row>
           <Col size="sm-12 md-4 lg-3 xl-3" className="mh-100">
             <SearchGroup
