@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
-import { Container, Col, Row } from '../Grid';
+import { Col, Row } from '../Grid';
 import UnitContext from '../../utils/UnitContext';
 import ThemeContext from '../../utils/ThemeContext';
 import * as Conversion from '../../utils/Conversion';
 
-const dailyForecastStyle = {
-  overflowY: 'scroll',
-  height: `30vh`
-};
+// const dailyForecastStyle = {
+//   overflowY: 'scroll',
+//   height: `30vh`,
+//   width: `90vw`
+// };
 
 const DailyForecastDiv = props => {
 
@@ -23,11 +24,12 @@ const DailyForecastDiv = props => {
       <Row className={`bg-${themeContext.backgroundColor}`}>
         <Col size="12 lg-10 xl-9">
           <h4 className={`text-${themeContext.textColor}`}>Daily forecast</h4>
-          <div className="" style={dailyForecastStyle}>
+          <div
+            // style={dailyForecastStyle}
+          >
             {props.daily.map(day => {
               return (
-                <Row className={`align-items-center `} key={day.dt}>
-                  {/* <div className="d-flex align-items-center"> */}
+                <Row className={`d-flex align-items-center my-1`} key={day.dt}>
                   <Col size="4">
                     <div className={`text-${themeContext.textColor}`}>{Conversion.unixToLocalTime(day.dt, props.timezone, `dddd`)}</div>
                   </Col>
@@ -41,7 +43,6 @@ const DailyForecastDiv = props => {
                       <div className={`h5 text-${themeContext.textColor}`}>{Conversion.returnRoundedTemperature(day.temp.min)}{unitContext.units}</div>
                     </div>
                   </Col>
-                  {/* </div> */}
                 </Row>
               )
             })}
