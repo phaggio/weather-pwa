@@ -182,7 +182,7 @@ const Home = () => {
     <Container fluid="true" className={`vh-100 bg-${themeContext.backgroundColor}`}>
       <Col size="12" className={`mh-100 mx-0 px-0 bg-${themeContext.backgroundColor}`} style={homeStyle}>
         <Row className={`bg-${themeContext.backgroundColor}`}>
-          <Col size="12 sm-12 md-4 lg-3 xl-3" className="vh-100">
+          <Col size="12 sm-12 md-4 lg-3 xl-3" className="">
             <SearchGroup
               onChange={updateSearchCityState}
               keyPressed={keyPressed}
