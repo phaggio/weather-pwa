@@ -17,21 +17,21 @@ const CurrentWeatherDiv = props => {
   return (
     <div>
       <Row className={`bg-${themeContext.backgroundColor}`}>
-        <Col size="12 md-5 lg-6">
+        <Col size="12 md-6 lg-6">
           <div className="h-100 d-flex flex-row justify-content-center justify-content-md-end align-items-center">
-            <img className="mw-100" src={require(`../../assets/${props.currentWeather.weather[0].icon}@2x.png`)} alt="weather icon" />
+            <img className="mx-1 rounded-circle bg-light" src={require(`../../assets/${props.currentWeather.weather[0].icon}@2x.png`)} alt="weather icon" />
             <div className="d-flex align-items-end">
-              <h1 className={`display-3 text-${themeContext.textColor}`}>{Math.round(parseInt(props.currentWeather.main.temp))}</h1>
+              <h1 className={`display-4 text-${themeContext.textColor}`}>{Math.round(parseInt(props.currentWeather.main.temp))}</h1>
               <p className={`mb-2 text-${themeContext.textColor}`}>{unitContext.units}</p>
             </div>
           </div>
         </Col>
-        <Col size="12 md-7 lg-6">
+        <Col size="12 md-6 lg-6">
           <div className="h-100">
             <div className="d-flex flex-row justify-content-center justify-content-md-start align-items-end">
               <p className={`font-italic my-0 text-${themeContext.textColor}`}>{props.currentWeather.weather[0].description} in</p>
             </div>
-            <div className="d-flex flex-row justify-content-center justify-content-md-start align-items-end">
+            <div className="d-flex flex-row justify-content-center justify-content-md-start align-items-end flex-wrap">
               <p className={`h1 mr-2 text-center text-md-left text-${themeContext.textColor}`}>{props.currentWeather.name}</p>
               <small className={`mb-2 text-${themeContext.textColor}`}>{currentCountryName}</small>
             </div>

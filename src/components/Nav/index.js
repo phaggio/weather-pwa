@@ -19,7 +19,7 @@ const Nav = () => {
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-      <span className={`navbar-brand mb-0 h1 mx-auto text-${themeContext.textColor}`}>Simple Weather</span>
+      <h1 className={`navbar-brand mb-0 h1 mx-auto text-${themeContext.textColor}`}>Simple Weather</h1>
     </nav>
   )
 }
