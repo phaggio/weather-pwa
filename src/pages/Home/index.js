@@ -174,8 +174,11 @@ const Home = () => {
   const consoleSelectedCountry = () => console.log(selectedCountry);
   const consoleSearchCity = () => console.log(searchCity);
 
+  const homeStyle = {
+    minHeight: `1000px`
+  }
   return (
-    <div className={`mh-100 bg-${themeContext.backgroundColor}`}>
+    <div className={`mh-100 bg-${themeContext.backgroundColor}`} style={homeStyle}>
       <Container fluid="" className={`vh-100`}>
         <Row className="">
           <Col size="sm-12 md-4 lg-3 xl-3" className="mh-100">
