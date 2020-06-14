@@ -175,13 +175,14 @@ const Home = () => {
   const consoleSearchCity = () => console.log(searchCity);
 
   const homeStyle = {
-    minHeight: `1000px`
+    minHeight: `1150px`
   }
   return (
-    <div className={`mh-100 bg-${themeContext.backgroundColor}`} style={homeStyle}>
-      <Container fluid="" className={`vh-100`}>
-        <Row className="">
-          <Col size="sm-12 md-4 lg-3 xl-3" className="mh-100">
+
+    <Container fluid="true" className={`vh-100 bg-${themeContext.backgroundColor}`}>
+      <Col size="12" className={`mh-100 mx-0 px-0 bg-${themeContext.backgroundColor}`} style={homeStyle}>
+        <Row className={`bg-${themeContext.backgroundColor}`}>
+          <Col size="12 sm-12 md-4 lg-3 xl-3" className="vh-100">
             <SearchGroup
               onChange={updateSearchCityState}
               keyPressed={keyPressed}
@@ -222,8 +223,9 @@ const Home = () => {
             }
           </Col>
         </Row>
-      </Container>
-    </div>
+      </Col>
+    </Container>
+
   );
 }
 
