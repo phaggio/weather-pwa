@@ -196,10 +196,10 @@ const Home = () => {
               :
               ``
             }
-            <DebugTool
+            {/* <DebugTool
               consoleRecentCities={consoleRecentCities}
               consoleSearchCity={consoleSearchCity}
-              consoleSelectedCountry={consoleSelectedCountry} />
+              consoleSelectedCountry={consoleSelectedCountry} /> */}
           </Col>
 
           <Col size="sm-12 md-8 lg-9 xl-9">
