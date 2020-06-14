@@ -40,12 +40,12 @@ const App = () => {
       <UnitContext.Provider value={unitState}>
         <DarkModeContext.Provider value={darkModeState}>
           <ThemeContext.Provider value={themeState}>
-            {/* <div className={`bh-${themeState.backgroundColor}`}> */}
+            <div className={``}>
               <Navbar />
               <Route exact path="/" component={Home} />
               <Route exact path="/simple-weather" component={Home} />
               <Footer />
-            {/* </div> */}
+            </div>
           </ThemeContext.Provider>
         </DarkModeContext.Provider>
       </UnitContext.Provider>

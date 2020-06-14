@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { Col, Row } from '../Grid';
+import { Container, Col, Row } from '../Grid';
 import UnitContext from '../../utils/UnitContext';
 import ThemeContext from '../../utils/ThemeContext';
 import * as Conversion from '../../utils/Conversion';
 
 const dailyForecastStyle = {
-  overflowY: 'scroll'
+  overflowY: 'scroll',
+  height: `30vh`
 };
 
 const DailyForecastDiv = props => {
@@ -18,14 +19,14 @@ const DailyForecastDiv = props => {
   }
 
   return (
-    <div>
-      <Row className={`bg-${themeContext.backgroundColor}`}>
+    <div className="mb-2">
+      <Row>
         <Col size="12">
           <h4 className={`text-${themeContext.textColor}`}>Daily forecast</h4>
-          <div className="rounded-lg mh-100">
+          <div className="" style={dailyForecastStyle}>
             {props.daily.map(day => {
               return (
-                <Row className={`align-items-center bg-${themeContext.backgroundColor}`} key={day.dt}>
+                <Row className={`align-items-center `} key={day.dt}>
                   {/* <div className="d-flex align-items-center"> */}
                   <Col size="4">
                     <div className={`text-${themeContext.textColor}`}>{Conversion.unixToLocalTime(day.dt, props.timezone, `dddd`)}</div>

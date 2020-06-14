@@ -175,9 +175,9 @@ const Home = () => {
   const consoleSearchCity = () => console.log(searchCity);
 
   return (
-    <div className={`mh-100 vh-100 bg-${themeContext.backgroundColor}`}>
-      <Container fluid="" className={`bg-${themeContext.backgroundColor}`}>
-        <Row>
+    <div className={`mh-100 bg-${themeContext.backgroundColor}`}>
+      <Container fluid="" className={`vh-100`}>
+        <Row className="">
           <Col size="sm-12 md-4 lg-3 xl-3" className="mh-100">
             <SearchGroup
               onChange={updateSearchCityState}
@@ -217,10 +217,6 @@ const Home = () => {
             {forecast ?
               <DailyForecastDiv daily={forecast.daily} timezone={forecast.timezone_offset} /> : ``
             }
-          </Col>
-
-          <Col size="sm-12">
-
           </Col>
         </Row>
       </Container>

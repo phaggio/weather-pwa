@@ -29,7 +29,7 @@ const Col = ({ size, className, children }) => {
 				.split(` `)
 				.map(size => `col-${size}`)
 				.join(` `)}
-				${className}`
+				${className ? className : ``}`
 			}
 		>
 			{children}
