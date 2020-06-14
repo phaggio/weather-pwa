@@ -204,8 +204,16 @@ const Home = () => {
 
           <Col size="sm-12 md-8 lg-9 xl-9">
             {/* CurrentWeatherDiv is added after page load, so it is outside of html space */}
-            {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} units={unitContext.units} /> : ``}
-            {forecast ? <HourlyForecastDiv hourlyForecast={forecast.hourly} hours={hourlyForecastNumber} timezone={forecast.timezone_offset} units={unitContext.units} /> : ``}
+            {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} /> : ``}
+            {forecast ?
+              <HourlyForecastDiv
+                hourlyForecast={forecast.hourly}
+                hours={hourlyForecastNumber}
+                timezone={forecast.timezone_offset}
+              />
+              :
+              ``
+            }
           </Col>
 
           <Col size="sm-12">

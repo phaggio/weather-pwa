@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import Moment from 'moment';
 import { Col, Row } from '../Grid';
 import UnitContext from '../../utils/UnitContext';
 import ThemeContext from '../../utils/ThemeContext';
