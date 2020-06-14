@@ -45,17 +45,17 @@ const CurrentWeatherDiv = props => {
       </Row>
 
       <Row className={`bg-${themeContext.backgroundColor}`}>
-        <Col size="12 md-4">
+        <Col size="12 md-4 xl-3">
           <p className={`text-center text-md-left text-${themeContext.textColor}`}>
             Now: {Conversion.unixToLocalTime(props.currentWeather.dt, props.currentWeather.timezone, `h:mm A`)}
           </p>
         </Col>
-        <Col size="12 md-4">
+        <Col size="12 md-4 xl-3">
           <p className={`text-center text-md-left text-${themeContext.textColor}`}>
             Sunrise: {Conversion.unixToLocalTime(props.currentWeather.sys.sunrise, props.currentWeather.timezone, `h:mm A`)}
           </p>
         </Col>
-        <Col size="12 md-4">
+        <Col size="12 md-4 xl-3">
           <p className={`text-center text-md-left text-${themeContext.textColor}`}>
             Sunset: {Conversion.unixToLocalTime(props.currentWeather.sys.sunset, props.currentWeather.timezone, `h:mm A`)}
           </p>

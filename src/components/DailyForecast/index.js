@@ -21,7 +21,7 @@ const DailyForecastDiv = props => {
   return (
     <div className="mb-2">
       <Row className={`bg-${themeContext.backgroundColor}`}>
-        <Col size="12">
+        <Col size="12 lg-10 xl-9">
           <h4 className={`text-${themeContext.textColor}`}>Daily forecast</h4>
           <div className="" style={dailyForecastStyle}>
             {props.daily.map(day => {
