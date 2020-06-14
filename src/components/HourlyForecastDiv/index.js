@@ -10,7 +10,7 @@ const hourlyForecastStyle = {
 
 const HourlyForecastDiv = props => {
 
-  const hourArr = props.hourlyForecast.slice(0, props.hours);
+  const hourArr = props.hourly.slice(0, props.hours);
   const unitContext = useContext(UnitContext);
 
   const themeContext = useContext(ThemeContext);

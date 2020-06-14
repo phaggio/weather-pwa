@@ -11,14 +11,14 @@ const DebugTool = props => {
 
   return (
     <div className="d-flex flex-column btn-group mt-3">
-      <label>Debug Tool</label>
-      <ul className="list-group w-100">
-        <button className="btn btn-primary w-100" onClick={() => console.log(unitContext)}>console.log unitContext</button>
-        <button className="btn btn-primary w-100" onClick={() => console.log(darkModeContext)}>console.log darkModeContext</button>
-        <button className="btn btn-primary w-100" onClick={() => console.log(themeContext)}>console.log themeContext</button>
-        <button className="btn btn-secondary w-100" onClick={props.consoleRecentCities}>console.log recentCities</button>
-        <button className="btn btn-info w-100" onClick={props.consoleSearchCity}>console.log searchCity</button>
-        <button className="btn btn-warning w-100" onClick={props.consoleSelectedCountry}>console.log selectedCountry</button>
+      <label>Debug Log Tool</label>
+      <ul className="list-group w-75">
+        <button className="btn btn-primary w-100" onClick={() => console.log(unitContext)}><small>unitContext</small></button>
+        <button className="btn btn-secondary w-100" onClick={() => console.log(darkModeContext)}><small>darkModeContext</small></button>
+        <button className="btn btn-success w-100" onClick={() => console.log(themeContext)}><small>themeContext</small></button>
+        <button className="btn btn-danger w-100" onClick={props.consoleRecentCities}><small>recentCitiesState</small></button>
+        <button className="btn btn-warning w-100" onClick={props.consoleSearchCity}><small>searchCityState</small></button>
+        <button className="btn btn-info w-100" onClick={props.consoleSelectedCountry}><small>selectedCountryState</small></button>
       </ul>
     </div>
   )

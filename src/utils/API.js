@@ -17,7 +17,7 @@ const currentWeatherByCoord = ({ units, lat, lon }) => {
 }
 
 const oneCallWeatherByCoord = ({ units, lat, lon }) => {
-  return axios.get(`${oneCallWeatherURL}lat=${lat}&lon=${lon}&units=${units ? units : ``}&appid=${key}`);
+  return axios.get(`${oneCallWeatherURL}lat=${lat}&lon=${lon}&exclude=minutely&units=${units ? units : ``}&appid=${key}`);
 }
 
 export default {

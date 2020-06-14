@@ -24,7 +24,7 @@ const returnPressureUnit = type => type === `imperial` ? `inHg` : `hPa`;
 const returnDegreeUnit = type => type === `` ? `°` : ``;
 const returnRoundedTemperature = temperature => parseInt(temperature) ? parseInt(temperature).toFixed() : undefined;
 
-// takes unix timestamp and return local time 'h:mm A'
+// takes unix timestamp, offset in seconds, and output format and return local time
 const unixToLocalTime = (unix, secondsOffset, format) => {
   const hoursOffset = secondsOffset / 60;
   return Moment.unix(unix).utc().utcOffset(hoursOffset).format(format)
