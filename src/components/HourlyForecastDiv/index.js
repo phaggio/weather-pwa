@@ -2,17 +2,12 @@ import React, { useContext } from 'react';
 import Moment from 'moment';
 import { Col, Row } from '../Grid';
 import UnitContext from '../../utils/UnitContext';
-import * as Conversion from '../../utils/Conversion';
 import ThemeContext from '../../utils/ThemeContext';
+import * as Conversion from '../../utils/Conversion';
 
 const hourlyForecastStyle = {
   overflowX: 'auto'
 };
-
-const hourStyle = {
-  // display: 'inline-block',
-  // padding: '5px'
-}
 
 const HourlyForecastDiv = props => {
 
@@ -29,8 +24,8 @@ const HourlyForecastDiv = props => {
           <div className="rounded-lg d-flex flex-nowrap" style={hourlyForecastStyle}>
             {hourArr.map(hour => {
               return (
-                <div className="d-flex flex-column align-items-center" key={hour.dt} style={hourStyle}>
-                  <div className={`text-${themeContext.textColor}`}>{Moment.unix(hour.dt).format(`h A`)}</div>
+                <div className="d-flex flex-column align-items-center" key={hour.dt}>
+                  <div className={`text-${themeContext.textColor}`}>{Conversion.unixToLocalTime(hour.dt, props.timezone, `hA`)}</div>
                   <img className="mx-1 rounded-circle bg-light" size="w-100" src={require(`../../assets/${hour.weather[0].icon}@2x.png`)} alt="weather icon" />
                   <div className={`text-${themeContext.textColor}`}>{Conversion.returnRoundedTemperature(hour.temp)}{unitContext.units}</div>
                 </div>

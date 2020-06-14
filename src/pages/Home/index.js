@@ -5,6 +5,7 @@ import { CountryDropdown } from '../../components/CountryDropdown';
 import RecentCitiesDiv from '../../components/RecentCitiesDiv';
 import { CurrentWeatherDiv } from '../../components/CurrentWeatherDiv';
 import { HourlyForecastDiv } from '../../components/HourlyForecastDiv';
+import { DailyForecastDiv } from '../../components/DailyForecast';
 import API from '../../utils/API';
 import UnitContext from '../../utils/UnitContext';
 import countryArr from '../../constant/countries.json';
@@ -17,7 +18,7 @@ const Home = () => {
   const [recentCities, setRecentCities] = useState([]);
   const [showSearchButton, setShowSearchButton] = useState(false);
   const [currentWeather, setCurrentWeather] = useState();
-  const [hourlyForecast, setHourlyForecast] = useState();
+  const [forecast, setForecast] = useState();
 
   const unitContext = useContext(UnitContext);
   const themeContext = useContext(ThemeContext);
@@ -108,7 +109,7 @@ const Home = () => {
   const getForecastByCoord = ({ units, lat, lon }) => {
     API.oneCallWeatherByCoord({ units, lat, lon })
       .then(res => {
-        setHourlyForecast(res.data.hourly);
+        setForecast(res.data);
       })
   };
 
@@ -187,11 +188,11 @@ const Home = () => {
             <CountryDropdown
               countryArr={countryArr}
               onChange={updateSelectedCountryState} />
-            {recentCities.length > 0 ? 
-            <RecentCitiesDiv
-              recentCities={recentCities}
-              recentCityButtonPressed={recentCityButtonPressed}
-              removeCityButtonPressed={removeCityButtonPressed} />
+            {recentCities.length > 0 ?
+              <RecentCitiesDiv
+                recentCities={recentCities}
+                recentCityButtonPressed={recentCityButtonPressed}
+                removeCityButtonPressed={removeCityButtonPressed} />
               :
               ``
             }
@@ -204,7 +205,7 @@ const Home = () => {
           <Col size="sm-12 md-8 lg-9 xl-9">
             {/* CurrentWeatherDiv is added after page load, so it is outside of html space */}
             {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} units={unitContext.units} /> : ``}
-            {hourlyForecast ? <HourlyForecastDiv hourlyForecast={hourlyForecast} hours={hourlyForecastNumber} units={unitContext.units} /> : ``}
+            {forecast ? <HourlyForecastDiv hourlyForecast={forecast.hourly} hours={hourlyForecastNumber} timezone={forecast.timezone_offset} units={unitContext.units} /> : ``}
           </Col>
 
           <Col size="sm-12">

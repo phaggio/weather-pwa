@@ -1,3 +1,5 @@
+import Moment from 'moment';
+
 // takes pascal string and convert to inHg in string
 const convertPressure = (pascal, newUnitType) => {
   const pascalToInchMercury = 0.029529983071445;
@@ -22,11 +24,19 @@ const returnPressureUnit = type => type === `imperial` ? `inHg` : `hPa`;
 const returnDegreeUnit = type => type === `` ? `°` : ``;
 const returnRoundedTemperature = temperature => parseInt(temperature) ? parseInt(temperature).toFixed() : undefined;
 
+// takes unix timestamp and return local time 'h:mm A'
+const unixToLocalTime = (unix, secondsOffset, format) => {
+  const hoursOffset = secondsOffset / 60;
+  return Moment.unix(unix).utc().utcOffset(hoursOffset).format(format)
+}
+
+
 export {
   convertPressure,
   convertDirection,
   returnSpeedUnit,
   returnPressureUnit,
   returnDegreeUnit,
-  returnRoundedTemperature
+  returnRoundedTemperature,
+  unixToLocalTime
 }
