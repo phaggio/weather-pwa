@@ -6,7 +6,6 @@ import ThemeContext from '../../utils/ThemeContext';
 import * as Conversion from '../../utils/Conversion';
 
 const CurrentWeatherDiv = props => {
-  console.log(`rendering CurrentWeatherDiv`)
   const currentCountryCode = props.currentWeather.sys.country ? props.currentWeather.sys.country : ``;
   const currentCountryName = countryArr.find(country => country.code === currentCountryCode).name;
 
@@ -115,4 +114,4 @@ const CurrentWeatherDiv = props => {
   )
 };
 
-export { CurrentWeatherDiv };
+export default CurrentWeatherDiv;

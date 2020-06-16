@@ -13,6 +13,7 @@ const HourlyForecastDiv = props => {
   const hourArr = props.hourly.slice(0, props.hours);
   const unitContext = useContext(UnitContext);
   const themeContext = useContext(ThemeContext);
+
   const imgStyle = {
     height: `60px`,
     width: `60px`
@@ -46,4 +47,4 @@ const HourlyForecastDiv = props => {
   )
 };
 
-export { HourlyForecastDiv };
+export default HourlyForecastDiv;

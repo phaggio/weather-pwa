@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, Col, Row } from '../../components/Grid';
 import SearchGroup from '../../components/SearchGroup';
-import { CountryDropdown } from '../../components/CountryDropdown';
+import CountryDropdown from '../../components/CountryDropdown';
 import RecentCitiesDiv from '../../components/RecentCitiesDiv';
-import { CurrentWeatherDiv } from '../../components/CurrentWeatherDiv';
-import { HourlyForecastDiv } from '../../components/HourlyForecastDiv';
-import { DailyForecastDiv } from '../../components/DailyForecast';
+import CurrentWeatherDiv from '../../components/CurrentWeatherDiv';
+import HourlyForecastDiv from '../../components/HourlyForecastDiv';
+import DailyForecastDiv from '../../components/DailyForecast';
 import API from '../../utils/API';
 import UnitContext from '../../utils/UnitContext';
 import countryArr from '../../constant/countries.json';
-import DebugTool from '../../components/DebugTool';
+// import DebugTool from '../../components/DebugTool';
 import ThemeContext from '../../utils/ThemeContext';
 
 const Home = () => {
@@ -49,7 +49,6 @@ const Home = () => {
 
   const updateSelectedCountryState = event => {
     const country = event.target.value;
-    console.log(country);
     setSelectedCountry(country);
   };
 
@@ -81,7 +80,6 @@ const Home = () => {
   const searchButtonPressed = () => {
     API.currentWeatherByCity({ units: unitContext.unitType, city: searchCity, country: selectedCountry })
       .then(res => {
-        console.log(res.data);
         setCurrentWeather(res.data);
         updateRecentCities({
           key: `${res.data.name}, ${res.data.sys.country}`,
@@ -93,11 +91,7 @@ const Home = () => {
         getForecastByCoord(...res.data.coord, { units: unitContext.unitType }); // another API call to get forecast data
       })
       .catch(err => {
-        console.log(err)
         if (err.response) {
-          console.log(err.response.data);
-          console.log(err.response.status);
-          console.log(err.response.headers);
           if (err.response.status === 404) {
             alert(`Cannot find that city`);
           }
@@ -121,7 +115,6 @@ const Home = () => {
         lon: browserPosition.coords.longitude
       })
         .then(res => {
-          console.log(res.data);
           setCurrentWeather(res.data);
           updateRecentCities({
             key: `${res.data.name}, ${res.data.sys.country}`,
@@ -156,13 +149,10 @@ const Home = () => {
       .then(res => {
         setCurrentWeather(res.data);
         getForecastByCoord({ units: unitContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon })
-        console.log(res);
       })
   };
 
   const removeCityButtonPressed = key => {
-    console.log(`Removing city`);
-    console.log(key);
     const tempArr = [...recentCities];
     const index = tempArr.findIndex(city => city.key === key);
     tempArr.splice(index, 1);
@@ -177,6 +167,7 @@ const Home = () => {
   const homeStyle = {
     minHeight: `1150px`
   }
+
   return (
 
     <Container fluid="true" className={`vh-100 bg-${themeContext.backgroundColor}`}>

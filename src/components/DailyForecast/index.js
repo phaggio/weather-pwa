@@ -4,16 +4,11 @@ import UnitContext from '../../utils/UnitContext';
 import ThemeContext from '../../utils/ThemeContext';
 import * as Conversion from '../../utils/Conversion';
 
-// const dailyForecastStyle = {
-//   overflowY: 'scroll',
-//   height: `30vh`,
-//   width: `90vw`
-// };
-
 const DailyForecastDiv = props => {
 
   const unitContext = useContext(UnitContext);
   const themeContext = useContext(ThemeContext);
+
   const imgStyle = {
     height: `60px`,
     width: `60px`
@@ -59,4 +54,4 @@ const DailyForecastDiv = props => {
   )
 };
 
-export { DailyForecastDiv };
+export default DailyForecastDiv;

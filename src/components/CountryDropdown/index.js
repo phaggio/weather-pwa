@@ -25,4 +25,4 @@ const CountryDropdown = props => {
   );
 }
 
-export { CountryDropdown }
+export default CountryDropdown
