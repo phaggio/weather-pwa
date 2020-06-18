@@ -36,14 +36,13 @@ const App = () => {
     }
   })
 
+  const localSetting = LocalStorage.checkLocalStorage(`simple-weather`);
+  console.log(localSetting);
   useEffect(() => {
-    const localSetting = LocalStorage.checkLocalStorage(`simple-weather`);
-    console.log(localSetting);
     if (localSetting) {
       setDarkModeState({ ...darkModeState, darkMode: localSetting.darkMode });
-      setUnitState({ ...unitState, unitType: localSetting.type, units: localSetting.units })
     }
-  }, []);
+  }, [])
 
   return (
     <Router>
