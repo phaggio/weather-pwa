@@ -16,7 +16,7 @@ const UnitRadioButtonGroup = props => {
             <input type="radio" id={radio.label} name="customRadio"
               checked={radio.type === props.currentUnitType ? true : false}
               className="custom-control-input"
-              onChange={() => props.updateUnitType(radio.type, radio.unit)} />
+              onChange={() => props.updateUnits(radio.type, radio.unit)} />
             <label className={`custom-control-label text-${themeContext.textColor}`} htmlFor={radio.label}>{radio.label}</label>
             <small className={`ml-2 font-italic text-${themeContext.textColor}`} htmlFor={radio.label}>{radio.description}</small>
           </div>

@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import ToggleSwitch from '../ToggleSwitch';
 import UnitRadioButtonGroup from '../UnitRadioButtonGroup';
 import Nav from '../Nav';
+import * as LocalStorage from '../../utils/LocalStorage';
 import UnitContext from '../../utils/UnitContext';
 import DarkModeContext from '../../utils/DarkModeContext';
 import ThemeContext from '../../utils/ThemeContext';
@@ -13,7 +14,25 @@ const Navbar = () => {
   const darkModeContext = useContext(DarkModeContext);
   const themeContext = useContext(ThemeContext);
 
-  const toggle = bool => bool ? darkModeContext.toggleDarkMode(false) : darkModeContext.toggleDarkMode(true);
+  const toggle = bool => {
+    darkModeContext.toggleDarkMode(bool);
+    const storageObj = {
+      darkMode: bool,
+      "type": unitContext.unitType,
+      "units": unitContext.units
+    }
+    LocalStorage.saveLocalStorage(`simple-weather`, storageObj)
+  };
+
+  const updateUnits = (type, unit) => {
+    unitContext.updateUnitType(type, unit);
+    const storageObj = {
+      "darkMode": darkModeContext.darkMode,
+      type: type,
+      units: unit
+    }
+    LocalStorage.saveLocalStorage(`simple-weather`, storageObj)
+  }
 
   useEffect(() => {
     themeContext.updateTheme(darkModeContext.darkMode);
@@ -33,8 +52,7 @@ const Navbar = () => {
 
           <UnitRadioButtonGroup
             radios={unitArr}
-            updateUnitType={unitContext.updateUnitType}
-            updateUnits={unitContext.updateUnits}
+            updateUnits={updateUnits}
             currentUnitType={unitContext.unitType}
           />
 

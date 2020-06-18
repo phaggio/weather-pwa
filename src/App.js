@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import * as LocalStorage from './utils/LocalStorage';
 import DarkModeContext from './utils/DarkModeContext';
 import UnitContext from './utils/UnitContext';
 import ThemeContext from './utils/ThemeContext';
@@ -18,7 +19,7 @@ const App = () => {
     unitType: `imperial`,
     units: `°F`,
     updateUnitType: (unitType, units) => {
-      setUnitState({ ...unitState, unitType, units })
+      setUnitState({ ...unitState, unitType, units });
     }
   });
 
@@ -34,6 +35,15 @@ const App = () => {
       }
     }
   })
+
+  useEffect(() => {
+    const localSetting = LocalStorage.checkLocalStorage(`simple-weather`);
+    console.log(localSetting);
+    if (localSetting) {
+      setDarkModeState({ ...darkModeState, darkMode: localSetting.darkMode });
+      setUnitState({ ...unitState, unitType: localSetting.type, units: localSetting.units })
+    }
+  }, []);
 
   return (
     <Router>

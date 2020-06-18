@@ -198,7 +198,6 @@ const Home = () => {
           </Col>
 
           <Col size="sm-12 md-8 lg-9 xl-9">
-            {/* CurrentWeatherDiv is added after page load, so it is outside of html space */}
             {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} /> : ``}
             {forecast ?
               <HourlyForecastDiv
