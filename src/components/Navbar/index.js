@@ -40,7 +40,7 @@ const Navbar = () => {
   }, [darkModeContext.darkMode])
 
   return (
-    <div className="">
+    <div>
       <div className="collapse" id="navbarToggleExternalContent">
         <div className={`bg-${themeContext.backgroundColor} p-4`}>
 

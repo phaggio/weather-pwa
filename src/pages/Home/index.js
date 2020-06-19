@@ -7,14 +7,16 @@ import CurrentWeatherDiv from '../../components/CurrentWeatherDiv';
 import HourlyForecastDiv from '../../components/HourlyForecastDiv';
 import DailyForecastDiv from '../../components/DailyForecast';
 import API from '../../utils/API';
+import parseCityObj from '../../utils/ParseFunctions';
+import * as LocalStorage from '../../utils/LocalStorage';
 import UnitContext from '../../utils/UnitContext';
 import countryArr from '../../constant/countries.json';
-// import DebugTool from '../../components/DebugTool';
+import DebugTool from '../../components/DebugTool';
 import ThemeContext from '../../utils/ThemeContext';
 
 const Home = () => {
-  const [searchCity, setSearchCity] = useState();
-  const [selectedCountry, setSelectedCountry] = useState(`US`);
+  const [searchCity, setSearchCity] = useState(`Seattle`); // search city input state, use to change search/locate button
+  const [selectedCountry, setSelectedCountry] = useState(`US`); // country state to track selected country
   const [recentCities, setRecentCities] = useState([]);
   const [showSearchButton, setShowSearchButton] = useState(false);
   const [currentWeather, setCurrentWeather] = useState();
@@ -23,22 +25,30 @@ const Home = () => {
   const unitContext = useContext(UnitContext);
   const themeContext = useContext(ThemeContext);
 
-  const localStorageKey = `recentCities`;
+  const localStorageKey = `recent-cities`;
   const hourlyForecastNumber = 24;
 
+  // initial run
   useEffect(() => {
-    checkLocalStorage(`recentCities`);
-    API.currentWeatherByCity({ units: unitContext.unitType, city: `Seattle`, country: `US` })
+    const recentCitiesArr = LocalStorage.checkLocalStorage(localStorageKey);
+    console.log(recentCitiesArr);
+    if (recentCitiesArr.length > 0) {
+      setRecentCities(recentCitiesArr);
+      API.currentWeatherByCity({ units: unitContext.unitType, city: recentCitiesArr[0].city, country: recentCitiesArr[0].country })
+        .then(res => setCurrentWeather(res.data));
+      getForecastByCoord({ units: unitContext.unitType, lat: recentCitiesArr[0].lat, lon: recentCitiesArr[0].lon });
+    } else {
+      API.currentWeatherByCity({ units: unitContext.unitType, city: searchCity, country: selectedCountry })
+    }
+  }, []);
+
+  useEffect(() => {
+    API.currentWeatherByCity({ units: unitContext.unitType, city: searchCity, country: selectedCountry })
       .then(res => {
         setCurrentWeather(res.data);
         getForecastByCoord({ units: unitContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon });
       })
-  }, [unitContext]);
-
-  // local storage functions
-  const checkLocalStorage = key => setRecentCities(JSON.parse(localStorage.getItem(key)) ? JSON.parse(localStorage.getItem(key)) : []);
-  const saveLocalStorage = (key, data) => localStorage.setItem(key, JSON.stringify(data));
-
+  }, [unitContext])
 
   // state functions
   const updateSearchCityState = event => {
@@ -49,6 +59,7 @@ const Home = () => {
 
   const updateSelectedCountryState = event => {
     const country = event.target.value;
+    console.log(country);
     setSelectedCountry(country);
   };
 
@@ -58,17 +69,14 @@ const Home = () => {
     const existingCity = recentCities.find(city => {
       return (city.city === newCityObj.city && city.country === newCityObj.country);
     });
-    if (existingCity) {
-      return;
-    } else {
-      setRecentCities([...recentCities, newCityObj]);
-      saveLocalStorage(localStorageKey, [...recentCities, newCityObj]);
-    }
+    if (existingCity) return;
+    const currentRecentCitiesArr = recentCities;
+    if (currentRecentCitiesArr.length > 2) { currentRecentCitiesArr.splice(0, 1) };
+    currentRecentCitiesArr.push(newCityObj);
+    setRecentCities(currentRecentCitiesArr);
+    console.log(`adding ${newCityObj.city} to list`)
+    LocalStorage.saveLocalStorage(localStorageKey, currentRecentCitiesArr);
   }
-
-  useEffect(() => {
-    saveLocalStorage(localStorageKey, recentCities);
-  })
 
   const keyPressed = event => {
     if (event.keyCode === 13 && searchCity) {
@@ -78,17 +86,15 @@ const Home = () => {
 
   // api call functions
   const searchButtonPressed = () => {
+    console.log(`search button pressed`)
     API.currentWeatherByCity({ units: unitContext.unitType, city: searchCity, country: selectedCountry })
       .then(res => {
         setCurrentWeather(res.data);
-        updateRecentCities({
-          key: `${res.data.name}, ${res.data.sys.country}`,
-          city: res.data.name,
-          country: res.data.sys.country,
-          lon: res.data.coord.lon,
-          lat: res.data.coord.lat
-        });
-        getForecastByCoord(...res.data.coord, { units: unitContext.unitType }); // another API call to get forecast data
+        console.log(parseCityObj(res.data))
+        console.log(res.data)
+        getForecastByCoord({ units: unitContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon }); // another API call to get forecast data
+
+        updateRecentCities(parseCityObj(res.data));
       })
       .catch(err => {
         if (err.response) {
@@ -101,8 +107,10 @@ const Home = () => {
   };
 
   const getForecastByCoord = ({ units, lat, lon }) => {
+    console.log(lat, lon)
     API.oneCallWeatherByCoord({ units, lat, lon })
       .then(res => {
+        console.log(`oneCallData`, res.data)
         setForecast(res.data);
       })
   };
@@ -116,13 +124,7 @@ const Home = () => {
       })
         .then(res => {
           setCurrentWeather(res.data);
-          updateRecentCities({
-            key: `${res.data.name}, ${res.data.sys.country}`,
-            city: res.data.name,
-            country: res.data.sys.country,
-            lon: res.data.coord.lon,
-            lat: res.data.coord.lat
-          });
+          updateRecentCities(parseCityObj(res.data));
         });
       getForecastByCoord({
         units: unitContext.unitType,
@@ -145,6 +147,8 @@ const Home = () => {
   };
 
   const recentCityButtonPressed = ({ city, country }) => {
+    setSearchCity(city);
+    setSelectedCountry(country)
     API.currentWeatherByCity({ units: unitContext.unitType, city: city, country: country })
       .then(res => {
         setCurrentWeather(res.data);
@@ -153,10 +157,11 @@ const Home = () => {
   };
 
   const removeCityButtonPressed = key => {
-    const tempArr = [...recentCities];
-    const index = tempArr.findIndex(city => city.key === key);
-    tempArr.splice(index, 1);
-    setRecentCities(tempArr)
+    const recentCitiesArr = recentCities;
+    const index = recentCitiesArr.findIndex(city => city.key === key);
+    recentCitiesArr.splice(index, 1);
+    setRecentCities(recentCitiesArr);
+    LocalStorage.saveLocalStorage(localStorageKey, recentCitiesArr);
   }
 
   // dev log functions
@@ -191,10 +196,10 @@ const Home = () => {
               :
               ``
             }
-            {/* <DebugTool
+            <DebugTool
               consoleRecentCities={consoleRecentCities}
               consoleSearchCity={consoleSearchCity}
-              consoleSelectedCountry={consoleSelectedCountry} /> */}
+              consoleSelectedCountry={consoleSelectedCountry} />
           </Col>
 
           <Col size="sm-12 md-8 lg-9 xl-9">
