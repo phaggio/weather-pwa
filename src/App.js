@@ -34,11 +34,12 @@ const App = () => {
     }
   })
 
-  const localSetting = LocalStorage.checkLocalStorage(`simple-weather`);
-  console.log(`localSetting is`, localSetting);
   useEffect(() => {
+    const localSetting = LocalStorage.checkLocalStorage(`simple-weather`);
+    console.log(`localSetting is`);
+    console.log(localSetting);
     if (localSetting) {
-      console.log(`found existing local setting`)
+      console.log(`found existing local setting, setting darkMode state and unitState...`)
       setDarkModeState({ ...darkModeState, darkMode: localSetting.darkMode });
       setUnitState({ ...unitState, unitType: localSetting.type, units: localSetting.units })
     }

@@ -18,7 +18,9 @@ const RecentCitiesDiv = props => {
                 <div className={`btn-group rounded mb-1`} key={city.key}>
                   <button className={`btn btn-${themeContext.backgroundColor} btn-outline-${themeContext.borderColor} w-75`}
                     value={city}
-                    onClick={() => props.recentCityButtonPressed({ city: city.city, country: city.country })} >
+                    onClick={() => props.recentCityButtonPressed(
+                      { city: city.city, country: city.country, lat: city.lat, lon: city.lon }
+                    )} >
                     {`${city.city}, ${city.country}`}
                   </button>
                   <button className={`btn btn-${themeContext.backgroundColor} btn-outline-${themeContext.borderColor} w-25`}
