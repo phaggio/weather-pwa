@@ -60,22 +60,29 @@ const Home = () => {
         setCurrentWeather(res.data);
         getForecastByCoord({ units: unitContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon });
       })
-  }, [unitContext])
+  }, [unitContext]);
 
-  // state functions
-  const updateSearchCityState = event => {
-    const city = event.target.value.trim();
-    if (city.length > 0) { setSearchCity(city) };
-    validateSearchCity(city);
-  };
+  // city change effect
+  useEffect(() => {
+    console.log(`searchCity changed, updating current weather...`);
+    // searchButtonPressed();
+  }, [searchCity]);
 
+  // selected coord change effect
+  useEffect(() => {
+    console.log(`selectedCoord changed, updating forecast...`);
+  }, [selectedCoord]);
+
+
+  // update selectedCountry state
   const updateSelectedCountryState = event => {
     const country = event.target.value;
-    console.log(country);
+    console.log(`selected ${country}`);
     setSelectedCountry(country);
   };
 
-  const validateSearchCity = input => (input.trim()) ? setShowSearchButton(true) : setShowSearchButton(false);
+  // function that validates input and switch between search and locate me buttons
+  const validateSearchField = event => (event.target.value.trim()) ? setShowSearchButton(true) : setShowSearchButton(false);
 
   const updateRecentCities = newCityObj => {
     const existingCity = recentCities.find(city => {
@@ -90,26 +97,28 @@ const Home = () => {
     LocalStorage.saveLocalStorage(localStorageKey, currentRecentCitiesArr);
   }
 
-  // check for enter key
+  // check for enter key and update city state
   const keyPressed = event => {
-    if (event.keyCode === 13 && searchCity) {
-      console.log(`enter key pressed and there's input in search city field, getting current weather...`);
-      getCurrentWeather();
+    if (event.keyCode === 13) {
+      const input = event.target.value;
+      console.log(`enter key pressed, input value is '${input}', updating city state...`);
+      setSearchCity(input);
     }
   }
 
   // api call functions
-  const getCurrentWeather = () => {
-    console.log(`getting current weather...`)
+  const searchButtonPressed = () => {
+    console.log(`getting current weather by city and country...`);
     API.currentWeatherByCity({ units: unitContext.unitType, city: searchCity, country: selectedCountry })
       .then(res => {
         // pass raw data to currentWeather state
+        console.log(`setting currentWeather state...`)
         setCurrentWeather(res.data);
-        console.log(parseCityObj(res.data))
+        // console.log(parseCityObj(res.data))
         console.log(res.data)
+        console.log(`passing coord to selectedCoord state...`);
         setSelectedCoord({ lat: res.data.coord.lat, lon: res.data.coord.lon });
         // getForecastByCoord({ units: unitContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon }); // another API call to get forecast data
-
         updateRecentCities(parseCityObj(res.data));
       })
       .catch(err => {
@@ -121,6 +130,15 @@ const Home = () => {
         }
       })
   };
+
+  const getForecast = () => {
+    console.log(`getting forecast using selectedCoord state...`);
+    API.oneCallWeatherByCoord({ units: unitContext.unitType, lat: selectedCoord.lat, lon: selectedCoord.lon })
+      .then(res => {
+        console.log(`received forecast data from oneCall, setting forecast state...`);
+        setForecast(res.data);
+      })
+  }
 
   const getForecastByCoord = ({ units, lat, lon }) => {
     console.log(lat, lon)
@@ -163,8 +181,8 @@ const Home = () => {
   };
 
   const recentCityButtonPressed = ({ city, country, lat, lon }) => {
-    setSearchCity(city);
     setSelectedCountry(country);
+    setSearchCity(city);
     setSelectedCoord({ lat: lat, lon: lon });
     // API.currentWeatherByCity({ units: unitContext.unitType, city: city, country: country })
     //   .then(res => {
@@ -199,11 +217,12 @@ const Home = () => {
         <Row className={`bg-${themeContext.backgroundColor}`}>
           <Col size="12 sm-12 md-4 lg-3 xl-3" className="">
             <SearchGroup
-              onChange={updateSearchCityState}
+              onChange={validateSearchField}
+              // onChange={searchCityInput}
               keyPressed={keyPressed}
               showSearchButton={showSearchButton}
               locateMeButtonPressed={locateMeButtonPressed}
-              searchButtonPressed={getCurrentWeather} />
+              searchButtonPressed={searchButtonPressed} />
             <CountryDropdown
               countryArr={countryArr}
               onChange={updateSelectedCountryState} />
