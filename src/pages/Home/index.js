@@ -18,12 +18,12 @@ const Home = () => {
   const localStorageKey = `recent-cities`;
   const hourlyForecastNumber = 24;
   const maxRecentCities = 3;
-  const recentCitiesArr = LocalStorage.checkLocalStorage(localStorageKey);
+  const recentCitiesArr = LocalStorage.checkLocalStorage(localStorageKey) ? LocalStorage.checkLocalStorage(localStorageKey) : [];
 
-  const [searchCity, setSearchCity] = useState(recentCitiesArr[0].city ? recentCitiesArr[0].city : `Seattle`); // search city input state
-  const [selectedCountry, setSelectedCountry] = useState(recentCitiesArr[0].country ? recentCitiesArr[0].country : `US`); // country state to track selected country
-  const [selectedCoord, setSelectedCoord] = useState(recentCitiesArr[0] ? { lat: recentCitiesArr[0].lat, lon: recentCitiesArr[0].lon } : { lat: 47.61, lon: -122.33 });
-  const [recentCities, setRecentCities] = useState(recentCitiesArr ? recentCitiesArr : []);
+  const [searchCity, setSearchCity] = useState(recentCitiesArr.length > 0 ? recentCitiesArr[0].city : `Seattle`); // search city input state
+  const [selectedCountry, setSelectedCountry] = useState(recentCitiesArr.length > 0 ? recentCitiesArr[0].country : `US`); // country state to track selected country
+  const [selectedCoord, setSelectedCoord] = useState(recentCitiesArr.length > 0 ? { lat: recentCitiesArr[0].lat, lon: recentCitiesArr[0].lon } : { lat: 47.61, lon: -122.33 });
+  const [recentCities, setRecentCities] = useState(recentCitiesArr.length > 0 ? recentCitiesArr : []);
   const [showSearchButton, setShowSearchButton] = useState(false); // use to toggle search/locate button
   const [currentWeather, setCurrentWeather] = useState();
   const [forecast, setForecast] = useState();
@@ -184,7 +184,7 @@ const Home = () => {
     const recentCitiesArr = recentCities;
     const index = recentCitiesArr.findIndex(city => city.key === key);
     recentCitiesArr.splice(index, 1);
-    setRecentCities(recentCitiesArr);
+    setRecentCities([...recentCitiesArr]);
     LocalStorage.saveLocalStorage(localStorageKey, recentCitiesArr);
   }
 
