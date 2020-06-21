@@ -15,10 +15,15 @@ import DebugTool from '../../components/DebugTool';
 import ThemeContext from '../../utils/ThemeContext';
 
 const Home = () => {
-  const [searchCity, setSearchCity] = useState(`Seattle`); // search city input state
-  const [selectedCountry, setSelectedCountry] = useState(`US`); // country state to track selected country
-  const [selectedCoord, setSelectedCoord] = useState({ lat: 47.61, lon: -122.33 });
-  const [recentCities, setRecentCities] = useState([]);
+  const localStorageKey = `recent-cities`;
+  const hourlyForecastNumber = 24;
+  const maxRecentCities = 3;
+  const recentCitiesArr = LocalStorage.checkLocalStorage(localStorageKey);
+
+  const [searchCity, setSearchCity] = useState(recentCitiesArr[0].city ? recentCitiesArr[0].city : `Seattle`); // search city input state
+  const [selectedCountry, setSelectedCountry] = useState(recentCitiesArr[0].country ? recentCitiesArr[0].country : `US`); // country state to track selected country
+  const [selectedCoord, setSelectedCoord] = useState(recentCitiesArr[0] ? { lat: recentCitiesArr[0].lat, lon: recentCitiesArr[0].lon } : { lat: 47.61, lon: -122.33 });
+  const [recentCities, setRecentCities] = useState(recentCitiesArr ? recentCitiesArr : []);
   const [showSearchButton, setShowSearchButton] = useState(false); // use to toggle search/locate button
   const [currentWeather, setCurrentWeather] = useState();
   const [forecast, setForecast] = useState();
@@ -26,35 +31,10 @@ const Home = () => {
   const unitContext = useContext(UnitContext);
   const themeContext = useContext(ThemeContext);
 
-  const localStorageKey = `recent-cities`;
-  const hourlyForecastNumber = 24;
-
-  // init useEffect
-  useEffect(() => {
-    // check recent cities in local storage
-    const recentCitiesArr = LocalStorage.checkLocalStorage(localStorageKey);
-    console.log(recentCitiesArr);
-    if (recentCitiesArr.length > 0) {
-      console.log(`non-empty recent cities array found in local storage, updating recentCities state...`)
-      setRecentCities(recentCitiesArr);
-      console.log(`getting weather for ${recentCitiesArr[0].city} with coord: lat: ${recentCitiesArr[0].lat} lon: ${recentCitiesArr[0].lon}`);
-      setSearchCity(recentCitiesArr[0].city);
-      setSelectedCountry(recentCitiesArr[0].country);
-      // API.currentWeatherByCity({ units: unitContext.unitType, city: recentCitiesArr[0].city, country: recentCitiesArr[0].country })
-      //   .then(res => {
-      //     console.log(res.data);
-      //     setCurrentWeather(res.data)
-      //   });
-      // getForecastByCoord({ units: unitContext.unitType, lat: recentCitiesArr[0].lat, lon: recentCitiesArr[0].lon });
-    } else {
-      console.log(`no existing recent city in local storage, getting default city weather...`)
-      API.currentWeatherByCity({ units: unitContext.unitType, city: searchCity, country: selectedCountry })
-    }
-  }, []);
-
   // unit change effect
   useEffect(() => {
-    console.log(`unit changed, updating weather in searchCity and selectedCountry...`)
+    console.log(`unit changed, updating weather in searchCity and selectedCountry...`);
+    console.log(`getting weather for ${searchCity}`)
     API.currentWeatherByCity({ units: unitContext.unitType, city: searchCity, country: selectedCountry })
       .then(res => {
         setCurrentWeather(res.data);
@@ -65,14 +45,14 @@ const Home = () => {
   // city change effect
   useEffect(() => {
     console.log(`searchCity changed, updating current weather...`);
-    // searchButtonPressed();
+    getCurrentWeather();
   }, [searchCity]);
 
   // selected coord change effect
   useEffect(() => {
     console.log(`selectedCoord changed, updating forecast...`);
+    getForecast();
   }, [selectedCoord]);
-
 
   // update selectedCountry state
   const updateSelectedCountryState = event => {
@@ -84,17 +64,17 @@ const Home = () => {
   // function that validates input and switch between search and locate me buttons
   const validateSearchField = event => (event.target.value.trim()) ? setShowSearchButton(true) : setShowSearchButton(false);
 
+  // update recent cities state
   const updateRecentCities = newCityObj => {
-    const existingCity = recentCities.find(city => {
+    const currentRecentCitiesArr = recentCities;
+    const existingCity = currentRecentCitiesArr.find(city => {
       return (city.city === newCityObj.city && city.country === newCityObj.country);
     });
     if (existingCity) return;
-    const currentRecentCitiesArr = recentCities;
-    if (currentRecentCitiesArr.length > 2) { currentRecentCitiesArr.splice(0, 1) };
-    currentRecentCitiesArr.push(newCityObj);
-    setRecentCities(currentRecentCitiesArr);
-    console.log(`adding ${newCityObj.city} to list`)
-    LocalStorage.saveLocalStorage(localStorageKey, currentRecentCitiesArr);
+    const newRecentCitiesArr = [newCityObj, ...currentRecentCitiesArr];
+    if (newRecentCitiesArr.length > maxRecentCities) { newRecentCitiesArr.pop() };
+    setRecentCities(newRecentCitiesArr);
+    LocalStorage.saveLocalStorage(localStorageKey, newRecentCitiesArr);
   }
 
   // check for enter key and update city state
@@ -102,20 +82,18 @@ const Home = () => {
     if (event.keyCode === 13) {
       const input = event.target.value;
       console.log(`enter key pressed, input value is '${input}', updating city state...`);
-      setSearchCity(input);
+      searchButtonPressed(input, selectedCountry);
     }
   }
 
   // api call functions
-  const searchButtonPressed = () => {
+  const searchButtonPressed = (city, country) => {
     console.log(`getting current weather by city and country...`);
-    API.currentWeatherByCity({ units: unitContext.unitType, city: searchCity, country: selectedCountry })
+    API.currentWeatherByCity({ units: unitContext.unitType, city: city, country: country })
       .then(res => {
-        // pass raw data to currentWeather state
         console.log(`setting currentWeather state...`)
         setCurrentWeather(res.data);
         // console.log(parseCityObj(res.data))
-        console.log(res.data)
         console.log(`passing coord to selectedCoord state...`);
         setSelectedCoord({ lat: res.data.coord.lat, lon: res.data.coord.lon });
         // getForecastByCoord({ units: unitContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon }); // another API call to get forecast data
@@ -131,6 +109,28 @@ const Home = () => {
       })
   };
 
+  // get current weather using city and country state
+  const getCurrentWeather = () => {
+    console.log(`getting current weather using states...`);
+    API.currentWeatherByCity({ units: unitContext.unitType, city: searchCity, country: selectedCountry })
+      .then(res => {
+        console.log(`setting currentWeather state...`)
+        setCurrentWeather(res.data);
+      })
+  };
+
+  // get current weather by taking coord in param
+  const getCurrentWeatherByCoord = ({ lat, lon }) => {
+    API.currentWeatherByCoord({ units: unitContext.unitType, lat: lat, lon: lon })
+      .then(res => {
+        setCurrentWeather(res.data);
+        console.log(`adding recent-cities...`);
+        console.log(parseCityObj(res.data));
+        updateRecentCities(parseCityObj(res.data));
+      });
+  }
+
+  // get forecast using coord state
   const getForecast = () => {
     console.log(`getting forecast using selectedCoord state...`);
     API.oneCallWeatherByCoord({ units: unitContext.unitType, lat: selectedCoord.lat, lon: selectedCoord.lon })
@@ -140,31 +140,21 @@ const Home = () => {
       })
   }
 
-  const getForecastByCoord = ({ units, lat, lon }) => {
-    console.log(lat, lon)
-    API.oneCallWeatherByCoord({ units, lat, lon })
+  // get forecast by taking coord in param
+  const getForecastByCoord = ({ lat, lon }) => {
+    console.log(`getting forecast using coord in param...`);
+    API.oneCallWeatherByCoord({ units: unitContext.unitType, lat: lat, lon: lon })
       .then(res => {
-        console.log(`oneCallData`, res.data)
+        console.log(`received forecast data from oneCall, setting forecast state...`);
         setForecast(res.data);
       })
   };
 
   const locateMeButtonPressed = () => {
     const success = browserPosition => {
-      API.currentWeatherByCoord({
-        units: unitContext.unitType,
-        lat: browserPosition.coords.latitude,
-        lon: browserPosition.coords.longitude
-      })
-        .then(res => {
-          setCurrentWeather(res.data);
-          updateRecentCities(parseCityObj(res.data));
-        });
-      getForecastByCoord({
-        units: unitContext.unitType,
-        lat: browserPosition.coords.latitude,
-        lon: browserPosition.coords.longitude
-      });
+      const currentCoord = browserPosition.coords;
+      getCurrentWeatherByCoord({ lat: currentCoord.latitude, lon: currentCoord.longitude });
+      getForecastByCoord({ lat: currentCoord.latitude, lon: currentCoord.longitude });
     }
 
     const error = () => {
@@ -184,12 +174,6 @@ const Home = () => {
     setSelectedCountry(country);
     setSearchCity(city);
     setSelectedCoord({ lat: lat, lon: lon });
-    // API.currentWeatherByCity({ units: unitContext.unitType, city: city, country: country })
-    //   .then(res => {
-    //     // pass weather data to currentWeather state
-    //     setCurrentWeather(res.data);
-    //     getForecastByCoord({ units: unitContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon })
-    //   })
   };
 
   const removeCityButtonPressed = key => {
@@ -218,13 +202,13 @@ const Home = () => {
           <Col size="12 sm-12 md-4 lg-3 xl-3" className="">
             <SearchGroup
               onChange={validateSearchField}
-              // onChange={searchCityInput}
               keyPressed={keyPressed}
               showSearchButton={showSearchButton}
               locateMeButtonPressed={locateMeButtonPressed}
               searchButtonPressed={searchButtonPressed} />
             <CountryDropdown
               countryArr={countryArr}
+              selectedCountry={selectedCountry}
               onChange={updateSelectedCountryState} />
             {recentCities.length > 0 ?
               <RecentCitiesDiv

@@ -11,14 +11,27 @@ import ThemeContext from './utils/ThemeContext';
 
 const App = () => {
 
+  // useEffect(() => {
+  //   const localSetting = LocalStorage.checkLocalStorage(`simple-weather`);
+  //   console.log(`localSetting is`);
+  //   console.log(localSetting);
+  //   if (localSetting) {
+  //     console.log(`found existing local setting, setting darkMode state and unitState...`)
+  //     setDarkModeState({ ...darkModeState, darkMode: localSetting.darkMode });
+  //     setUnitState({ ...unitState, unitType: localSetting.type, units: localSetting.units })
+  //   }
+  // }, [])
+
+  const localSetting = LocalStorage.checkLocalStorage(`simple-weather`);
+
   const [darkModeState, setDarkModeState] = useState({
-    darkMode: false,
+    darkMode: localSetting.darkMode ? localSetting.darkMode : false,
     toggleDarkMode: (bool) => setDarkModeState({ ...darkModeState, darkMode: bool })
   });
 
   const [unitState, setUnitState] = useState({
-    unitType: `imperial`,
-    units: `°F`,
+    unitType: localSetting.type ? localSetting.type : `imperial`,
+    units: localSetting.units ? localSetting.units : `°F`,
     updateUnitType: (unitType, units) => {
       setUnitState({ ...unitState, unitType, units });
     }
@@ -33,17 +46,6 @@ const App = () => {
       setThemeState({ ...themeState, ...newThemeObj })
     }
   })
-
-  useEffect(() => {
-    const localSetting = LocalStorage.checkLocalStorage(`simple-weather`);
-    console.log(`localSetting is`);
-    console.log(localSetting);
-    if (localSetting) {
-      console.log(`found existing local setting, setting darkMode state and unitState...`)
-      setDarkModeState({ ...darkModeState, darkMode: localSetting.darkMode });
-      setUnitState({ ...unitState, unitType: localSetting.type, units: localSetting.units })
-    }
-  }, [])
 
   return (
     <Router>
