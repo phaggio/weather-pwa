@@ -17,7 +17,7 @@ import ThemeContext from '../../utils/ThemeContext';
 const Home = () => {
   const localStorageKey = `recent-cities`;
   const hourlyForecastNumber = 24;
-  const maxRecentCities = 3;
+  const maxRecentCities = 6;
   const savedCities = LocalStorage.checkLocalStorage(localStorageKey) ? LocalStorage.checkLocalStorage(localStorageKey) : [];
 
   const [searchCity, setSearchCity] = useState(savedCities.length > 0 ? savedCities[0].city : `Seattle`);
@@ -222,13 +222,13 @@ const Home = () => {
               :
               ``
             }
-            <DebugTool
+            {/* <DebugTool
               consoleRecentCities={consoleRecentCities}
               consoleSearchCity={consoleSearchCity}
               consoleSelectedCountry={consoleSelectedCountry}
               consoleSelectedCoord={consoleSelectedCoord}
               consoleShowRecentCities={consoleShowRecentCities}
-            />
+            /> */}
           </Col>
 
           <Col size="sm-12 md-8 lg-9 xl-9">
