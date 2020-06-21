@@ -3,7 +3,7 @@ import { Col, Row } from '../Grid';
 import ThemeContext from '../../utils/ThemeContext';
 
 const SearchGroup = props => {
-
+  const searchInput = React.createRef();
   const themeContext = useContext(ThemeContext);
 
   return (
@@ -13,17 +13,19 @@ const SearchGroup = props => {
           <label className={`text-${themeContext.textColor}`}>Search a city:</label>
           <div className="input-group">
             <input
+              ref={searchInput}
               className="form-control"
               id="search-input"
               type="text"
               placeholder="city name"
               aria-label="Search"
               onChange={event => props.onChange(event)}
-              onKeyDown={event => props.keyPressed(event)} />
+              onKeyDown={event => props.keyPressed(event)}
+            />
 
             <div className="input-group-append">
               {props.showSearchButton ?
-                <button className="btn btn-primary btn-sm" type="search" onClick={() => props.searchButtonPressed()}>
+                <button className="btn btn-primary btn-sm" type="search" onClick={() => props.searchButtonPressed(searchInput)}>
                   <i className="material-icons">search</i>
                 </button>
                 :
@@ -37,6 +39,6 @@ const SearchGroup = props => {
       </Col>
     </Row>
   );
-}
+};
 
 export default SearchGroup

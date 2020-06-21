@@ -82,21 +82,25 @@ const Home = () => {
     if (event.keyCode === 13) {
       const input = event.target.value;
       console.log(`enter key pressed, input value is '${input}', updating city state...`);
-      searchButtonPressed(input, selectedCountry);
+      getCurrentWeatherByCity(input, selectedCountry);
     }
+  };
+
+  const searchButtonPressed = (ref) => {
+    const city = ref.current.value;
+    console.log(city);
+    getCurrentWeatherByCity(city, selectedCountry);
   }
 
   // api call functions
-  const searchButtonPressed = (city, country) => {
+  const getCurrentWeatherByCity = (city, country) => {
     console.log(`getting current weather by city and country...`);
     API.currentWeatherByCity({ units: unitContext.unitType, city: city, country: country })
       .then(res => {
         console.log(`setting currentWeather state...`)
         setCurrentWeather(res.data);
-        // console.log(parseCityObj(res.data))
         console.log(`passing coord to selectedCoord state...`);
         setSelectedCoord({ lat: res.data.coord.lat, lon: res.data.coord.lon });
-        // getForecastByCoord({ units: unitContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon }); // another API call to get forecast data
         updateRecentCities(parseCityObj(res.data));
       })
       .catch(err => {
