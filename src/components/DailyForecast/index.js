@@ -8,7 +8,8 @@ const DailyForecastDiv = props => {
 
   const unitContext = useContext(UnitContext);
   const themeContext = useContext(ThemeContext);
-  const dailyForecastArr = Array(props.daily).shift();
+  const dailyForecastArr = props.daily
+  dailyForecastArr.shift();
 
   const imgStyle = {
     height: `60px`,
