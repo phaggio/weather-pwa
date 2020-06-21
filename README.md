@@ -15,11 +15,13 @@ Current weather information includes:
 
 ## Features
 * a collapsible setting panel
-* different units
+* different units in setting
 * dark mode
 * get user current location weather
+* collapsible recent city list
 * save recently searched city
 * country selection
+* user setting (dark mode, unit setting) persist in local storage
 
 ## Technologies
 * React
