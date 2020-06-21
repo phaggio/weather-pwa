@@ -25,6 +25,7 @@ const Home = () => {
   const [selectedCoord, setSelectedCoord] = useState(savedCities.length > 0 ? { lat: savedCities[0].lat, lon: savedCities[0].lon } : { lat: 47.61, lon: -122.33 });
   const [recentCities, setRecentCities] = useState(savedCities);
   const [showSearchButton, setShowSearchButton] = useState(false);
+  const [showRecentCities, setShowRecentCities] = useState(true); // default show recent cities
   const [currentWeather, setCurrentWeather] = useState();
   const [forecast, setForecast] = useState();
 
@@ -182,6 +183,10 @@ const Home = () => {
     recentCitiesArr.splice(index, 1);
     setRecentCities([...recentCitiesArr]);
     LocalStorage.saveLocalStorage(localStorageKey, recentCitiesArr);
+  };
+
+  const toggleShowRecentCities = () => {
+    setShowRecentCities(!showRecentCities);
   }
 
   // dev log functions
@@ -189,6 +194,7 @@ const Home = () => {
   const consoleSelectedCountry = () => console.log(selectedCountry);
   const consoleSearchCity = () => console.log(searchCity);
   const consoleSelectedCoord = () => console.log(selectedCoord);
+  const consoleShowRecentCities = () => console.log(showRecentCities);
 
   return (
     <Container fluid="true" className={`vh-100 bg-${themeContext.backgroundColor}`}>
@@ -209,7 +215,10 @@ const Home = () => {
               <RecentCitiesDiv
                 recentCities={recentCities}
                 recentCityButtonPressed={recentCityButtonPressed}
-                removeCityButtonPressed={removeCityButtonPressed} />
+                removeCityButtonPressed={removeCityButtonPressed}
+                showRecentCities={showRecentCities}
+                toggleShowRecentCities={toggleShowRecentCities}
+              />
               :
               ``
             }
@@ -218,6 +227,7 @@ const Home = () => {
               consoleSearchCity={consoleSearchCity}
               consoleSelectedCountry={consoleSelectedCountry}
               consoleSelectedCoord={consoleSelectedCoord}
+              consoleShowRecentCities={consoleShowRecentCities}
             />
           </Col>
 

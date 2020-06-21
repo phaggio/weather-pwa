@@ -10,9 +10,18 @@ const RecentCitiesDiv = props => {
     <Row className={`mh-100 bg-${themeContext.backgroundColor}`}>
       <Col size="12">
         <div className={`d-flex flex-column btn-group mt-3`}>
-          <label className={`text-${themeContext.textColor}`}>Recent cities</label>
-          <ul className={`list-group w-100`}>
+          <div className="d-flex justify-content-between">
+            <label className={`text-${themeContext.textColor}`}>Recent cities</label>
 
+            <span className={`btn py-0 material-icons text-${themeContext.textColor}`}
+              data-toggle="collapse"
+              data-target="#recent-cities"
+              role="button"
+              onClick={() => props.toggleShowRecentCities()}
+            >{props.showRecentCities ? `expand_less` : `expand_more`}</span>
+          </div>
+
+          <ul className={`list-group w-100 collapse show`} id="recent-cities">
             {props.recentCities.map(city => {
               return (
                 <div className={`btn-group rounded mb-1`} key={city.key}>
@@ -35,7 +44,6 @@ const RecentCitiesDiv = props => {
         </div>
       </Col>
     </Row>
-
   )
 };
 

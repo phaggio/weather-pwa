@@ -20,6 +20,7 @@ const DebugTool = props => {
         <button className="btn btn-warning w-100" onClick={props.consoleSearchCity}><small>searchCityState</small></button>
         <button className="btn btn-info w-100" onClick={props.consoleSelectedCountry}><small>selectedCountryState</small></button>
         <button className="btn btn-light w-100" onClick={props.consoleSelectedCoord}><small>selectedCoord</small></button>
+        <button className="btn btn-dark w-100" onClick={props.consoleShowRecentCities}><small>showRecentCities</small></button>
       </ul>
     </div>
   )
