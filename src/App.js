@@ -14,13 +14,13 @@ const App = () => {
   const localSetting = LocalStorage.checkLocalStorage(`simple-weather`);
 
   const [darkModeState, setDarkModeState] = useState({
-    darkMode: localSetting.darkMode ? localSetting.darkMode : false,
+    darkMode: localSetting ? localSetting.darkMode : false,
     toggleDarkMode: (bool) => setDarkModeState({ ...darkModeState, darkMode: bool })
   });
 
   const [unitState, setUnitState] = useState({
-    unitType: localSetting.type ? localSetting.type : `imperial`,
-    units: localSetting.units ? localSetting.units : `°F`,
+    unitType: localSetting ? localSetting.type : `imperial`,
+    units: localSetting ? localSetting.units : `°F`,
     updateUnitType: (unitType, units) => {
       setUnitState({ ...unitState, unitType, units });
     }
