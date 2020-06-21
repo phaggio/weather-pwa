@@ -194,14 +194,9 @@ const Home = () => {
   const consoleSearchCity = () => console.log(searchCity);
   const consoleSelectedCoord = () => console.log(selectedCoord);
 
-  const homeStyle = {
-    minHeight: `1150px`
-  }
-
   return (
-
     <Container fluid="true" className={`vh-100 bg-${themeContext.backgroundColor}`}>
-      <Col size="12" className={`mh-100 mx-0 px-0 bg-${themeContext.backgroundColor}`} style={homeStyle}>
+      <Col size="12" className={`mh-100 mx-0 px-0 bg-${themeContext.backgroundColor}`}>
         <Row className={`bg-${themeContext.backgroundColor}`}>
           <Col size="12 sm-12 md-4 lg-3 xl-3" className="">
             <SearchGroup
@@ -248,7 +243,6 @@ const Home = () => {
         </Row>
       </Col>
     </Container>
-
   );
 }
 

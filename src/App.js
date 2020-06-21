@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -10,17 +10,6 @@ import UnitContext from './utils/UnitContext';
 import ThemeContext from './utils/ThemeContext';
 
 const App = () => {
-
-  // useEffect(() => {
-  //   const localSetting = LocalStorage.checkLocalStorage(`simple-weather`);
-  //   console.log(`localSetting is`);
-  //   console.log(localSetting);
-  //   if (localSetting) {
-  //     console.log(`found existing local setting, setting darkMode state and unitState...`)
-  //     setDarkModeState({ ...darkModeState, darkMode: localSetting.darkMode });
-  //     setUnitState({ ...unitState, unitType: localSetting.type, units: localSetting.units })
-  //   }
-  // }, [])
 
   const localSetting = LocalStorage.checkLocalStorage(`simple-weather`);
 
