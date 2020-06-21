@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/simple-weather/static/css/main.5ecd60fb.chunk.css",
-    "main.js": "/simple-weather/static/js/main.9da425ee.chunk.js",
-    "main.js.map": "/simple-weather/static/js/main.9da425ee.chunk.js.map",
+    "main.js": "/simple-weather/static/js/main.82815236.chunk.js",
+    "main.js.map": "/simple-weather/static/js/main.82815236.chunk.js.map",
     "runtime-main.js": "/simple-weather/static/js/runtime-main.cb5533ae.js",
     "runtime-main.js.map": "/simple-weather/static/js/runtime-main.cb5533ae.js.map",
     "static/js/2.0d5e5458.chunk.js": "/simple-weather/static/js/2.0d5e5458.chunk.js",
     "static/js/2.0d5e5458.chunk.js.map": "/simple-weather/static/js/2.0d5e5458.chunk.js.map",
     "index.html": "/simple-weather/index.html",
-    "precache-manifest.bdaaade008dbc8213cbd20feb25fd67f.js": "/simple-weather/precache-manifest.bdaaade008dbc8213cbd20feb25fd67f.js",
+    "precache-manifest.e13b1ca629fece3fe95b8cceaf0d90eb.js": "/simple-weather/precache-manifest.e13b1ca629fece3fe95b8cceaf0d90eb.js",
     "service-worker.js": "/simple-weather/service-worker.js",
     "static/css/main.5ecd60fb.chunk.css.map": "/simple-weather/static/css/main.5ecd60fb.chunk.css.map",
     "static/js/2.0d5e5458.chunk.js.LICENSE.txt": "/simple-weather/static/js/2.0d5e5458.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.cb5533ae.js",
     "static/js/2.0d5e5458.chunk.js",
     "static/css/main.5ecd60fb.chunk.css",
-    "static/js/main.9da425ee.chunk.js"
+    "static/js/main.82815236.chunk.js"
   ]
 }
