@@ -35,6 +35,7 @@ const RecentCitiesDiv = props => {
         </div>
       </Col>
     </Row>
+
   )
 };
 
