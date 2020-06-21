@@ -18,13 +18,13 @@ const Home = () => {
   const localStorageKey = `recent-cities`;
   const hourlyForecastNumber = 24;
   const maxRecentCities = 3;
-  const recentCitiesArr = LocalStorage.checkLocalStorage(localStorageKey) ? LocalStorage.checkLocalStorage(localStorageKey) : [];
+  const savedCities = LocalStorage.checkLocalStorage(localStorageKey) ? LocalStorage.checkLocalStorage(localStorageKey) : [];
 
-  const [searchCity, setSearchCity] = useState(recentCitiesArr.length > 0 ? recentCitiesArr[0].city : `Seattle`); // search city input state
-  const [selectedCountry, setSelectedCountry] = useState(recentCitiesArr.length > 0 ? recentCitiesArr[0].country : `US`); // country state to track selected country
-  const [selectedCoord, setSelectedCoord] = useState(recentCitiesArr.length > 0 ? { lat: recentCitiesArr[0].lat, lon: recentCitiesArr[0].lon } : { lat: 47.61, lon: -122.33 });
-  const [recentCities, setRecentCities] = useState(recentCitiesArr.length > 0 ? recentCitiesArr : []);
-  const [showSearchButton, setShowSearchButton] = useState(false); // use to toggle search/locate button
+  const [searchCity, setSearchCity] = useState(savedCities.length > 0 ? savedCities[0].city : `Seattle`);
+  const [selectedCountry, setSelectedCountry] = useState(savedCities.length > 0 ? savedCities[0].country : `US`);
+  const [selectedCoord, setSelectedCoord] = useState(savedCities.length > 0 ? { lat: savedCities[0].lat, lon: savedCities[0].lon } : { lat: 47.61, lon: -122.33 });
+  const [recentCities, setRecentCities] = useState(savedCities);
+  const [showSearchButton, setShowSearchButton] = useState(false);
   const [currentWeather, setCurrentWeather] = useState();
   const [forecast, setForecast] = useState();
 
@@ -33,8 +33,6 @@ const Home = () => {
 
   // unit change effect
   useEffect(() => {
-    console.log(`unit changed, updating weather in searchCity and selectedCountry...`);
-    console.log(`getting weather for ${searchCity}`)
     API.currentWeatherByCity({ units: unitContext.unitType, city: searchCity, country: selectedCountry })
       .then(res => {
         setCurrentWeather(res.data);
@@ -81,7 +79,6 @@ const Home = () => {
   const keyPressed = event => {
     if (event.keyCode === 13) {
       const input = event.target.value;
-      console.log(`enter key pressed, input value is '${input}', updating city state...`);
       getCurrentWeatherByCity(input, selectedCountry);
     }
   };
@@ -94,7 +91,6 @@ const Home = () => {
 
   // api call functions
   const getCurrentWeatherByCity = (city, country) => {
-    console.log(`getting current weather by city and country...`);
     API.currentWeatherByCity({ units: unitContext.unitType, city: city, country: country })
       .then(res => {
         console.log(`setting currentWeather state...`)
@@ -196,9 +192,9 @@ const Home = () => {
 
   return (
     <Container fluid="true" className={`vh-100 bg-${themeContext.backgroundColor}`}>
-      <Col size="12" className={`mh-100 mx-0 px-0 bg-${themeContext.backgroundColor}`}>
+      <Col size="12" className={`mh-100 mx-0 px-0`}>
         <Row className={`bg-${themeContext.backgroundColor}`}>
-          <Col size="12 sm-12 md-4 lg-3 xl-3" className="">
+          <Col size="12 sm-12 md-4 lg-3 xl-3">
             <SearchGroup
               onChange={validateSearchField}
               keyPressed={keyPressed}
