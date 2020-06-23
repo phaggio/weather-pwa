@@ -41,22 +41,17 @@ const Home = () => {
       })
   }, [unitContext]);
 
-  // city change effect
-  useEffect(() => {
-    console.log(`searchCity changed, updating current weather...`);
-    getCurrentWeather();
-  }, [searchCity]);
-
-  // selected coord change effect
+  // get forecast when coord state updates
   useEffect(() => {
     console.log(`selectedCoord changed, updating forecast...`);
     getForecast();
   }, [selectedCoord]);
 
+
   // update selectedCountry state
   const updateSelectedCountryState = event => {
     const country = event.target.value;
-    console.log(`selected ${country}`);
+    console.log(`selected ${country}, updating country state...`);
     setSelectedCountry(country);
   };
 
@@ -70,6 +65,7 @@ const Home = () => {
       return (city.city === newCityObj.city && city.country === newCityObj.country);
     });
     if (existingCity) return;
+    console.log(`adding ${newCityObj.city} to recent cities...`)
     const newRecentCitiesArr = [newCityObj, ...currentRecentCitiesArr];
     if (newRecentCitiesArr.length > maxRecentCities) { newRecentCitiesArr.pop() };
     setRecentCities(newRecentCitiesArr);
@@ -79,18 +75,24 @@ const Home = () => {
   // check for enter key and update city state
   const keyPressed = event => {
     if (event.keyCode === 13) {
-      const input = event.target.value;
-      getCurrentWeatherByCity(input, selectedCountry);
+      const city = event.target.value;
+      console.log(`enter key pressed, '${city}' in the search field, updating city state...`)
+      setSearchCity(city);
+      console.log(`getting current weather by city and country...`);
+      getCurrentWeatherByCity(city, selectedCountry);
     }
   };
 
-  const searchButtonPressed = (ref) => {
+  // when blue search button is pressed
+  const searchButtonPressed = ref => {
     const city = ref.current.value;
-    console.log(city);
+    console.log(`search button pressed, '${city}' in the search field, updating city state...`);
+    setSearchCity(city);
+    console.log(`getting current weather by city and country...`);
     getCurrentWeatherByCity(city, selectedCountry);
   }
 
-  // api call functions
+  // only called when searching a new city
   const getCurrentWeatherByCity = (city, country) => {
     API.currentWeatherByCity({ units: unitContext.unitType, city: city, country: country })
       .then(res => {
@@ -98,40 +100,30 @@ const Home = () => {
         setCurrentWeather(res.data);
         console.log(`passing coord to selectedCoord state...`);
         setSelectedCoord({ lat: res.data.coord.lat, lon: res.data.coord.lon });
+        console.log(`adding ${res.data.name} to recent-cities...`);
         updateRecentCities(parseCityObj(res.data));
       })
       .catch(err => {
         if (err.response) {
-          if (err.response.status === 404) {
-            alert(`Cannot find that city`);
-          }
-          alert(`Something is wrong, cannot get weather at this time`);
+          if (err.response.status === 404) { alert(`Cannot find that city`) }
+          else { alert(`Something is wrong, cannot get weather at this time`) }
         }
-      })
+      });
   };
 
-  // get current weather using city and country state
-  const getCurrentWeather = () => {
-    console.log(`getting current weather using states...`);
-    API.currentWeatherByCity({ units: unitContext.unitType, city: searchCity, country: selectedCountry })
-      .then(res => {
-        console.log(`setting currentWeather state...`)
-        setCurrentWeather(res.data);
-      })
-  };
-
-  // get current weather by taking coord in param
+  // only call when user press locate me button
   const getCurrentWeatherByCoord = ({ lat, lon }) => {
     API.currentWeatherByCoord({ units: unitContext.unitType, lat: lat, lon: lon })
       .then(res => {
+        console.log(`updating currentWeather state...`);
         setCurrentWeather(res.data);
-        console.log(`adding recent-cities...`);
+        console.log(`adding city to recent-cities...`);
         console.log(parseCityObj(res.data));
         updateRecentCities(parseCityObj(res.data));
       });
   }
 
-  // get forecast using coord state
+  // get forecast using coord state, useEffect
   const getForecast = () => {
     console.log(`getting forecast using selectedCoord state...`);
     API.oneCallWeatherByCoord({ units: unitContext.unitType, lat: selectedCoord.lat, lon: selectedCoord.lon })
@@ -139,42 +131,45 @@ const Home = () => {
         console.log(`received forecast data from oneCall, setting forecast state...`);
         setForecast(res.data);
       })
+      .catch(err => {
+        if (err.response) {
+          if (err.response.status === 404) { alert(`Cannot find forecast for that city`) }
+          else { alert(`Something is wrong, cannot get forecast at this time`) }
+        }
+      });
   }
 
-  // get forecast by taking coord in param
+  // get forecast by coord in arg, this is only called when unit changes
   const getForecastByCoord = ({ lat, lon }) => {
-    console.log(`getting forecast using coord in param...`);
     API.oneCallWeatherByCoord({ units: unitContext.unitType, lat: lat, lon: lon })
-      .then(res => {
-        console.log(`received forecast data from oneCall, setting forecast state...`);
-        setForecast(res.data);
-      })
+      .then(res => { setForecast(res.data) })
   };
 
   const locateMeButtonPressed = () => {
     const success = browserPosition => {
-      const currentCoord = browserPosition.coords;
-      getCurrentWeatherByCoord({ lat: currentCoord.latitude, lon: currentCoord.longitude });
-      getForecastByCoord({ lat: currentCoord.latitude, lon: currentCoord.longitude });
+      const coords = browserPosition.coords;
+      console.log(`getting current weather by coord...`)
+      getCurrentWeatherByCoord({ lat: coords.latitude, lon: coords.longitude });
+      console.log(`updating selectedCoord state...`);
+      setSelectedCoord({ lat: coords.latitude, lon: coords.longitude });
     }
 
-    const error = () => {
-      console.log(`Unable to retrieve your location ...`);
-    };
+    const error = () => { alert(`Unable to retrieve your location at this time`) };
 
     if (!navigator.geolocation) {
-      console.log(`Geolocation is not supported by your browser ...`)
+      console.log(`Geolocation is not supported by your browser ...`);
+      alert(`Geolocation is not supported by your browser...`);
     } else {
       console.log(`Getting your location ...`)
-      const options = { timeout: 20000 };
+      const options = { timeout: 12000 };
       navigator.geolocation.getCurrentPosition(success, error, options);
     }
   };
 
-  const recentCityButtonPressed = ({ city, country, lat, lon }) => {
+  const recentCityButtonPressed = ({ city, country }) => {
     setSelectedCountry(country);
     setSearchCity(city);
-    setSelectedCoord({ lat: lat, lon: lon });
+    getCurrentWeatherByCity(city, country);
   };
 
   const removeCityButtonPressed = key => {
@@ -222,13 +217,13 @@ const Home = () => {
               :
               ``
             }
-            {/* <DebugTool
+            <DebugTool
               consoleRecentCities={consoleRecentCities}
               consoleSearchCity={consoleSearchCity}
               consoleSelectedCountry={consoleSelectedCountry}
               consoleSelectedCoord={consoleSelectedCoord}
               consoleShowRecentCities={consoleShowRecentCities}
-            /> */}
+            />
           </Col>
 
           <Col size="sm-12 md-8 lg-9 xl-9">
