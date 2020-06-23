@@ -34,39 +34,29 @@ const Home = () => {
 
   // unit change effect
   useEffect(() => {
-    API.currentWeatherByCity({ units: unitContext.unitType, city: searchCity, country: selectedCountry })
-      .then(res => {
-        setCurrentWeather(res.data);
-        getForecastByCoord({ units: unitContext.unitType, lat: res.data.coord.lat, lon: res.data.coord.lon });
-      })
+    getCurrentWeatherByCoord(selectedCoord)
+    getForecastByCoord(selectedCoord)
   }, [unitContext]);
 
   // get forecast when coord state updates
   useEffect(() => {
-    console.log(`selectedCoord changed, updating forecast...`);
     getForecast();
   }, [selectedCoord]);
 
-
-  // update selectedCountry state
   const updateSelectedCountryState = event => {
     const country = event.target.value;
-    console.log(`selected ${country}, updating country state...`);
     setSelectedCountry(country);
   };
 
-  // function that validates input and switch between search and locate me buttons
   const validateSearchField = event => (event.target.value.trim()) ? setShowSearchButton(true) : setShowSearchButton(false);
 
   // update recent cities state
   const updateRecentCities = newCityObj => {
-    const currentRecentCitiesArr = recentCities;
-    const existingCity = currentRecentCitiesArr.find(city => {
-      return (city.city === newCityObj.city && city.country === newCityObj.country);
-    });
-    if (existingCity) return;
+    const recentCitiesArr = recentCities;
+    const exist = recentCitiesArr.find(city => { return (city.city === newCityObj.city && city.country === newCityObj.country) });
+    if (exist) return;
     console.log(`adding ${newCityObj.city} to recent cities...`)
-    const newRecentCitiesArr = [newCityObj, ...currentRecentCitiesArr];
+    const newRecentCitiesArr = [newCityObj, ...recentCitiesArr];
     if (newRecentCitiesArr.length > maxRecentCities) { newRecentCitiesArr.pop() };
     setRecentCities(newRecentCitiesArr);
     LocalStorage.saveLocalStorage(localStorageKey, newRecentCitiesArr);
@@ -76,9 +66,7 @@ const Home = () => {
   const keyPressed = event => {
     if (event.keyCode === 13) {
       const city = event.target.value;
-      console.log(`enter key pressed, '${city}' in the search field, updating city state...`)
       setSearchCity(city);
-      console.log(`getting current weather by city and country...`);
       getCurrentWeatherByCity(city, selectedCountry);
     }
   };
@@ -100,7 +88,6 @@ const Home = () => {
         setCurrentWeather(res.data);
         console.log(`passing coord to selectedCoord state...`);
         setSelectedCoord({ lat: res.data.coord.lat, lon: res.data.coord.lon });
-        console.log(`adding ${res.data.name} to recent-cities...`);
         updateRecentCities(parseCityObj(res.data));
       })
       .catch(err => {
@@ -117,8 +104,6 @@ const Home = () => {
       .then(res => {
         console.log(`updating currentWeather state...`);
         setCurrentWeather(res.data);
-        console.log(`adding city to recent-cities...`);
-        console.log(parseCityObj(res.data));
         updateRecentCities(parseCityObj(res.data));
       });
   }
@@ -217,13 +202,13 @@ const Home = () => {
               :
               ``
             }
-            <DebugTool
+            {/* <DebugTool
               consoleRecentCities={consoleRecentCities}
               consoleSearchCity={consoleSearchCity}
               consoleSelectedCountry={consoleSelectedCountry}
               consoleSelectedCoord={consoleSelectedCoord}
               consoleShowRecentCities={consoleShowRecentCities}
-            />
+            /> */}
           </Col>
 
           <Col size="sm-12 md-8 lg-9 xl-9">
