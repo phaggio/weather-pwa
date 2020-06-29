@@ -14,7 +14,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "https://phaggio.github.io/",
+  "start_url": "https://phaggio.github.io/simple-weather",
   "display": "standalone",
   "theme_color": "#37474F",
   "background_color": "#B0BEC5"
