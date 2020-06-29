@@ -1,0 +1,31 @@
+{
+  "short_name": "Simple Weather short name",
+  "name": "Simple Weather name",
+  "description": "Single page weather forecast",
+  "icons": [
+    {
+      "src": "simple-weather-16.ico",
+      "sizes": "16x16",
+      "type": "image/ico"
+    },
+    {
+      "src": "simple-weather-24.ico",
+      "sizes": "24x24",
+      "type": "image/ico"
+    },
+    {
+      "src": "simple-weather-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "simple-weather-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
