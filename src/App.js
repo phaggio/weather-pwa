@@ -41,12 +41,10 @@ const App = () => {
       <UnitContext.Provider value={unitState}>
         <DarkModeContext.Provider value={darkModeState}>
           <ThemeContext.Provider value={themeState}>
-            <div className={``}>
               <Navbar />
-              <Route exact path="/" component={Home} />
-              <Route exact path="/simple-weather" component={Home} />
+              <Route path="/" component={Home} />
+              {/* <Route exact path="/simple-weather" component={Home} /> */}
               <Footer />
-            </div>
           </ThemeContext.Provider>
         </DarkModeContext.Provider>
       </UnitContext.Provider>

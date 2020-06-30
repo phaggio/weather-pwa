@@ -55,6 +55,7 @@ const Navbar = () => {
             updateUnits={updateUnits}
             currentUnitType={unitContext.unitType}
           />
+          
           <small className={`text-${themeContext.textColor}`}><em>version 1.1.0</em></small>
         </div>
       </div>
