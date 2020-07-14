@@ -31,6 +31,7 @@ Information includes:
 * React.js
 * Moment.js
 * Bootstrap
+* gh-pages
 * LocalStorage
 * Google Fonts
 
