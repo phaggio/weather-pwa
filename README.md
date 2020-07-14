@@ -4,29 +4,34 @@ Application link: https://phaggio.github.io/simple-weather/
 
 ## Overview
 This is a single page weather web app, where user can search for current and forecast weather condition.
-Current weather information includes:
+Information includes:
 * current temperature
+* local time
 * sunrise time
 * sunset time
 * humidity
 * atmosphere pressure
 * wind speed and direction
 * current temperature feels like
+* hourly forecast (next 24 hours)
+* daily forecast (next 7 days)
 
 ## Features
-* a collapsible setting panel
-* different units in setting
+* a hamburger button to expand/collapse app settings
+* unit system (Fahrenheit, Celsius, Kelvin)
 * dark mode
-* get user current location weather
+* setting preference saved to LocalStorage
+* get user current location
 * collapsible recent city list
-* save recently searched city
+* save recently searched city (up to 6)
 * country selection
-* user setting (dark mode, unit setting) persist in local storage
 
-## Technologies
-* React
+## Technologies/Framework
+* JavaScript
+* React.js
 * Moment.js
 * Bootstrap
+* LocalStorage
 * Google Fonts
 
 ## Public API
