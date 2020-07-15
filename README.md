@@ -3,7 +3,9 @@
 Application link: https://phaggio.github.io/simple-weather/
 
 ## Overview
-This is a single page weather web app, where user can search for current and forecast weather condition.
+This is a single page weather web app developed mainly using JavaScript and React.js.
+User can search for current and forecast weather condition.
+
 Information includes:
 * current temperature
 * local time
