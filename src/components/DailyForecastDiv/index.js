@@ -8,8 +8,8 @@ const DailyForecastDiv = props => {
 
   const unitContext = useContext(UnitContext);
   const themeContext = useContext(ThemeContext);
-  const dailyForecastArr = props.daily
-  dailyForecastArr.shift();
+  let daily = props.daily ? props.daily : [];
+  daily.shift()
 
   const imgStyle = {
     height: `60px`,
@@ -21,8 +21,8 @@ const DailyForecastDiv = props => {
       <Row className={`bg-${themeContext.backgroundColor}`}>
         <Col size="12 lg-10 xl-9">
           <h4 className={`text-${themeContext.textColor}`}>Daily forecast</h4>
-          {
-            dailyForecastArr.map(day => {
+          {daily ?
+            daily.map(day => {
               return (
                 <Row className={`d-flex align-items-center my-1`} key={day.dt}>
                   <Col size="4">
@@ -41,6 +41,7 @@ const DailyForecastDiv = props => {
                 </Row>
               )
             })
+            : ``
           }
         </Col>
       </Row>

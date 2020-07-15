@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Col, Row } from '../Grid';
 import ThemeContext from '../../utils/ThemeContext';
 
 const RecentCitiesDiv = props => {
 
   const themeContext = useContext(ThemeContext);
+  const [showRecentCities, setShowRecentCities] = useState(true);
 
   return (
     <Row className={`mh-100 bg-${themeContext.backgroundColor}`}>
@@ -13,12 +14,12 @@ const RecentCitiesDiv = props => {
           <div className="d-flex justify-content-between">
             <label className={`text-${themeContext.textColor}`}>Recent cities</label>
 
-            <span className={`btn py-0 material-icons text-${themeContext.textColor}`}
+            <div className={`btn py-0 material-icons text-${themeContext.textColor}`}
               data-toggle="collapse"
               data-target="#recent-cities"
               role="button"
-              onClick={() => props.toggleShowRecentCities()}
-            >{props.showRecentCities ? `expand_less` : `expand_more`}</span>
+              onClick={() => setShowRecentCities(!showRecentCities)}
+            >{showRecentCities ? `expand_less` : `expand_more`}</div>
           </div>
 
           <ul className={`list-group w-100 collapse show`} id="recent-cities">

@@ -5,7 +5,7 @@ import CountryDropdown from '../../components/CountryDropdown';
 import RecentCitiesDiv from '../../components/RecentCitiesDiv';
 import CurrentWeatherDiv from '../../components/CurrentWeatherDiv';
 import HourlyForecastDiv from '../../components/HourlyForecastDiv';
-import DailyForecastDiv from '../../components/DailyForecast';
+import DailyForecastDiv from '../../components/DailyForecastDiv';
 import API from '../../utils/API';
 import parseCityObj from '../../utils/ParseFunctions';
 import * as LocalStorage from '../../utils/LocalStorage';
@@ -25,7 +25,6 @@ const Home = () => {
   const [selectedCoord, setSelectedCoord] = useState(savedCities.length > 0 ? { lat: savedCities[0].lat, lon: savedCities[0].lon } : { lat: 47.61, lon: -122.33 });
   const [recentCities, setRecentCities] = useState(savedCities);
   const [showSearchButton, setShowSearchButton] = useState(false);
-  const [showRecentCities, setShowRecentCities] = useState(true); // default show recent cities
   const [currentWeather, setCurrentWeather] = useState();
   const [forecast, setForecast] = useState();
 
@@ -165,16 +164,11 @@ const Home = () => {
     LocalStorage.saveLocalStorage(localStorageKey, recentCitiesArr);
   };
 
-  const toggleShowRecentCities = () => {
-    setShowRecentCities(!showRecentCities);
-  }
-
   // dev log functions
   const consoleRecentCities = () => console.log(recentCities);
   const consoleSelectedCountry = () => console.log(selectedCountry);
   const consoleSearchCity = () => console.log(searchCity);
   const consoleSelectedCoord = () => console.log(selectedCoord);
-  const consoleShowRecentCities = () => console.log(showRecentCities);
 
   return (
     <Container fluid="true" className={`vh-100 bg-${themeContext.backgroundColor}`}>
@@ -196,8 +190,6 @@ const Home = () => {
                 recentCities={recentCities}
                 recentCityButtonPressed={recentCityButtonPressed}
                 removeCityButtonPressed={removeCityButtonPressed}
-                showRecentCities={showRecentCities}
-                toggleShowRecentCities={toggleShowRecentCities}
               />
               :
               ``
