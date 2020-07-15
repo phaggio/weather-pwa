@@ -132,13 +132,17 @@ const Home = () => {
   const locateMeButtonPressed = () => {
     const success = browserPosition => {
       const coords = browserPosition.coords;
-      console.log(`getting current weather by coord...`)
+      console.log(`getting current weather by coord...`);
+      console.log(browserPosition)
       getCurrentWeatherByCoord({ lat: coords.latitude, lon: coords.longitude });
       console.log(`updating selectedCoord state...`);
       setSelectedCoord({ lat: coords.latitude, lon: coords.longitude });
     }
 
-    const error = () => { alert(`Unable to retrieve your location at this time`) };
+    const error = err => { 
+      alert(`Unable to retrieve your location at this time`);
+      console.log(err);
+    };
 
     if (!navigator.geolocation) {
       console.log(`Geolocation is not supported by your browser ...`);
