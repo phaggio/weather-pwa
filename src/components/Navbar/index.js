@@ -56,7 +56,7 @@ const Navbar = () => {
             currentUnitType={unitContext.unitType}
           />
           
-          <small className={`text-${themeContext.textColor}`}><em>version 1.1.0</em></small>
+          <small className={`text-${themeContext.textColor}`}><em>version 1.1.1</em></small>
         </div>
       </div>
 
