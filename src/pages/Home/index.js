@@ -64,7 +64,8 @@ const Home = () => {
   // check for enter key and update city state
   const keyPressed = event => {
     if (event.keyCode === 13) {
-      const city = event.target.value;
+      const city = event.target.value.trim();
+      console.log(city)
       setSearchCity(city);
       getCurrentWeatherByCity(city, selectedCountry);
     }
