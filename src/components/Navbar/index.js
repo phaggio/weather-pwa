@@ -7,6 +7,7 @@ import UnitContext from '../../utils/UnitContext';
 import DarkModeContext from '../../utils/DarkModeContext';
 import ThemeContext from '../../utils/ThemeContext';
 import unitArr from '../../constant/units.json';
+import pkg from '../../../package.json';
 
 const Navbar = () => {
 
@@ -55,8 +56,8 @@ const Navbar = () => {
             updateUnits={updateUnits}
             currentUnitType={unitContext.unitType}
           />
-          
-          <small className={`text-${themeContext.textColor}`}><em>version 1.1.1</em></small>
+
+          <small className={`text-${themeContext.textColor}`}><em>version {pkg.version}</em></small>
         </div>
       </div>
 
