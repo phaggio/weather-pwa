@@ -1,6 +1,6 @@
 # Simple Weather
 
-Application link: https://phaggio.github.io/simple-weather/
+Application link: https://phaggio.github.io/weather-pwa/
 
 ## Overview
 This is a single page weather web app developed mainly using JavaScript and React.js.
