@@ -6,10 +6,10 @@ Application link: https://phaggio.github.io/weather-pwa/
 This is a single page weather web app developed mainly using JavaScript and React.js.
 User can search for current and forecast weather condition.
 
-## Screenshot
-![alt text][logo]
 
-[logo]:https://raw.githubusercontent.com/phaggio/weather-pwa/master/screenshot/weather-pwa-screenshot.png
+## Screenshot
+![image](https://raw.githubusercontent.com/phaggio/weather-pwa/master/screenshot/weather-pwa-screenshot.png)
+
 
 ## Weather information
 * current temperature
@@ -23,6 +23,7 @@ User can search for current and forecast weather condition.
 * hourly forecast (next 24 hours)
 * daily forecast (next 7 days)
 
+
 ## Features
 * a hamburger button to expand/collapse app settings
 * unit system (Fahrenheit, Celsius, Kelvin)
@@ -33,6 +34,7 @@ User can search for current and forecast weather condition.
 * save recently searched city (up to 6)
 * country selection
 
+
 ## Technologies/Framework
 * JavaScript
 * React.js
@@ -41,6 +43,7 @@ User can search for current and forecast weather condition.
 * gh-pages
 * LocalStorage
 * Google Fonts
+
 
 ## Public API
 * OpenWeatherMap
