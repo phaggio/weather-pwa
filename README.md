@@ -6,7 +6,12 @@ Application link: https://phaggio.github.io/weather-pwa/
 This is a single page weather web app developed mainly using JavaScript and React.js.
 User can search for current and forecast weather condition.
 
-Information includes:
+## Screenshot
+![alt text][logo]
+
+[logo]:https://raw.githubusercontent.com/phaggio/weather-pwa/master/screenshot/weather-pwa-screenshot.png
+
+## Weather information
 * current temperature
 * local time
 * sunrise time
@@ -39,4 +44,3 @@ Information includes:
 
 ## Public API
 * OpenWeatherMap
-
