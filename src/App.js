@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -15,7 +15,7 @@ const App = () => {
 
   const [darkModeState, setDarkModeState] = useState({
     darkMode: localSetting ? localSetting.darkMode : false,
-    toggleDarkMode: (bool) => setDarkModeState({ ...darkModeState, darkMode: bool })
+    toggleDarkMode: (bool) => setDarkModeState(prev => { return { ...prev, darkMode: bool } })
   });
 
   const [unitState, setUnitState] = useState({
@@ -36,15 +36,19 @@ const App = () => {
     }
   })
 
+  useEffect(() => {
+
+  }, [localSetting])
+
   return (
     <Router>
       <UnitContext.Provider value={unitState}>
         <DarkModeContext.Provider value={darkModeState}>
           <ThemeContext.Provider value={themeState}>
-              <Navbar />
-              <Route path="/" component={Home} />
-              {/* <Route exact path="/simple-weather" component={Home} /> */}
-              <Footer />
+            <Navbar />
+            <Route path="/" component={Home} />
+            {/* <Route exact path="/simple-weather" component={Home} /> */}
+            <Footer />
           </ThemeContext.Provider>
         </DarkModeContext.Provider>
       </UnitContext.Provider>

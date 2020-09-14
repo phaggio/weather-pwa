@@ -1,14 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const Container = ({ fluid, className, children }) => {
-	return <div className={`container${fluid ? `-fluid` : ``} ${className}`}>{children}</div>;
-}
-Container.propTypes = {
-	children: PropTypes.node,
-	fluid: PropTypes.string
-};
-
 const Row = ({ fluid, cols, className, children }) => {
 	return (
 		<div className={`row${fluid ? `-fluid` : ``} ${cols ? `row-cols-${cols}` : ``} ${className}`} >
@@ -42,7 +34,7 @@ Col.propTypes = {
 };
 
 export {
-	Container,
+	// Container,
 	Col,
 	Row
 }
