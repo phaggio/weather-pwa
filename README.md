@@ -35,7 +35,7 @@ User can search for current and forecast weather condition.
 * country selection
 
 
-## Technologies/Framework
+## Framework/Libraries
 * JavaScript
 * React.js
 * Moment.js
