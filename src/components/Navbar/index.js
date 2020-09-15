@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import {ToggleSwitch, UnitRadioButtonGroup, Nav } from '..';
+import { ToggleSwitch, UnitRadioButtonGroup, Nav } from '..';
 import * as LocalStorage from '../../utils/LocalStorage';
 import UnitContext from '../../utils/UnitContext';
 import DarkModeContext from '../../utils/DarkModeContext';
@@ -35,7 +35,6 @@ const Navbar = () => {
 
   useEffect(() => {
     themeContext.updateTheme(darkModeContext.darkMode);
-    console.log(`NavBar UseEffect takes in: darkModeContext = ${darkModeContext.darkMode}`)
   }, [darkModeContext.darkMode])
 
   return (

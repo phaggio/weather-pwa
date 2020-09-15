@@ -32,15 +32,28 @@ const Home = () => {
 	const unitContext = useContext(UnitContext);
 	const themeContext = useContext(ThemeContext);
 
+	// init weather call
+	useEffect(() => {
+		if (recentCities.length > 0) {
+			setCurrentCity({ city: recentCities[0].city, country: recentCities[0].country })
+		} else {
+			setCurrentCity({ city: 'Seattle', country: 'US' })
+		}
+	}, [])
+
 	// current weather by current coord.
 	useEffect(() => {
 		if (currentCoord !== undefined && currentCoord.lon && currentCoord.lat) {
-			console.log(`getting current weather using currentCoord state...`);
+			// console.log(`getting current weather using currentCoord state...`);
 			API.currentWeatherByCoord({ units: unitContext.unitType, lon: currentCoord.lon, lat: currentCoord.lat })
 				.then(res => {
 					setCurrentWeather(res.data);
 					setForecastCoord(res.data.coord);
 					setCurrentCity({ city: '', country: 'US' });
+					updateRecentCities({
+						key: `${res.data.name}, ${res.data.sys.country}`,
+						city: res.data.name, country: res.data.sys.country, lon: res.data.coord.lon, lat: res.data.coord.lat
+					})
 				})
 				.catch(err => {
 					if (err.response) {
@@ -54,12 +67,16 @@ const Home = () => {
 	// current weather by current city.
 	useEffect(() => {
 		if (currentCity.city) {
-			console.log(`getting current weather using currentCity state ... `)
+			// console.log(`getting current weather using currentCity state ... `);
 			API.currentWeatherByCity({ units: unitContext.unitType, city: currentCity.city, country: currentCity.country })
 				.then(res => {
 					setCurrentWeather(res.data);
 					setForecastCoord(res.data.coord);
 					setCurrentCoord();
+					updateRecentCities({
+						key: `${res.data.name}, ${res.data.sys.country}`,
+						city: res.data.name, country: res.data.sys.country, lon: res.data.coord.lon, lat: res.data.coord.lat
+					})
 				})
 				.catch(err => console.error(err))
 		}
@@ -69,7 +86,7 @@ const Home = () => {
 	// forecast weather by forecast coord.
 	useEffect(() => {
 		if (forecastCoord !== undefined && forecastCoord.lon && forecastCoord.lat) {
-			console.log(`getting forecast weather data using forecastCoord state ...`);
+			// console.log(`getting forecast weather data using forecastCoord state ...`);
 			API.oneCallWeatherByCoord({ units: unitContext.unitType, lon: forecastCoord.lon, lat: forecastCoord.lat })
 				.then(res => {
 					setTimezoneOffset(res.data.timezone_offset)
@@ -99,11 +116,10 @@ const Home = () => {
 	// update recent cities state
 	const updateRecentCities = newCityObj => {
 		const recentCitiesArr = recentCities;
-		const exist = recentCitiesArr.find(city => { return (city.city === newCityObj.city && city.country === newCityObj.country) });
+		const exist = recentCities.find(city => { return city.key === newCityObj.key });
 		if (exist) return;
-		console.log(`adding ${newCityObj.city} to recent cities...`)
 		const newRecentCitiesArr = [newCityObj, ...recentCitiesArr];
-		if (newRecentCitiesArr.length > maxRecentCities) { newRecentCitiesArr.pop() };
+		if (newRecentCitiesArr.length > maxRecentCities) newRecentCitiesArr.pop();
 		setRecentCities(newRecentCitiesArr);
 		LocalStorage.saveLocalStorage(localStorageKey, newRecentCitiesArr);
 	}
@@ -114,13 +130,10 @@ const Home = () => {
 	// when search button is pressed
 	const searchButtonPressed = () => { setCurrentCity({ city: userInput, country: selectedCountry }) }
 
-
-
 	const locateMeButtonPressed = () => {
 		const success = browserPosition => {
 			const coords = browserPosition.coords;
-			console.log(browserPosition)
-			console.log(`updating currentCoord state...`);
+			// console.log(browserPosition);
 			setCurrentCoord({ lat: coords.latitude, lon: coords.longitude });
 		}
 
@@ -130,18 +143,16 @@ const Home = () => {
 		};
 
 		if (!navigator.geolocation) {
-			console.log(`Geolocation is not supported by your browser ...`);
+			// console.log(`Geolocation is not supported by your browser ...`);
 			alert(`Geolocation is not supported by your browser...`);
 		} else {
-			console.log(`Getting your location ...`)
+			// console.log(`Getting your location ...`);
 			const options = { timeout: 12000 };
 			navigator.geolocation.getCurrentPosition(success, error, options);
 		}
 	};
 
-	const recentCityButtonPressed = ({ city, country }) => {
-		setCurrentCity({ city: city, country: country });
-	};
+	const recentCityButtonPressed = ({ city, country }) => { setCurrentCity({ city: city, country: country }) };
 
 	const removeCityButtonPressed = key => {
 		const recentCitiesArr = recentCities;
@@ -177,7 +188,7 @@ const Home = () => {
 						``
 					}
 
-					<div className="d-flex flex-column">
+					{/* <div className="d-flex flex-column">
 						<ConsoleLogButton name="currentCity" state={currentCity} />
 						<ConsoleLogButton name="currentCoord" state={currentCoord} />
 						<ConsoleLogButton name="forecastCoord" state={forecastCoord} />
@@ -188,7 +199,7 @@ const Home = () => {
 						<ConsoleLogButton name="timezoneOffset" state={timezoneOffset} />
 						<ConsoleLogButton name="hourly" state={hourlyForecast} />
 						<ConsoleLogButton name="daily" state={dailyForecast} />
-					</div>
+					</div> */}
 
 				</div>
 

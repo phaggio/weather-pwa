@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import * as LocalStorage from './utils/LocalStorage';
-import * as ContextFunction from './utils/ContextFunctions';
+import { turnOnDarkTheme } from './utils/ContextFunctions';
 import DarkModeContext from './utils/DarkModeContext';
 import UnitContext from './utils/UnitContext';
 import ThemeContext from './utils/ThemeContext';
@@ -18,6 +18,7 @@ const App = () => {
     toggleDarkMode: (bool) => setDarkModeState(prev => { return { ...prev, darkMode: bool } })
   });
 
+
   const [unitState, setUnitState] = useState({
     unitType: localSetting ? localSetting.type : `imperial`,
     units: localSetting ? localSetting.units : `°F`,
@@ -26,19 +27,16 @@ const App = () => {
     }
   });
 
+
   const [themeState, setThemeState] = useState({
     backgroundColor: `light`,
     textColor: `black`,
     borderColor: `dark`,
     updateTheme: (bool) => {
-      const newThemeObj = ContextFunction.turnOnDarkTheme(bool);
+      const newThemeObj = turnOnDarkTheme(bool);
       setThemeState({ ...themeState, ...newThemeObj })
     }
   })
-
-  useEffect(() => {
-
-  }, [localSetting])
 
   return (
     <Router>
