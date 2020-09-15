@@ -4,7 +4,6 @@ import CurrentWeatherDiv from '../../components/CurrentWeatherDiv';
 import HourlyForecastDiv from '../../components/HourlyForecastDiv';
 import DailyForecastDiv from '../../components/DailyForecastDiv';
 import API from '../../utils/API';
-import { parseCityObj } from '../../utils/functions';
 import * as LocalStorage from '../../utils/LocalStorage';
 
 import UnitContext from '../../utils/UnitContext';
@@ -31,7 +30,6 @@ const Home = () => {
 	const [timezoneOffset, setTimezoneOffset] = useState(0);
 	const [hourlyForecast, setHourlyForecast] = useState([]);
 	const [dailyForecast, setDailyForecast] = useState([]);
-	const [forecast, setForecast] = useState();
 
 	const unitContext = useContext(UnitContext);
 	const themeContext = useContext(ThemeContext);

@@ -22,7 +22,8 @@ const convertDirection = (degree, newUnitType) => {
 const returnSpeedUnit = type => type === `imperial` ? `mph` : `m/s`;
 const returnPressureUnit = type => type === `imperial` ? `inHg` : `hPa`;
 const returnDegreeUnit = type => type === `` ? `°` : ``;
-const returnRoundedTemperature = temperature => parseInt(temperature) ? parseInt(temperature).toFixed() : undefined;
+const returnRoundedTemperature = temperature => (temperature) ? (temperature).toFixed() : undefined;
+const returnRoundedWindSpeed = speed => (speed) ? (speed).toFixed(1) : undefined;
 
 // takes unix timestamp, offset in seconds, and output format and return local time
 const unixToLocalTime = (unix, secondsOffset, format) => {
@@ -38,5 +39,6 @@ export {
   returnPressureUnit,
   returnDegreeUnit,
   returnRoundedTemperature,
+  returnRoundedWindSpeed,
   unixToLocalTime
 }
