@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import UnitContext from '../../utils/UnitContext';
 import ThemeContext from '../../utils/ThemeContext';
 import * as Conversion from '../../utils/Conversion';
@@ -9,7 +10,7 @@ const hourlyForecastStyle = {
 
 const HourlyForecastDiv = props => {
 
-  const hourArr = props.hourly.slice(0, props.hours);
+  const hourArr = props.hourly.slice(1, props.hours);
   const unitContext = useContext(UnitContext);
   const themeContext = useContext(ThemeContext);
 
@@ -45,6 +46,13 @@ const HourlyForecastDiv = props => {
 
     </div>
   )
+};
+
+HourlyForecastDiv.propTypes = {
+  children: PropTypes.node,
+  hourly: PropTypes.array,
+  hours: PropTypes.number,
+  timezone: PropTypes.number
 };
 
 export default HourlyForecastDiv;

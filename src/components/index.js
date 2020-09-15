@@ -5,9 +5,13 @@ import CurrentWeatherDiv from './CurrentWeatherDiv';
 import DailyForecastDiv from './DailyForecastDiv';
 import Footer from './Footer';
 import HourlyForecastDiv from './HourlyForecastDiv';
+import Nav from './Nav';
+import Navbar from './Navbar'
 
 import RecentCitiesDiv from './RecentCitiesDiv';
 import SearchGroup from './SearchGroup';
+import ToggleSwitch from './ToggleSwitch';
+import UnitRadioButtonGroup from './UnitRadioButtonGroup';
 
 export {
   Alert,
@@ -17,6 +21,10 @@ export {
   DailyForecastDiv,
   Footer,
   HourlyForecastDiv,
+  Nav,
+  Navbar,
   RecentCitiesDiv,
-  SearchGroup
+  SearchGroup,
+  ToggleSwitch,
+  UnitRadioButtonGroup
 }

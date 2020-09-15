@@ -2,12 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import {
 	SearchGroup, CountryDropdown, RecentCitiesDiv, CurrentWeatherDiv, HourlyForecastDiv, DailyForecastDiv, ConsoleLogButton
 } from '../../components';
-
 import API from '../../utils/API';
 import * as LocalStorage from '../../utils/LocalStorage';
 
 import UnitContext from '../../utils/UnitContext';
-import countryArr from '../../constant/countries.json';
 import ThemeContext from '../../utils/ThemeContext';
 
 const Home = () => {
@@ -166,7 +164,6 @@ const Home = () => {
 						locateMeButtonPressed={locateMeButtonPressed}
 						searchButtonPressed={searchButtonPressed} />
 					<CountryDropdown
-						countryArr={countryArr}
 						selectedCountry={selectedCountry} // selected country code
 						onChange={updateSelectedCountryState} />
 					{recentCities.length > 0 ?
