@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Col, Row } from '../../components/Grid';
-import SearchGroup from '../../components/SearchGroup';
-import CountryDropdown from '../../components/CountryDropdown';
-import RecentCitiesDiv from '../../components/RecentCitiesDiv';
+import { SearchGroup, CountryDropdown, RecentCitiesDiv } from '../../components';
 import CurrentWeatherDiv from '../../components/CurrentWeatherDiv';
 import HourlyForecastDiv from '../../components/HourlyForecastDiv';
 import DailyForecastDiv from '../../components/DailyForecastDiv';
@@ -14,16 +11,22 @@ import countryArr from '../../constant/countries.json';
 import ThemeContext from '../../utils/ThemeContext';
 
 const Home = () => {
+	console.log('rendering Home page ...')
+	const [userInput, updateUserInput] = useState('');
+	const [showSearchButton, updateShowSearchButton] = useState(false);
+
+
 	const localStorageKey = `recent-cities`;
 	const hourlyForecastNumber = 24;
 	const maxRecentCities = 6;
 	const savedCities = LocalStorage.checkLocalStorage(localStorageKey) ? LocalStorage.checkLocalStorage(localStorageKey) : [];
 
-	const [searchCity, setSearchCity] = useState(savedCities.length > 0 ? savedCities[0].city : `Seattle`);
+
+	const [searchCity, updateSearchCity] = useState(`Seattle`);
 	const [selectedCountry, setSelectedCountry] = useState(savedCities.length > 0 ? savedCities[0].country : `US`);
 	const [selectedCoord, setSelectedCoord] = useState(savedCities.length > 0 ? { lat: savedCities[0].lat, lon: savedCities[0].lon } : { lat: 47.61, lon: -122.33 });
 	const [recentCities, setRecentCities] = useState(savedCities);
-	const [showSearchButton, setShowSearchButton] = useState(false);
+
 	const [currentWeather, setCurrentWeather] = useState();
 	const [forecast, setForecast] = useState();
 
@@ -41,12 +44,20 @@ const Home = () => {
 		getForecast();
 	}, [selectedCoord]);
 
+	// update selectedCountry
 	const updateSelectedCountryState = event => {
 		const country = event.target.value;
 		setSelectedCountry(country);
 	};
 
-	const validateSearchField = event => (event.target.value.trim()) ? setShowSearchButton(true) : setShowSearchButton(false);
+	// toggle search and locate me buttons
+	useEffect(() => {
+		if (userInput) {
+			updateShowSearchButton(true);
+		} else {
+			updateShowSearchButton(false);
+		}
+	}, [userInput])
 
 	// update recent cities state
 	const updateRecentCities = newCityObj => {
@@ -60,23 +71,13 @@ const Home = () => {
 		LocalStorage.saveLocalStorage(localStorageKey, newRecentCitiesArr);
 	}
 
-	// check for enter key and update city state
-	const keyPressed = event => {
-		if (event.keyCode === 13) {
-			const city = event.target.value.trim();
-			console.log(city)
-			setSearchCity(city);
-			getCurrentWeatherByCity(city, selectedCountry);
-		}
-	};
+	// check for enter key pressed
+	const keyPressed = code => { if (code === 13) console.log('enter pressed ...') };
 
-	// when blue search button is pressed
-	const searchButtonPressed = ref => {
-		const city = ref.current.value;
-		console.log(`search button pressed, '${city}' in the search field, updating city state...`);
-		setSearchCity(city);
-		console.log(`getting current weather by city and country...`);
-		getCurrentWeatherByCity(city, selectedCountry);
+	// when search button is pressed
+	const searchButtonPressed = () => {
+		updateSearchCity(userInput);
+		// getCurrentWeatherByCity(searchCity, selectedCountry);
 	}
 
 	// only called when searching a new city
@@ -156,7 +157,7 @@ const Home = () => {
 
 	const recentCityButtonPressed = ({ city, country }) => {
 		setSelectedCountry(country);
-		setSearchCity(city);
+		updateSearchCity(city);
 		getCurrentWeatherByCity(city, country);
 	};
 
@@ -170,48 +171,48 @@ const Home = () => {
 
 
 	return (
-		<div className="container-fluid">
-			<Col size="12" className={`mh-100 mx-0 px-0`}>
-				<Row className={`bg-${themeContext.backgroundColor}`}>
-					<Col size="12 sm-12 md-4 lg-3 xl-3">
-						<SearchGroup
-							onChange={validateSearchField}
-							keyPressed={keyPressed}
-							showSearchButton={showSearchButton}
-							locateMeButtonPressed={locateMeButtonPressed}
-							searchButtonPressed={searchButtonPressed} />
-						<CountryDropdown
-							countryArr={countryArr}
-							selectedCountry={selectedCountry}
-							onChange={updateSelectedCountryState} />
-						{recentCities.length > 0 ?
-							<RecentCitiesDiv
-								recentCities={recentCities}
-								recentCityButtonPressed={recentCityButtonPressed}
-								removeCityButtonPressed={removeCityButtonPressed}
-							/>
-							:
-							``
-						}
-					</Col>
+		<div className={`container-fluid bg-${themeContext.backgroundColor}`} style={{ height: '100vh', overflow: 'auto' }}>
+			<div className="row">
+				<div className="col-12 col-md-4 col-lg-3">
 
-					<Col size="sm-12 md-8 lg-9 xl-9">
-						{currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} /> : ``}
-						{forecast ?
-							<HourlyForecastDiv
-								hourly={forecast.hourly}
-								hours={hourlyForecastNumber}
-								timezone={forecast.timezone_offset}
-							/>
-							:
-							``
-						}
-						{forecast ?
-							<DailyForecastDiv daily={forecast.daily} timezone={forecast.timezone_offset} /> : ``
-						}
-					</Col>
-				</Row>
-			</Col>
+					<SearchGroup
+						onChange={updateUserInput}
+						keyPressed={keyPressed}
+						showSearchButton={showSearchButton}
+						locateMeButtonPressed={locateMeButtonPressed}
+						searchButtonPressed={searchButtonPressed} />
+					<CountryDropdown
+						countryArr={countryArr}
+						selectedCountry={selectedCountry} // selected country code
+						onChange={updateSelectedCountryState} />
+					{recentCities.length > 0 ?
+						<RecentCitiesDiv
+							recentCities={recentCities}
+							recentCityButtonPressed={recentCityButtonPressed}
+							removeCityButtonPressed={removeCityButtonPressed}
+						/>
+						:
+						``
+					}
+				</div>
+
+				<div className="col-12 col-md-8 col-lg-9">
+					{currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} /> : ``}
+					{forecast ?
+						<HourlyForecastDiv
+							hourly={forecast.hourly}
+							hours={hourlyForecastNumber}
+							timezone={forecast.timezone_offset}
+						/>
+						:
+						``
+					}
+					{forecast ?
+						<DailyForecastDiv daily={forecast.daily} timezone={forecast.timezone_offset} /> : ``
+					}
+
+				</div>
+			</div>
 		</div>
 	);
 }

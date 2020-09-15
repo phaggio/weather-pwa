@@ -7,6 +7,7 @@ import Footer from './Footer';
 import HourlyForecastDiv from './HourlyForecastDiv';
 
 import RecentCitiesDiv from './RecentCitiesDiv';
+import SearchGroup from './SearchGroup';
 
 export {
   Alert,
@@ -16,5 +17,6 @@ export {
   DailyForecastDiv,
   Footer,
   HourlyForecastDiv,
-  RecentCitiesDiv
+  RecentCitiesDiv,
+  SearchGroup
 }
