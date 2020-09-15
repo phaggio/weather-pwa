@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { SearchGroup, CountryDropdown, RecentCitiesDiv, ConsoleLogButton } from '../../components';
-import CurrentWeatherDiv from '../../components/CurrentWeatherDiv';
-import HourlyForecastDiv from '../../components/HourlyForecastDiv';
-import DailyForecastDiv from '../../components/DailyForecastDiv';
+import {
+	SearchGroup, CountryDropdown, RecentCitiesDiv, CurrentWeatherDiv, HourlyForecastDiv, DailyForecastDiv, ConsoleLogButton
+} from '../../components';
+
 import API from '../../utils/API';
 import * as LocalStorage from '../../utils/LocalStorage';
 
@@ -195,19 +195,16 @@ const Home = () => {
 
 				</div>
 
-				<div className="col-12 col-md-8 col-lg-9">
+				<div className="col-12 col-md-8 col-lg-8 col-xl-7">
 					{
 						currentWeather ?
-							<CurrentWeatherDiv
-								currentWeather={currentWeather}
-								country="USA" />
+							<CurrentWeatherDiv currentWeather={currentWeather} />
 							:
 							``
 					}
 					{
 						hourlyForecast ?
-							<HourlyForecastDiv
-								hourly={hourlyForecast}
+							<HourlyForecastDiv hourly={hourlyForecast}
 								hours={hourlyForecastNumber}
 								timezone={timezoneOffset}
 							/>
@@ -216,12 +213,11 @@ const Home = () => {
 					}
 					{
 						dailyForecast ?
-							<DailyForecastDiv
-								daily={dailyForecast} timezoneOffset={timezoneOffset} />
+							<DailyForecastDiv daily={dailyForecast}
+								timezoneOffset={timezoneOffset} />
 							:
 							``
 					}
-
 				</div>
 
 
