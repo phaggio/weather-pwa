@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import * as LocalStorage from './utils/LocalStorage';
-import * as ContextFunction from './utils/ContextFunctions';
+import { turnOnDarkTheme } from './utils/ContextFunctions';
 import DarkModeContext from './utils/DarkModeContext';
 import UnitContext from './utils/UnitContext';
 import ThemeContext from './utils/ThemeContext';
@@ -15,8 +15,9 @@ const App = () => {
 
   const [darkModeState, setDarkModeState] = useState({
     darkMode: localSetting ? localSetting.darkMode : false,
-    toggleDarkMode: (bool) => setDarkModeState({ ...darkModeState, darkMode: bool })
+    toggleDarkMode: (bool) => setDarkModeState(prev => { return { ...prev, darkMode: bool } })
   });
+
 
   const [unitState, setUnitState] = useState({
     unitType: localSetting ? localSetting.type : `imperial`,
@@ -26,12 +27,13 @@ const App = () => {
     }
   });
 
+
   const [themeState, setThemeState] = useState({
     backgroundColor: `light`,
     textColor: `black`,
     borderColor: `dark`,
     updateTheme: (bool) => {
-      const newThemeObj = ContextFunction.turnOnDarkTheme(bool);
+      const newThemeObj = turnOnDarkTheme(bool);
       setThemeState({ ...themeState, ...newThemeObj })
     }
   })
@@ -41,10 +43,9 @@ const App = () => {
       <UnitContext.Provider value={unitState}>
         <DarkModeContext.Provider value={darkModeState}>
           <ThemeContext.Provider value={themeState}>
-              <Navbar />
-              <Route path="/" component={Home} />
-              {/* <Route exact path="/simple-weather" component={Home} /> */}
-              <Footer />
+            <Navbar />
+            <Route path="/" component={Home} />
+            <Footer />
           </ThemeContext.Provider>
         </DarkModeContext.Provider>
       </UnitContext.Provider>

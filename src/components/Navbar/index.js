@@ -1,13 +1,11 @@
 import React, { useContext, useEffect } from 'react';
-import ToggleSwitch from '../ToggleSwitch';
-import UnitRadioButtonGroup from '../UnitRadioButtonGroup';
-import Nav from '../Nav';
+import { ToggleSwitch, UnitRadioButtonGroup, Nav } from '..';
 import * as LocalStorage from '../../utils/LocalStorage';
 import UnitContext from '../../utils/UnitContext';
 import DarkModeContext from '../../utils/DarkModeContext';
 import ThemeContext from '../../utils/ThemeContext';
-import unitArr from '../../constant/units.json';
-import pkg from '../../../package.json';
+import unitArr from '../../JSON/units.json';
+import pkg from '../../../package.json'; // for updating app version
 
 const Navbar = () => {
 
@@ -37,7 +35,6 @@ const Navbar = () => {
 
   useEffect(() => {
     themeContext.updateTheme(darkModeContext.darkMode);
-    console.log(`NavBar UseEffect takes in: darkModeContext = ${darkModeContext.darkMode}`)
   }, [darkModeContext.darkMode])
 
   return (

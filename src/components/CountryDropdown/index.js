@@ -1,28 +1,33 @@
 import React, { useContext } from 'react';
-import { Col, Row } from '../Grid';
+import PropTypes from 'prop-types';
+import countryCodeJSON from '../../JSON/countryCode.json';
 import ThemeContext from '../../utils/ThemeContext';
 
 const CountryDropdown = props => {
-
   const themeContext = useContext(ThemeContext);
+  const countries = [];
+  for (const key in countryCodeJSON[0]) {
+    // console.log(key, countryCodeJSON[0][key])
+    countries.push(<option key={key} value={key}>{countryCodeJSON[0][key]}</option>)
+  }
 
   return (
-    <Row className={`bg-${themeContext.backgroundColor}`}>
-      <Col size="12">
-        <div className="input-group">
-          <div className="input-group">
-            <select className="custom-select" onChange={props.onChange} value={props.selectedCountry}>
-              <option key="default" value="us">Select a country</option>
-              {props.countryArr.map(country => {
-                return <option key={country.name} value={country.code}>{country.name}</option>
-              })}
-            </select>
-          </div>
-          <small className={`ml-1 text-${themeContext.textColor}`}>Default country: US</small>
-        </div>
-      </Col>
-    </Row>
-  );
+    <div className="input-group">
+      <div className="input-group">
+        <select className="custom-select" onChange={props.onChange} value={props.selectedCountry}>
+          <option key="default" value="US">Select a country</option>
+          {countries}
+        </select>
+      </div>
+      <small className={`ml-1 text-${themeContext.textColor}`}>Default country: US</small>
+    </div>
+  )
 }
+
+CountryDropdown.propTypes = {
+  children: PropTypes.node,
+  selectedCountry: PropTypes.string,
+  onChange: PropTypes.func
+};
 
 export default CountryDropdown

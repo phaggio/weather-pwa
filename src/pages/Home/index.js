@@ -1,232 +1,237 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Container, Col, Row } from '../../components/Grid';
-import SearchGroup from '../../components/SearchGroup';
-import CountryDropdown from '../../components/CountryDropdown';
-import RecentCitiesDiv from '../../components/RecentCitiesDiv';
-import CurrentWeatherDiv from '../../components/CurrentWeatherDiv';
-import HourlyForecastDiv from '../../components/HourlyForecastDiv';
-import DailyForecastDiv from '../../components/DailyForecastDiv';
+import {
+	SearchGroup, CountryDropdown, RecentCitiesDiv, CurrentWeatherDiv, HourlyForecastDiv, DailyForecastDiv, ConsoleLogButton
+} from '../../components';
 import API from '../../utils/API';
-import parseCityObj from '../../utils/ParseFunctions';
 import * as LocalStorage from '../../utils/LocalStorage';
+
 import UnitContext from '../../utils/UnitContext';
-import countryArr from '../../constant/countries.json';
-import DebugTool from '../../components/DebugTool';
 import ThemeContext from '../../utils/ThemeContext';
 
 const Home = () => {
-  const localStorageKey = `recent-cities`;
-  const hourlyForecastNumber = 24;
-  const maxRecentCities = 6;
-  const savedCities = LocalStorage.checkLocalStorage(localStorageKey) ? LocalStorage.checkLocalStorage(localStorageKey) : [];
+	const [userInput, updateUserInput] = useState('');
+	const [selectedCountry, setSelectedCountry] = useState('US');
+	const [showSearchButton, setShowSearchButton] = useState(false);
 
-  const [searchCity, setSearchCity] = useState(savedCities.length > 0 ? savedCities[0].city : `Seattle`);
-  const [selectedCountry, setSelectedCountry] = useState(savedCities.length > 0 ? savedCities[0].country : `US`);
-  const [selectedCoord, setSelectedCoord] = useState(savedCities.length > 0 ? { lat: savedCities[0].lat, lon: savedCities[0].lon } : { lat: 47.61, lon: -122.33 });
-  const [recentCities, setRecentCities] = useState(savedCities);
-  const [showSearchButton, setShowSearchButton] = useState(false);
-  const [currentWeather, setCurrentWeather] = useState();
-  const [forecast, setForecast] = useState();
+	const localStorageKey = `recent-cities`;
+	const hourlyForecastNumber = 24;
+	const maxRecentCities = 6;
+	const savedCities = LocalStorage.checkLocalStorage(localStorageKey) ? LocalStorage.checkLocalStorage(localStorageKey) : [];
 
-  const unitContext = useContext(UnitContext);
-  const themeContext = useContext(ThemeContext);
+	const [currentCity, setCurrentCity] = useState({ city: '', country: 'US' });
+	const [currentCoord, setCurrentCoord] = useState();
+	const [forecastCoord, setForecastCoord] = useState();
 
-  // unit change effect
-  useEffect(() => {
-    getCurrentWeatherByCoord(selectedCoord)
-    getForecastByCoord(selectedCoord)
-  }, [unitContext]);
+	const [recentCities, setRecentCities] = useState(savedCities);
 
-  // get forecast when coord state updates
-  useEffect(() => {
-    getForecast();
-  }, [selectedCoord]);
+	const [currentWeather, setCurrentWeather] = useState();
+	const [timezoneOffset, setTimezoneOffset] = useState(0);
+	const [hourlyForecast, setHourlyForecast] = useState([]);
+	const [dailyForecast, setDailyForecast] = useState([]);
 
-  const updateSelectedCountryState = event => {
-    const country = event.target.value;
-    setSelectedCountry(country);
-  };
+	const unitContext = useContext(UnitContext);
+	const themeContext = useContext(ThemeContext);
 
-  const validateSearchField = event => (event.target.value.trim()) ? setShowSearchButton(true) : setShowSearchButton(false);
+	// init weather call
+	useEffect(() => {
+		if (recentCities.length > 0) {
+			setCurrentCity({ city: recentCities[0].city, country: recentCities[0].country })
+		} else {
+			setCurrentCity({ city: 'Seattle', country: 'US' })
+		}
+	}, [])
 
-  // update recent cities state
-  const updateRecentCities = newCityObj => {
-    const recentCitiesArr = recentCities;
-    const exist = recentCitiesArr.find(city => { return (city.city === newCityObj.city && city.country === newCityObj.country) });
-    if (exist) return;
-    console.log(`adding ${newCityObj.city} to recent cities...`)
-    const newRecentCitiesArr = [newCityObj, ...recentCitiesArr];
-    if (newRecentCitiesArr.length > maxRecentCities) { newRecentCitiesArr.pop() };
-    setRecentCities(newRecentCitiesArr);
-    LocalStorage.saveLocalStorage(localStorageKey, newRecentCitiesArr);
-  }
+	// current weather by current coord.
+	useEffect(() => {
+		if (currentCoord !== undefined && currentCoord.lon && currentCoord.lat) {
+			// console.log(`getting current weather using currentCoord state...`);
+			API.currentWeatherByCoord({ units: unitContext.unitType, lon: currentCoord.lon, lat: currentCoord.lat })
+				.then(res => {
+					setCurrentWeather(res.data);
+					setForecastCoord(res.data.coord);
+					setCurrentCity({ city: '', country: 'US' });
+					updateRecentCities({
+						key: `${res.data.name}, ${res.data.sys.country}`,
+						city: res.data.name, country: res.data.sys.country, lon: res.data.coord.lon, lat: res.data.coord.lat
+					})
+				})
+				.catch(err => {
+					if (err.response) {
+						if (err.response.status === 404) { alert(`Cannot find forecast for that city`) }
+						else { alert(`Something is wrong, cannot get forecast at this time`) }
+					}
+				});
+		}
+	}, [currentCoord, unitContext]);
 
-  // check for enter key and update city state
-  const keyPressed = event => {
-    if (event.keyCode === 13) {
-      const city = event.target.value.trim();
-      console.log(city)
-      setSearchCity(city);
-      getCurrentWeatherByCity(city, selectedCountry);
-    }
-  };
+	// current weather by current city.
+	useEffect(() => {
+		if (currentCity.city) {
+			// console.log(`getting current weather using currentCity state ... `);
+			API.currentWeatherByCity({ units: unitContext.unitType, city: currentCity.city, country: currentCity.country })
+				.then(res => {
+					setCurrentWeather(res.data);
+					setForecastCoord(res.data.coord);
+					setCurrentCoord();
+					updateRecentCities({
+						key: `${res.data.name}, ${res.data.sys.country}`,
+						city: res.data.name, country: res.data.sys.country, lon: res.data.coord.lon, lat: res.data.coord.lat
+					})
+				})
+				.catch(err => console.error(err))
+		}
 
-  // when blue search button is pressed
-  const searchButtonPressed = ref => {
-    const city = ref.current.value;
-    console.log(`search button pressed, '${city}' in the search field, updating city state...`);
-    setSearchCity(city);
-    console.log(`getting current weather by city and country...`);
-    getCurrentWeatherByCity(city, selectedCountry);
-  }
+	}, [currentCity, unitContext]);
 
-  // only called when searching a new city
-  const getCurrentWeatherByCity = (city, country) => {
-    API.currentWeatherByCity({ units: unitContext.unitType, city: city, country: country })
-      .then(res => {
-        console.log(`setting currentWeather state...`)
-        setCurrentWeather(res.data);
-        console.log(`passing coord to selectedCoord state...`);
-        setSelectedCoord({ lat: res.data.coord.lat, lon: res.data.coord.lon });
-        updateRecentCities(parseCityObj(res.data));
-      })
-      .catch(err => {
-        if (err.response) {
-          if (err.response.status === 404) { alert(`Cannot find that city`) }
-          else { alert(`Something is wrong, cannot get weather at this time`) }
-        }
-      });
-  };
+	// forecast weather by forecast coord.
+	useEffect(() => {
+		if (forecastCoord !== undefined && forecastCoord.lon && forecastCoord.lat) {
+			// console.log(`getting forecast weather data using forecastCoord state ...`);
+			API.oneCallWeatherByCoord({ units: unitContext.unitType, lon: forecastCoord.lon, lat: forecastCoord.lat })
+				.then(res => {
+					setTimezoneOffset(res.data.timezone_offset)
+					setHourlyForecast(res.data.hourly);
+					setDailyForecast(res.data.daily);
+					setForecastCoord();
+				})
+				.catch(err => console.error(err))
+		}
+	}, [forecastCoord, unitContext])
 
-  // only call when user press locate me button
-  const getCurrentWeatherByCoord = ({ lat, lon }) => {
-    API.currentWeatherByCoord({ units: unitContext.unitType, lat: lat, lon: lon })
-      .then(res => {
-        console.log(`updating currentWeather state...`);
-        setCurrentWeather(res.data);
-        updateRecentCities(parseCityObj(res.data));
-      });
-  }
+	// toggle search and locate me buttons
+	useEffect(() => {
+		if (userInput) {
+			setShowSearchButton(true);
+		} else {
+			setShowSearchButton(false);
+		}
+	}, [userInput])
 
-  // get forecast using coord state, useEffect
-  const getForecast = () => {
-    console.log(`getting forecast using selectedCoord state...`);
-    API.oneCallWeatherByCoord({ units: unitContext.unitType, lat: selectedCoord.lat, lon: selectedCoord.lon })
-      .then(res => {
-        console.log(`received forecast data from oneCall, setting forecast state...`);
-        setForecast(res.data);
-      })
-      .catch(err => {
-        if (err.response) {
-          if (err.response.status === 404) { alert(`Cannot find forecast for that city`) }
-          else { alert(`Something is wrong, cannot get forecast at this time`) }
-        }
-      });
-  }
+	// update selectedCountry
+	const updateSelectedCountryState = event => {
+		const country = event.target.value;
+		setSelectedCountry(country);
+	};
 
-  // get forecast by coord in arg, this is only called when unit changes
-  const getForecastByCoord = ({ lat, lon }) => {
-    API.oneCallWeatherByCoord({ units: unitContext.unitType, lat: lat, lon: lon })
-      .then(res => { setForecast(res.data) })
-  };
+	// update recent cities state
+	const updateRecentCities = newCityObj => {
+		const recentCitiesArr = recentCities;
+		const exist = recentCities.find(city => { return city.key === newCityObj.key });
+		if (exist) return;
+		const newRecentCitiesArr = [newCityObj, ...recentCitiesArr];
+		if (newRecentCitiesArr.length > maxRecentCities) newRecentCitiesArr.pop();
+		setRecentCities(newRecentCitiesArr);
+		LocalStorage.saveLocalStorage(localStorageKey, newRecentCitiesArr);
+	}
 
-  const locateMeButtonPressed = () => {
-    const success = browserPosition => {
-      const coords = browserPosition.coords;
-      console.log(`getting current weather by coord...`);
-      console.log(browserPosition)
-      getCurrentWeatherByCoord({ lat: coords.latitude, lon: coords.longitude });
-      console.log(`updating selectedCoord state...`);
-      setSelectedCoord({ lat: coords.latitude, lon: coords.longitude });
-    }
+	// check for enter key pressed
+	const keyPressed = code => { if (code === 13) setCurrentCity({ city: userInput, country: selectedCountry }) };
 
-    const error = err => { 
-      alert(`Unable to retrieve your location at this time`);
-      console.log(err);
-    };
+	// when search button is pressed
+	const searchButtonPressed = () => { setCurrentCity({ city: userInput, country: selectedCountry }) }
 
-    if (!navigator.geolocation) {
-      console.log(`Geolocation is not supported by your browser ...`);
-      alert(`Geolocation is not supported by your browser...`);
-    } else {
-      console.log(`Getting your location ...`)
-      const options = { timeout: 12000 };
-      navigator.geolocation.getCurrentPosition(success, error, options);
-    }
-  };
+	const locateMeButtonPressed = () => {
+		const success = browserPosition => {
+			const coords = browserPosition.coords;
+			// console.log(browserPosition);
+			setCurrentCoord({ lat: coords.latitude, lon: coords.longitude });
+		}
 
-  const recentCityButtonPressed = ({ city, country }) => {
-    setSelectedCountry(country);
-    setSearchCity(city);
-    getCurrentWeatherByCity(city, country);
-  };
+		const error = err => {
+			alert(`Unable to retrieve your location at this time`);
+			console.log(err);
+		};
 
-  const removeCityButtonPressed = key => {
-    const recentCitiesArr = recentCities;
-    const index = recentCitiesArr.findIndex(city => city.key === key);
-    recentCitiesArr.splice(index, 1);
-    setRecentCities([...recentCitiesArr]);
-    LocalStorage.saveLocalStorage(localStorageKey, recentCitiesArr);
-  };
+		if (!navigator.geolocation) {
+			// console.log(`Geolocation is not supported by your browser ...`);
+			alert(`Geolocation is not supported by your browser...`);
+		} else {
+			// console.log(`Getting your location ...`);
+			const options = { timeout: 12000 };
+			navigator.geolocation.getCurrentPosition(success, error, options);
+		}
+	};
 
-  // dev log functions
-  const consoleRecentCities = () => console.log(recentCities);
-  const consoleSelectedCountry = () => console.log(selectedCountry);
-  const consoleSearchCity = () => console.log(searchCity);
-  const consoleSelectedCoord = () => console.log(selectedCoord);
+	const recentCityButtonPressed = ({ city, country }) => { setCurrentCity({ city: city, country: country }) };
 
-  return (
-    <Container fluid="true" className={`vh-100 bg-${themeContext.backgroundColor}`}>
-      <Col size="12" className={`mh-100 mx-0 px-0`}>
-        <Row className={`bg-${themeContext.backgroundColor}`}>
-          <Col size="12 sm-12 md-4 lg-3 xl-3">
-            <SearchGroup
-              onChange={validateSearchField}
-              keyPressed={keyPressed}
-              showSearchButton={showSearchButton}
-              locateMeButtonPressed={locateMeButtonPressed}
-              searchButtonPressed={searchButtonPressed} />
-            <CountryDropdown
-              countryArr={countryArr}
-              selectedCountry={selectedCountry}
-              onChange={updateSelectedCountryState} />
-            {recentCities.length > 0 ?
-              <RecentCitiesDiv
-                recentCities={recentCities}
-                recentCityButtonPressed={recentCityButtonPressed}
-                removeCityButtonPressed={removeCityButtonPressed}
-              />
-              :
-              ``
-            }
-            {/* <DebugTool
-              consoleRecentCities={consoleRecentCities}
-              consoleSearchCity={consoleSearchCity}
-              consoleSelectedCountry={consoleSelectedCountry}
-              consoleSelectedCoord={consoleSelectedCoord}
-              consoleShowRecentCities={consoleShowRecentCities}
-            /> */}
-          </Col>
+	const removeCityButtonPressed = key => {
+		const recentCitiesArr = recentCities;
+		const index = recentCitiesArr.findIndex(city => city.key === key);
+		recentCitiesArr.splice(index, 1);
+		setRecentCities([...recentCitiesArr]);
+		LocalStorage.saveLocalStorage(localStorageKey, recentCitiesArr);
+	};
 
-          <Col size="sm-12 md-8 lg-9 xl-9">
-            {currentWeather ? <CurrentWeatherDiv currentWeather={currentWeather} /> : ``}
-            {forecast ?
-              <HourlyForecastDiv
-                hourly={forecast.hourly}
-                hours={hourlyForecastNumber}
-                timezone={forecast.timezone_offset}
-              />
-              :
-              ``
-            }
-            {forecast ?
-              <DailyForecastDiv daily={forecast.daily} timezone={forecast.timezone_offset} /> : ``
-            }
-          </Col>
-        </Row>
-      </Col>
-    </Container>
-  );
+
+	return (
+		<div className={`container-fluid pb-5 bg-${themeContext.backgroundColor}`} style={{ height: '100vh', overflow: 'auto' }}>
+			<div className="row">
+				<div className="col-12 col-md-4 col-lg-3">
+
+					<SearchGroup defaultValue={userInput}
+						onChange={updateUserInput}
+						keyPressed={keyPressed}
+						showSearchButton={showSearchButton}
+						locateMeButtonPressed={locateMeButtonPressed}
+						searchButtonPressed={searchButtonPressed} />
+					<CountryDropdown
+						selectedCountry={selectedCountry} // selected country code
+						onChange={updateSelectedCountryState} />
+					{recentCities.length > 0 ?
+						<RecentCitiesDiv
+							recentCities={recentCities}
+							recentCityButtonPressed={recentCityButtonPressed}
+							removeCityButtonPressed={removeCityButtonPressed}
+						/>
+
+						:
+						``
+					}
+
+					{/* <div className="d-flex flex-column">
+						<ConsoleLogButton name="currentCity" state={currentCity} />
+						<ConsoleLogButton name="currentCoord" state={currentCoord} />
+						<ConsoleLogButton name="forecastCoord" state={forecastCoord} />
+						<ConsoleLogButton name="userInput" state={userInput} />
+						<ConsoleLogButton name="selectedCountry" state={selectedCountry} />
+						<ConsoleLogButton name="recent" state={recentCities} />
+						<ConsoleLogButton name="current" state={currentWeather} />
+						<ConsoleLogButton name="timezoneOffset" state={timezoneOffset} />
+						<ConsoleLogButton name="hourly" state={hourlyForecast} />
+						<ConsoleLogButton name="daily" state={dailyForecast} />
+					</div> */}
+
+				</div>
+
+				<div className="col-12 col-md-8 col-lg-8 col-xl-7">
+					{
+						currentWeather ?
+							<CurrentWeatherDiv currentWeather={currentWeather} />
+							:
+							``
+					}
+					{
+						hourlyForecast ?
+							<HourlyForecastDiv hourly={hourlyForecast}
+								hours={hourlyForecastNumber}
+								timezone={timezoneOffset}
+							/>
+							:
+							``
+					}
+					{
+						dailyForecast ?
+							<DailyForecastDiv daily={dailyForecast}
+								timezoneOffset={timezoneOffset} />
+							:
+							``
+					}
+				</div>
+
+
+			</div>
+		</div>
+	);
 }
 
 export default Home;
