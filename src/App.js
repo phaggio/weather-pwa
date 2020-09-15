@@ -47,7 +47,6 @@ const App = () => {
           <ThemeContext.Provider value={themeState}>
             <Navbar />
             <Route path="/" component={Home} />
-            {/* <Route exact path="/simple-weather" component={Home} /> */}
             <Footer />
           </ThemeContext.Provider>
         </DarkModeContext.Provider>

@@ -1,4 +1,5 @@
-// parsing res.data from OpenWeatherMap API current weather res.data
+
+// parsing res.data from OpenWeatherMap API current weather res.data and return city data
 const parseCityObj = data => {
   return ({
     key: `${data.name}, ${data.sys.country}`,
@@ -9,4 +10,7 @@ const parseCityObj = data => {
   })
 }
 
-export default parseCityObj;
+
+export {
+  parseCityObj
+}

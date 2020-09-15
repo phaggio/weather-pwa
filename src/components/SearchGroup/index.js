@@ -9,7 +9,7 @@ const SearchGroup = props => {
       
       <label className={`text-${themeContext.textColor}`}>Search a city:</label>
       <div className="input-group">
-        <input
+        <input defaultValue={props.defaultValue}
           className="form-control"
           type="text"
           placeholder="city name"
