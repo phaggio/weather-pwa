@@ -52,3 +52,11 @@ Mobile friendly UI
 
 ## Public API
 * OpenWeatherMap
+
+
+## Contributors
+Feel free leave me any feedbacks.
+
+Richard Wang
+[Github](https://github.com/phaggio) ,
+[LinkedIn](https://www.linkedin.com/in/richard-c-wang/)
