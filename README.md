@@ -11,7 +11,7 @@ User can search for current and forecast weather condition.
 Mobile friendly UI
 
 <div>
-  <img src="https://raw.githubusercontent.com/phaggio/weather-pwa/master/screenshot/weather-pwa-screenshot.png" height="300">
+  <img style="margin-right: 10px" src="https://raw.githubusercontent.com/phaggio/weather-pwa/master/screenshot/weather-pwa-screenshot.png" height="300">
   <img src="https://raw.githubusercontent.com/phaggio/weather-pwa/master/screenshot/weather-pwa-screenshot2.png" height="300">
 </div>
 
