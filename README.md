@@ -8,7 +8,11 @@ User can search for current and forecast weather condition.
 
 
 ## Screenshot
-![image](https://raw.githubusercontent.com/phaggio/weather-pwa/master/screenshot/weather-pwa-screenshot.png)
+Mobile friendly UI
+
+<img src="https://raw.githubusercontent.com/phaggio/weather-pwa/master/screenshot/weather-pwa-screenshot.png" height="300">
+<img src="https://raw.githubusercontent.com/phaggio/weather-pwa/master/screenshot/weather-pwa-screenshot2.png" height="300">
+
 
 
 ## Weather information
