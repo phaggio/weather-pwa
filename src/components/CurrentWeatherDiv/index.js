@@ -44,7 +44,7 @@ const CurrentWeatherDiv = props => {
 
       <div className="row">
         <div className="col-12">
-          <div className="d-flex flex-column flex-md-row justify-content-around ">
+          <div className="d-flex flex-column flex-sm-row justify-content-around ">
             <p className={`text-center text-md-left text-${themeContext.textColor}`}>
               Now: {Conversion.unixToLocalTime(props.currentWeather.dt, props.currentWeather.timezone, `h:mm A`)}
             </p>

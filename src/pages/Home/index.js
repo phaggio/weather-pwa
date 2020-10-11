@@ -165,7 +165,7 @@ const Home = () => {
 
 	return (
 		<div className={`container-fluid pb-5 bg-${themeContext.backgroundColor}`} style={{ height: '100vh', overflow: 'auto' }}>
-			<div className="row">
+			<div className="row justify-content-center">
 				<div className="col-12 col-md-4 col-lg-3">
 
 					<SearchGroup defaultValue={userInput}
@@ -185,7 +185,7 @@ const Home = () => {
 						/>
 
 						:
-						``
+						null
 					}
 
 					{/* <div className="d-flex flex-column">
@@ -203,12 +203,12 @@ const Home = () => {
 
 				</div>
 
-				<div className="col-12 col-md-8 col-lg-8 col-xl-7">
+				<div className="col-12 col-md-8 col-lg-7 col-xl-6">
 					{
 						currentWeather ?
 							<CurrentWeatherDiv currentWeather={currentWeather} />
 							:
-							``
+							null
 					}
 					{
 						hourlyForecast ?
@@ -217,14 +217,14 @@ const Home = () => {
 								timezone={timezoneOffset}
 							/>
 							:
-							``
+							null
 					}
 					{
 						dailyForecast ?
 							<DailyForecastDiv daily={dailyForecast}
 								timezoneOffset={timezoneOffset} />
 							:
-							``
+							null
 					}
 				</div>
 
