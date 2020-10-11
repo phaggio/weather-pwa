@@ -166,7 +166,7 @@ const Home = () => {
 	return (
 		<div className={`container-fluid pb-5 bg-${themeContext.backgroundColor}`} style={{ height: '100vh', overflow: 'auto' }}>
 			<div className="row justify-content-center">
-				<div className="col-12 col-md-4 col-lg-3">
+				<div className="col-12 col-md-5 col-lg-4 col-xl-3">
 
 					<SearchGroup defaultValue={userInput}
 						onChange={updateUserInput}
@@ -203,7 +203,7 @@ const Home = () => {
 
 				</div>
 
-				<div className="col-12 col-md-8 col-lg-7 col-xl-6">
+				<div className="col-12 col-md-7 col-lg-7 col-xl-6">
 					{
 						currentWeather ?
 							<CurrentWeatherDiv currentWeather={currentWeather} />

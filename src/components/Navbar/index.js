@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import $ from 'jquery';
 import { ToggleSwitch, UnitRadioButtonGroup, Nav } from '..';
 import * as LocalStorage from '../../utils/LocalStorage';
 import UnitContext from '../../utils/UnitContext';
@@ -19,8 +20,9 @@ const Navbar = () => {
       darkMode: bool,
       "type": unitContext.unitType,
       "units": unitContext.units
-    }
-    LocalStorage.saveLocalStorage(`simple-weather`, storageObj)
+    };
+    LocalStorage.saveLocalStorage(`simple-weather`, storageObj);
+    $('.collapse').collapse('hide');
   };
 
   const updateUnits = (type, unit) => {
@@ -29,8 +31,9 @@ const Navbar = () => {
       "darkMode": darkModeContext.darkMode,
       type: type,
       units: unit
-    }
-    LocalStorage.saveLocalStorage(`simple-weather`, storageObj)
+    };
+    LocalStorage.saveLocalStorage(`simple-weather`, storageObj);
+    $('.collapse').collapse('hide');
   }
 
   useEffect(() => {
