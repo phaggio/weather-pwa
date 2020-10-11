@@ -22,7 +22,7 @@ const Navbar = () => {
       "units": unitContext.units
     };
     LocalStorage.saveLocalStorage(`simple-weather`, storageObj);
-    $('.collapse').collapse('hide');
+    $('.navbar-collapse').collapse('hide');
   };
 
   const updateUnits = (type, unit) => {
@@ -33,7 +33,7 @@ const Navbar = () => {
       units: unit
     };
     LocalStorage.saveLocalStorage(`simple-weather`, storageObj);
-    $('.collapse').collapse('hide');
+    $('.navbar-collapse').collapse('hide');
   }
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <div className="collapse" id="navbarToggleExternalContent">
+      <div className="collapse navbar-collapse" id="navbarToggleExternalContent">
         <div className={`bg-${themeContext.backgroundColor} p-4`}>
 
           <h4 className={`text-${themeContext.textColor} h4`}>Settings</h4>

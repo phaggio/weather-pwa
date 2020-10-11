@@ -50,10 +50,12 @@ const Home = () => {
 					setCurrentWeather(res.data);
 					setForecastCoord(res.data.coord);
 					setCurrentCity({ city: '', country: 'US' });
-					updateRecentCities({
-						key: `${res.data.name}, ${res.data.sys.country}`,
-						city: res.data.name, country: res.data.sys.country, lon: res.data.coord.lon, lat: res.data.coord.lat
-					})
+					updateRecentCities(() => {
+						return {
+							key: `${res.data.name}, ${res.data.sys.country}`,
+							city: res.data.name, country: res.data.sys.country, lon: res.data.coord.lon, lat: res.data.coord.lat
+						}
+					});
 				})
 				.catch(err => {
 					if (err.response) {
