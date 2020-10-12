@@ -30,14 +30,12 @@ Mobile friendly UI
 
 
 ## Features
-* a hamburger button to expand/collapse app settings
-* unit system (Fahrenheit, Celsius, Kelvin)
+* three units for weather info (Fahrenheit, Celsius, Kelvin)
 * dark mode
 * setting preference saved to LocalStorage
-* get user current location
-* collapsible recent city list
+* get weather info for user current location 
 * save recently searched city (up to 6)
-* country selection
+* installable progressive web app
 
 
 ## Framework/Libraries
