@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?`;
-const oneCallWeatherURL = `https://api.openweathermap.org/data/2.5/onecall?`;
+const oneCallWeatherURL = `https://api.openweathermap.org/data/3.0/onecall?`;
 const key = `786953f37f3a1158ba41f05aad533b5b`;
 
 const currentWeatherByCity = ({ units, city, country }) => {
