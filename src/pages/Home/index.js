@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {
 	SearchGroup
 	, CountryDropdown
@@ -50,7 +50,7 @@ const Home = () => {
 	// current weather by current coord.
 	useEffect(() => {
 		if (currentCoord !== undefined && currentCoord.lon && currentCoord.lat) {
-			console.log(`getting current weather using currentCoord state...`);
+			// console.log(`getting current weather using currentCoord state...`);
 			API.currentWeatherByCoord({ units: unitContext.unitType, lon: currentCoord.lon, lat: currentCoord.lat })
 				.then(res => {
 					setCurrentWeather(res.data);
@@ -94,10 +94,9 @@ const Home = () => {
 	// forecast weather by forecast coord.
 	useEffect(() => {
 		if (forecastCoord !== undefined && forecastCoord.lon && forecastCoord.lat) {
-			console.log(`getting forecast weather data using forecastCoord state ...`);
+			// console.log(`getting forecast weather data using forecastCoord state ...`);
 			API.forecastWeatherByCoord({ units: unitContext.unitType, lon: forecastCoord.lon, lat: forecastCoord.lat })
 				.then(res => {
-					console.log(res.data);
 					setTimezoneOffset(res.data.city.timezone)
 					setHourlyForecast(res.data.list);
 					setDailyForecast(res.data.list);

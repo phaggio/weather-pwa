@@ -13,8 +13,7 @@ const DailyForecastDiv = props => {
     height: `60px`,
     width: `60px`
   }
-  console.log(props);
-  console.log(props.timezoneOffset);
+  
   return (
     <div>
       <h4 className={`text-${themeContext.textColor}`}>Daily forecast</h4>
