@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?`;
-const oneCallWeatherURL = `https://api.openweathermap.org/data/3.0/onecall?`;
+const forecastURL = `https://api.openweathermap.org/data/2.5/forecast?`;
 const key = `786953f37f3a1158ba41f05aad533b5b`;
 
 const currentWeatherByCity = ({ units, city, country }) => {
@@ -16,12 +16,12 @@ const currentWeatherByCoord = ({ units, lat, lon }) => {
   return axios.get(`${currentWeatherURL}lat=${lat}&lon=${lon}&units=${units ? units : ``}&appid=${key}`);
 }
 
-const oneCallWeatherByCoord = ({ units, lat, lon }) => {
-  return axios.get(`${oneCallWeatherURL}lat=${lat}&lon=${lon}&exclude=minutely&units=${units ? units : ``}&appid=${key}`);
+const forecastWeatherByCoord = ({ units, lat, lon }) => {
+  return axios.get(`${forecastURL}lat=${lat}&lon=${lon}&units=${units ? units : ``}&appid=${key}`);
 }
 
 export default {
   currentWeatherByCity,
   currentWeatherByCoord,
-  oneCallWeatherByCoord
+  forecastWeatherByCoord
 }
